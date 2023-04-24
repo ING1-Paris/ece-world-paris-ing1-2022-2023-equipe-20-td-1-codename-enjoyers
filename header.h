@@ -7,5 +7,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <allegro.h>
 
 #endif //PROJET_HEADER_H
