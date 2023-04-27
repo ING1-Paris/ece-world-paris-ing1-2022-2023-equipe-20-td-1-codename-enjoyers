@@ -9,4 +9,7 @@
 #include <stdlib.h>
 #include <allegro.h>
 
+//Sous programme du Snake
+void Snake();
+
 #endif //PROJET_HEADER_H
