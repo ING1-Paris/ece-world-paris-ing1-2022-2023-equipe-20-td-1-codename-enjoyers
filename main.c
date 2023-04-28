@@ -44,9 +44,10 @@ int main() {
         {
                     // (dialog proc)     (x)   (y)   (w)   (h) (fg)(bg) (key) (flags)     (d1) (d2)    (dp)                   (dp2) (dp3)
             { d_box_proc,           0, 0, 500, 200, 0, 0, 0,        0,          0,  0,       NULL,               NULL, NULL},
-            { d_text_proc,         2,  10,    0,    0,   0,  0,    0,      0,       0,   0,    (void*)"Saisir le pseudo du joueur 1",  NULL, NULL  },
+            { d_text_proc,         2,  10,    0,    0,   0,  0,    0,      0,       0,   0,    (void*)"Saisir le pseudo du joueur:",  NULL, NULL  },
             { d_text_proc,         4,  20,    0,    0,   0,  0,    0,      0,       0,   0,    (void*)">>",  NULL, NULL  },
             { d_edit_proc,       28,  20,  160,    8,   0,  0,    0, D_EXIT,      64,   0,    (void*)chaine_temp,      NULL, NULL  },
+            { d_icon_proc, }
             { d_button_proc,     160,   190,  160,   16,   0,  0,    0, D_EXIT,       0,   0,    (void*)"OK",            NULL, NULL  },
             { d_yield_proc,        0,   0,    0,    0,   0,  0,    0,      0,       0,   0,    NULL,                   NULL, NULL  },
             { NULL,                0,   0,    0,    0,   0,  0,    0,      0,       0,   0,    NULL,                   NULL, NULL  },
@@ -88,12 +89,26 @@ int main() {
         blit(menu, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
         blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
+        if (i == 0) {
+
+            alert("Remplissez les informations du joueur 1 !", NULL, NULL, "Suivant", NULL, 0, 0);
+
+        }
+
         do_dialog(GUI_demarrage, 3);
 
         strcpy(tableau_joueurs[i].nom, chaine_temp);
         tableau_joueurs[i].score = 0;
 
+
         blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
+        if (i == 0) {
+
+            alert("Remplissez a present les informations du joueur 2 !", NULL, NULL, "Suivant", NULL, 0, 0);
+        }
+
+
     }
 
     while (!readkey()) {
