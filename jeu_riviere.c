@@ -60,7 +60,7 @@ void AfficherRondin(BITMAP *bmp,t_rondin *rondin_a_afficher);
 void AfficherTabRondin(BITMAP *bmp,t_rondin * tab[NRONDIN]);
 
 
-t_joueur * creerJoueur(char *nomimage);
+t_joueur * creationJoueur(char *nomimage);
 void AfficherJoueur(BITMAP *bmp,t_joueur *joueur_a_afficher);
 
 
@@ -70,6 +70,8 @@ int typeTerrain(t_joueur *joueur, int dx, int dy, int type);
 
 
 BITMAP * load_bitmap_check(char *nomImage);
+
+void jeu_riviere();
 
 
 
@@ -204,7 +206,7 @@ void AfficherTabRondin(BITMAP *bmp,t_rondin * tab[NRONDIN]){
 
 
 
-t_joueur * creerJoueur(char *nomimage){
+t_joueur * creationJoueur(char *nomimage){
     t_joueur *joueur_temp;
 
     joueur_temp = (t_joueur *)malloc(1*sizeof(t_joueur));
@@ -326,7 +328,7 @@ BITMAP * load_bitmap_check(char *nomImage){
 /*          PROGRAMME PRINCIPAL           */
 /******************************************/
 
-int main()
+void jeu_riviere()
 {
 
     t_rondin *mesRondins[NRONDIN];
@@ -352,7 +354,7 @@ int main()
     tableTuiles=load_bitmap_check("images/tilemapZelda/tableTuiles.bmp");
 
 
-    joueur = creerJoueur("images/tilemapZelda/sprite.bmp");
+    joueur = creationJoueur("images/tilemapZelda/sprite.bmp");
 
     remplirTabRondin(mesRondins);
 
@@ -405,7 +407,5 @@ int main()
         rest(15);
 
     }
-
-    return 0;
 }
-END_OF_MAIN();
+
