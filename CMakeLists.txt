@@ -3,6 +3,6 @@ project(PROJET C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(PROJET main.c header.h src/Ballons/jeuballons.c src/Snake/Jeux_Snake.c jeu_riviere.c)
+add_executable(PROJET main.c header.h src/Ballons/jeuballons.c src/Snake/Jeux_Snake.c src/Riviere/jeu_riviere.c)
 
 target_link_libraries(PROJET -lmingw32 -lalleg44)
