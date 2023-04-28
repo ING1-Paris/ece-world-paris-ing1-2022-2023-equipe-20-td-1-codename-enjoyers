@@ -10,6 +10,21 @@
 #include <time.h>
 #include <allegro.h>
 
+#define NOMBRE_JOUEURS 2
+
+
+
+// MENU ET POUR TOUT EN GENERAL
+typedef struct joueur {
+
+    char nom[64];
+    int score;
+    int x,y;     // position
+    int tx,ty;   // taille
+    int dx, dy;     // vitesse des déplacements (nombre de pixels)
+
+} t_joueur;
+
 //Sous programme du Snake
 void Snake();
 
@@ -69,14 +84,14 @@ typedef struct listeActeurs
 
 // Spécifique à cet exemple : un fusil et un ballon
 // Un élément à déplacement interactif
-typedef struct joueur {
+typedef struct joueur_ballons {
     int x,y;     // position
     int tx,ty;   // taille
     int vit;     // vitesse des déplacements (nombre de pixels)
     int cpttir0; // tempo armement 0
     int cpttir1; // tempo armement 1
     BITMAP *img; // sprite (image chargée)
-} t_joueur;
+} t_joueur_ballons;
 
 // Un élément à déplacement automatique aléatoire
 typedef struct ballon {
