@@ -1,9 +1,10 @@
 //
 // Created by Leroy on 27/04/2023.
 //
-#include "header.h"
+#include "../../header.h"
 
 void Snake(){
+
     BITMAP* page;
     BITMAP* decor;
     BITMAP* SNAKE1[4];
@@ -17,7 +18,7 @@ void Snake(){
         allegro_message("Impossible de charger le decor de Snake");
         exit(EXIT_FAILURE);
     }
-    // charger les images de la séquence d'animation
+    /*// charger les images de la séquence d'animation
     for (int i=0;i<4;i++) {
         // sprintf permet de faire un printf dans une chaine
         sprintf(nomfichier, "images/Snake/Snake_1%d.bmp", i+1);
@@ -27,7 +28,7 @@ void Snake(){
             allegro_message("pas pu trouver %s", nomfichier);
             exit(EXIT_FAILURE);
         }
-    }
+    }*/
 
 
     while (!key[KEY_ESC]){

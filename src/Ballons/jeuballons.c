@@ -205,7 +205,6 @@ int main()
     // Les ballons qui se déplacent automatiquement
     BITMAP *img[5];
 
-
     t_ballon *ballon1;
     t_ballon *ballon2;
     t_ballon *ballon3;
@@ -342,7 +341,7 @@ t_acteur * creerActeur(int x,int y,int type){
 }
 
 // Actualiser un acteur (bouger, sortie écran, fin explosion ...)
-void actualiserActeur(t_acteur *acteur){
+void actualiserActeur(t_acteur *acteur) {
 
     // deplacement
     acteur->x=acteur->x-acteur->dx;
