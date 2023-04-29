@@ -99,24 +99,13 @@ int libreListeActeurs(t_listeActeurs *la);
 //compteur de ballons éclatés
 int cpt_ballons ;
 
-
-//temps écoulés joueur 1 et 2
-clock_t start_time, current_time;
-double temps_ecouleJ1;
-double temps_ecouleJ2;
-
-// Mémorisation de l'heure de début
-long start_time;
-
-void heure(){
-    start_time = clock();
-}
+//temps performance joueur
+double temps_ecoule;
 
 // Allouer et ajouter un acteur à la liste
 // et retourner l'adresse de ce nouveau acteur
 // retourne NULL en cas de problème
 // pour ce projet il faut x y de départ et type
-//   ( à adapter selon besoins )
 t_acteur * ajouterActeur(t_listeActeurs *la,int x,int y,int type);
 
 // Enlever et libèrer un acteur qui était dans la liste en indice i
@@ -216,13 +205,6 @@ int main()
     // Les ballons qui se déplacent automatiquement
     BITMAP *img[5];
 
-    img[0] = (t_joueur *)malloc(1*sizeof(t_joueur));
-
-    t_ballon tabBallons[5];
-    for(int i =0; i< 5; i++){
-
-
-    }
 
     t_ballon *ballon1;
     t_ballon *ballon2;
@@ -269,51 +251,53 @@ int main()
     acteurs=creerListeActeurs(100);
 
     // BOUCLE DE JEU
-    while (!key[KEY_ESC])
-    {
-        heure();
+    for(int j=0; j<2; j++) {
+        time_t temps_precedent = time(NULL);
+        printf("debut %.2f\n", temps_ecoule);
+        while (!key[KEY_ENTER]) {
+            time_t temps_actuel = time(NULL);
+            temps_ecoule = difftime(temps_actuel, temps_precedent);
 
-        // Calcul du temps écoulé en secondes
-        temps_ecouleJ1 = (double)(start_time - current_time) / CLOCKS_PER_SEC;
-        temps_ecouleJ2 = (double)(start_time - current_time) / CLOCKS_PER_SEC;
+            // effacer buffer en appliquant décor  (pas de clear_bitmap)
+            blit(decor, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
-        // effacer buffer en appliquant décor  (pas de clear_bitmap)
-        blit(decor,page,0,0,0,0,SCREEN_W,SCREEN_H);
+            // bouger tout le monde
+            actualiserJoueur(fusil, acteurs);
+            actualiserBallon_bleu(ballon1);
+            actualiserBallon_rose(ballon2);
+            actualiserBallon_vert(ballon3);
+            actualiserBallon_violet(ballon4);
+            actualiserBallon_rouge(ballon5);
 
-        // bouger tout le monde
-        actualiserJoueur(fusil,acteurs);
-        actualiserBallon_bleu(ballon1);
-        actualiserBallon_rose(ballon2);
-        actualiserBallon_vert(ballon3);
-        actualiserBallon_violet(ballon4);
-        actualiserBallon_rouge(ballon5);
+            actualiserListeActeurs(acteurs);
 
-        actualiserListeActeurs(acteurs);
+            // gérer les collisions
+            collisionListeActeursBleu(ballon1, acteurs);
+            collisionListeActeursRose(ballon2, acteurs);
+            collisionListeActeursVert(ballon3, acteurs);
+            collisionListeActeursViolet(ballon4, acteurs);
+            collisionListeActeursRouge(ballon5, acteurs);
 
-        // gérer les collisions
-        collisionListeActeursBleu(ballon1,acteurs);
-        collisionListeActeursRose(ballon2,acteurs);
-        collisionListeActeursVert(ballon3,acteurs);
-        collisionListeActeursViolet(ballon4,acteurs);
-        collisionListeActeursRouge(ballon5,acteurs);
+            // afficher tout le monde
+            dessinerJoueur(page, fusil);
+            dessinerBallon_bleu(page, ballon1);
+            dessinerBallon_rose(page, ballon2);
+            dessinerBallon_vert(page, ballon3);
+            dessinerBallon_violet(page, ballon4);
+            dessinerBallon_rouge(page, ballon5);
 
-        // afficher tout le monde
-        dessinerJoueur(page,fusil);
-        dessinerBallon_bleu(page,ballon1);
-        dessinerBallon_rose(page,ballon2);
-        dessinerBallon_vert(page,ballon3);
-        dessinerBallon_violet(page,ballon4);
-        dessinerBallon_rouge(page,ballon5);
+            dessinerListeActeurs(page, acteurs);
 
-        dessinerListeActeurs(page,acteurs);
+            // afficher tout ça à l'écran
+            blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
-        // afficher tout ça à l'écran
-        blit(page,screen,0,0,0,0,SCREEN_W,SCREEN_H);
-
-        // petite temporisation
-        rest(10);
+            // petite temporisation
+            rest(10);
+        }
+        allegro_message("vous avez éclaté les 5 ballons en %.1f secondes", temps_ecoule);
+        printf("fin %.1f\n", temps_ecoule);
     }
-    allegro_message("vous avez éclaté les 5 ballons en %.2f secondes", temps_ecouleJ1);
+
     return 0;
 }
 END_OF_MAIN();
