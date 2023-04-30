@@ -10,7 +10,7 @@
 #include <time.h>
 #include <allegro.h>
 
-#define NOMBRE_JOUEURS 2
+#define NOMBRE_JOUEURS 1
 
 
 
@@ -22,12 +22,25 @@ typedef struct joueur {
     int x,y;     // position
     int tx,ty;   // taille
     int dx, dy;     // vitesse des déplacements (nombre de pixels)
-    BITMAP* Skin[13];
+    BITMAP * sprites[13];
 
 } t_joueur;
 
-//LE SNAKE
+void charger_sprites(t_joueur jouer_actuel, char nom_perso[256]);
 
+
+
+
+
+
+
+
+
+
+
+
+
+//LE SNAKE
 typedef struct Maillon {
     BITMAP* Skin[12];
     int skin_used;
@@ -40,6 +53,23 @@ typedef struct Maillon {
 
 void Snake(t_joueur Joueur[NOMBRE_JOUEURS]);
 t_corp_de_snake* Creer_maillon(t_corp_de_snake* maillon_precedent,BITMAP* tab_de_Skin[12]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // JEU DE TIR AUX BALLONS
 // ----------------------------------------

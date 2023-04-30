@@ -136,38 +136,32 @@ int main() {
 
             GUI_demarrage[5].flags = D_HIDDEN;
 
-            tableau_joueurs[i].sprites[0] = load_bitmap("../assets/personnages/farquaad/farquaad_immobile_avant_0.bmp", NULL);
-            tableau_joueurs[i].sprites[1] = load_bitmap("../assets/personnages/farquaad/farquaad_immobile_derriere_0", NULL);
-            tableau_joueurs[i].sprites[2] = load_bitmap("../assets/personnages/farquaad/farquaad_immobile_droite_0.bmp", NULL);
-            tableau_joueurs[i].sprites[3] = load_bitmap("../assets/personnages/farquaad/farquaad_immobile_gauche_0.bmp", NULL);
-            tableau_joueurs[i].sprites[4] = load_bitmap("../assets/personnages/farquaad/farquaad_marche_avant_0.bmp", NULL);
-            tableau_joueurs[i].sprites[5] = load_bitmap("../assets/personnages/farquaad/farquaad_marche_avant_1.bmp", NULL);
-            tableau_joueurs[i].sprites[6] = load_bitmap("../assets/personnages/farquaad/farquaad_marche_derriere_0.bmp", NULL);
-            tableau_joueurs[i].sprites[7] = load_bitmap("../assets/personnages/farquaad/farquaad_marche_derriere_1.bmp", NULL);
-            tableau_joueurs[i].sprites[8] = load_bitmap("../assets/personnages/farquaad/farquaad_marche_droite_0.bmp", NULL);
-            tableau_joueurs[i].sprites[9] = load_bitmap("../assets/personnages/farquaad/farquaad_marche_droite_1.bmp", NULL);
-            tableau_joueurs[i].sprites[10] = load_bitmap("../assets/personnages/farquaad/farquaad_marche_gauche_0.bmp", NULL);
-            tableau_joueurs[i].sprites[11] = load_bitmap("../assets/personnages/farquaad/farquaad_marche_gauche_1.bmp", NULL);
+            charger_sprites(tableau_joueurs[i], "Farquaad");
 
 
         } else if (GUI_demarrage[6].flags == D_SELECTED) { //Shrek
 
             GUI_demarrage[6].flags = D_HIDDEN;
 
+            charger_sprites(tableau_joueurs[i], "Shrek");
 
         } else if (GUI_demarrage[7].flags == D_SELECTED) { // Le chat potté
 
             GUI_demarrage[7].flags = D_HIDDEN;
 
-
+            charger_sprites(tableau_joueurs[i], "Chat");
 
         } else if (GUI_demarrage[8].flags == D_SELECTED) { // Fiona
 
             GUI_demarrage[8].flags = D_HIDDEN;
 
+            charger_sprites(tableau_joueurs[i], "Fiona");
+
         } else if (GUI_demarrage[9].flags == D_SELECTED) { // Thomas
 
             GUI_demarrage[9].flags = D_HIDDEN;
+
+            charger_sprites(tableau_joueurs[i], "Thomas");
         }
 
         tableau_joueurs[i].x = 300 + (20 * i); // Valeurs à changer
@@ -189,6 +183,14 @@ int main() {
     while (!readkey()) {
 
         blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
+        for (int i=0; i<NOMBRE_JOUEURS; i++) {
+
+            masked_blit(tableau_joueurs[i].sprites[0], page, 0, 0, tableau_joueurs[i].x, tableau_joueurs[i].y, tableau_joueurs[i].sprites[0]->w, tableau_joueurs[i].sprites[0]->h);
+
+        }
+
+
     }
 
 
