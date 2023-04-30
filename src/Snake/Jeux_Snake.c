@@ -8,7 +8,7 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS]){
     /// Initialisation \\\
 
     // Variable double buffer
-    BITMAP* page;
+    BITMAP* page ;
     BITMAP* decor;
 
     // Variable Gestion des Skins
