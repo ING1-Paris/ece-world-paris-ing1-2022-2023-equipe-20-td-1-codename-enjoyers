@@ -22,14 +22,24 @@ typedef struct joueur {
     int x,y;     // position
     int tx,ty;   // taille
     int dx, dy;     // vitesse des déplacements (nombre de pixels)
-    BITMAP * sprites[12];
+    BITMAP* Skin[13];
 
 } t_joueur;
 
-//Sous programme du Snake
-void Snake();
+//LE SNAKE
 
+typedef struct Maillon {
+    BITMAP* Skin[12];
+    int skin_used;
+    int x,y;
+    int last_x,last_y;
+    int tx,ty;
+    int dx,dy;
+    struct Maillon* next_corp;
+}t_corp_de_snake;
 
+void Snake(t_joueur Joueur[NOMBRE_JOUEURS]);
+t_corp_de_snake* Creer_maillon(t_corp_de_snake* maillon_precedent,BITMAP* tab_de_Skin[12]);
 
 // JEU DE TIR AUX BALLONS
 // ----------------------------------------
