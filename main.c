@@ -83,7 +83,6 @@ int main() {
 
 
 
-
     /// DEBUT DU JEU
     page = create_bitmap(SCREEN_W, SCREEN_H);
     clear_bitmap(page);
