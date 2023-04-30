@@ -1,83 +1,8 @@
-#include <allegro.h>
-#include <time.h>
-#include <stdio.h>
-#include <stdlib.h>
-
+#include "../../header.h"
 
 /**********************/
 /*     STRUCTURES     */
 /**********************/
-
-// chaque acteur qui se déplace
-typedef struct acteur
-{
-
-    // position du coin sup. gauche
-    int x,y;
-
-    // vecteur deplacement
-    int dx,dy;
-
-    // largeur hauteur
-    int tx,ty;
-
-    // couleur (ne sera plus pertinent avec des sprites importés...)
-    int couleur;
-
-    // type (ici 2 types mais on peut en mettre plus):
-    //   0 laser
-    //   1 missile (accélération horizontale)
-    int type;
-
-    // comportement :
-    //   0 normal déplacement
-    //   1 explosion
-    int comportement;
-    int cptexplo; // temps depuis l'explosion
-
-    // vivant :
-    //   0 mort (doit disparaitre de la liste)
-    //   1 vivant
-    int vivant;
-
-} t_acteur;
-
-// Une collection de acteurs
-typedef struct listeActeurs
-{
-    // nombre maxi d'éléments
-    // =taille du tableau de pointeurs
-    int max;
-
-    // nombre effectif de pointeurs utilisés
-    // (les autres sont à NULL)
-    int n;
-
-    // le tableau de pointeurs (alloué dynamiquement)
-    t_acteur **tab;
-
-} t_listeActeurs;
-
-
-// Spécifique à cet exemple : un fusil et un ballon
-
-// Un élément à déplacement interactif
-typedef struct joueur{
-    int x,y;     // position
-    int tx,ty;   // taille
-    int vit;     // vitesse des déplacements (nombre de pixels)
-    int cpttir0; // tempo armement 0
-    int cpttir1; // tempo armement 1
-    BITMAP *img; // sprite (image chargée)
-} t_joueur;
-
-// Un élément à déplacement automatique aléatoire
-typedef struct ballon{
-    int x,y;     // position
-    int dx;      // vecteur déplacement
-    int tx,ty;   // taille
-    BITMAP *img; // sprite (image chargée)
-} t_ballon;
 
 
 /*********************/
@@ -150,13 +75,13 @@ void collisionListeActeursRouge(t_ballon *ballon_rouge,t_listeActeurs *la);
 // Spécifique à cet exemple : gérer le fusil et le ballon
 
 // Allouer et initialiser joueur
-t_joueur * creerJoueur(char *nomimage);
+t_joueur_ballons * creerJoueur(char *nomimage);
 
 // Actualiser joueur (bouger interactivement et tirer...)
-void actualiserJoueur(t_joueur *joueur,t_listeActeurs *la);
+void actualiserJoueur(t_joueur_ballons *joueur,t_listeActeurs *la);
 
 // Dessiner joueur sur la bitmap bmp
-void dessinerJoueur(BITMAP *bmp,t_joueur *joueur);
+void dessinerJoueur(BITMAP *bmp,t_joueur_ballons *joueur);
 
 
 // Allouer et initialiser ballon_bleu
@@ -187,7 +112,7 @@ void dessinerBallon_rouge(BITMAP *bmp,t_ballon *ballon_rouge);
 /* initialisation puis boucle d'animation */
 /******************************************/
 
-int main()
+void jeuballons()
 {
 
     // Buffer
@@ -200,7 +125,7 @@ int main()
     t_listeActeurs *acteurs;
 
     // Le fusil manipulé par le joueur
-    t_joueur *fusil;
+    t_joueur_ballons *fusil;
 
     // Les ballons qui se déplacent automatiquement
     BITMAP *img[5];
@@ -297,9 +222,8 @@ int main()
         printf("fin %.1f\n", temps_ecoule);
     }
 
-    return 0;
 }
-END_OF_MAIN();
+
 
 
 
@@ -669,11 +593,11 @@ void collisionListeActeursRouge(t_ballon *ballon_rouge,t_listeActeurs *la){
 }
 
 // Allouer et initialiser un joueur
-t_joueur * creerJoueur(char *nomimage){
-    t_joueur *nouv;
+t_joueur_ballons * creerJoueur(char *nomimage){
+    t_joueur_ballons *nouv;
 
     // Allouer
-    nouv = (t_joueur *)malloc(1*sizeof(t_joueur));
+    nouv = (t_joueur_ballons *)malloc(1*sizeof(t_joueur_ballons));
 
     // Initialiser
 
@@ -698,7 +622,7 @@ t_joueur * creerJoueur(char *nomimage){
 }
 
 // Actualiser joueur (bouger interactivement et tirer...)
-void actualiserJoueur(t_joueur *joueur,t_listeActeurs *la){
+void actualiserJoueur(t_joueur_ballons *joueur,t_listeActeurs *la){
 
     // Déplacements instantanés (pas d'inertie)
     // gestion d'un blocage dans une zone écran (moitié gauche)
@@ -730,7 +654,7 @@ void actualiserJoueur(t_joueur *joueur,t_listeActeurs *la){
 }
 
 // Dessiner joueur sur la bitmap bmp
-void dessinerJoueur(BITMAP *bmp,t_joueur *joueur){
+void dessinerJoueur(BITMAP *bmp,t_joueur_ballons *joueur){
     draw_sprite(bmp,joueur->img,joueur->x,joueur->y);
 }
 

@@ -22,6 +22,7 @@ typedef struct joueur {
     int x,y;     // position
     int tx,ty;   // taille
     int dx, dy;     // vitesse des déplacements (nombre de pixels)
+    BITMAP * sprites[12];
 
 } t_joueur;
 

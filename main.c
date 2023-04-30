@@ -38,7 +38,7 @@ int main() {
 
 
     // OUVERTURE DE LA BOITE DE DIALOGUE
-    char chaine_temp[64] = "";
+    char chaine_temp[256] = "";
 
     DIALOG GUI_demarrage[] =
         {
@@ -119,33 +119,61 @@ int main() {
 
         }
 
-        do_dialog(GUI_demarrage, 3);
+        do {
+
+            do_dialog(GUI_demarrage, 3);
+
+        } while (strlen(chaine_temp) < 1);
+
 
         strcpy(tableau_joueurs[i].nom, chaine_temp);
         tableau_joueurs[i].score = 0;
         tableau_joueurs[i].dx = 10;
         tableau_joueurs[i].dy = 10;
 
-        if (GUI_demarrage[5].flags == D_SELECTED) {
+        // Remplir le tableau de sprites de chaque joueur en fonction du perso qu'il a choisi
+        if (GUI_demarrage[5].flags == D_SELECTED) { // Farquaad
 
             GUI_demarrage[5].flags = D_HIDDEN;
 
-        } else if (GUI_demarrage[6].flags == D_SELECTED) {
+            tableau_joueurs[i].sprites[0] = load_bitmap("../assets/personnages/farquaad/farquaad_immobile_avant_0.bmp", NULL);
+            tableau_joueurs[i].sprites[1] = load_bitmap("../assets/personnages/farquaad/farquaad_immobile_derriere_0", NULL);
+            tableau_joueurs[i].sprites[2] = load_bitmap("../assets/personnages/farquaad/farquaad_immobile_droite_0.bmp", NULL);
+            tableau_joueurs[i].sprites[3] = load_bitmap("../assets/personnages/farquaad/farquaad_immobile_gauche_0.bmp", NULL);
+            tableau_joueurs[i].sprites[4] = load_bitmap("../assets/personnages/farquaad/farquaad_marche_avant_0.bmp", NULL);
+            tableau_joueurs[i].sprites[5] = load_bitmap("../assets/personnages/farquaad/farquaad_marche_avant_1.bmp", NULL);
+            tableau_joueurs[i].sprites[6] = load_bitmap("../assets/personnages/farquaad/farquaad_marche_derriere_0.bmp", NULL);
+            tableau_joueurs[i].sprites[7] = load_bitmap("../assets/personnages/farquaad/farquaad_marche_derriere_1.bmp", NULL);
+            tableau_joueurs[i].sprites[8] = load_bitmap("../assets/personnages/farquaad/farquaad_marche_droite_0.bmp", NULL);
+            tableau_joueurs[i].sprites[9] = load_bitmap("../assets/personnages/farquaad/farquaad_marche_droite_1.bmp", NULL);
+            tableau_joueurs[i].sprites[10] = load_bitmap("../assets/personnages/farquaad/farquaad_marche_gauche_0.bmp", NULL);
+            tableau_joueurs[i].sprites[11] = load_bitmap("../assets/personnages/farquaad/farquaad_marche_gauche_1.bmp", NULL);
+
+
+        } else if (GUI_demarrage[6].flags == D_SELECTED) { //Shrek
 
             GUI_demarrage[6].flags = D_HIDDEN;
 
-        } else if (GUI_demarrage[7].flags == D_SELECTED) {
+
+        } else if (GUI_demarrage[7].flags == D_SELECTED) { // Le chat potté
 
             GUI_demarrage[7].flags = D_HIDDEN;
 
-        } else if (GUI_demarrage[8].flags == D_SELECTED) {
+
+
+        } else if (GUI_demarrage[8].flags == D_SELECTED) { // Fiona
 
             GUI_demarrage[8].flags = D_HIDDEN;
 
-        } else if (GUI_demarrage[9].flags == D_SELECTED) {
+        } else if (GUI_demarrage[9].flags == D_SELECTED) { // Thomas
 
             GUI_demarrage[9].flags = D_HIDDEN;
         }
+
+        tableau_joueurs[i].x = 300 + (20 * i); // Valeurs à changer
+        tableau_joueurs[i].y = 300 + (20 * i); // Valeurs à changer
+        tableau_joueurs[i].tx = tableau_joueurs[i].sprites[0]->w;
+        tableau_joueurs[i].ty = tableau_joueurs[i].sprites[0]->h;
 
 
         blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
