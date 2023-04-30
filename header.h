@@ -10,7 +10,7 @@
 #include <time.h>
 #include <allegro.h>
 
-#define NOMBRE_JOUEURS 1
+#define NOMBRE_JOUEURS 2
 
 
 
@@ -26,7 +26,7 @@ typedef struct joueur {
 
 } t_joueur;
 
-void charger_sprites(t_joueur jouer_actuel, char nom_perso[256]);
+void charger_sprites(t_joueur * joueur_actuel, char nom_perso[256]);
 
 
 

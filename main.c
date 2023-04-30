@@ -31,7 +31,7 @@ int main() {
 
     // BITMAPS
     BITMAP * page; // BITMAP de la page (double buffer)
-    BITMAP * menu;
+    BITMAP * map_menu;
 
     // JOUEURS
     t_joueur tableau_joueurs[NOMBRE_JOUEURS];
@@ -76,7 +76,7 @@ int main() {
     /// CHARGEMENT DES VARIABLES
     // -----------------------------
 
-    menu = load_bitmap("../assets/maps/menu.bmp", NULL);
+    map_menu = load_bitmap("../assets/maps/menu.bmp", NULL);
 
     /// -----------------------------
 
@@ -88,16 +88,17 @@ int main() {
     page = create_bitmap(SCREEN_W, SCREEN_H);
     clear_bitmap(page);
 
-    GUI_demarrage[5].dp = load_bitmap("../assets/personnages/farquaad/farquaad.bmp", NULL);
-    GUI_demarrage[6].dp = load_bitmap("../assets/personnages/shrek/shrek_photo.bmp", NULL);
-    GUI_demarrage[7].dp = load_bitmap("../assets/personnages/Chat/chat_potte.bmp", NULL);
-    GUI_demarrage[8].dp = load_bitmap("../assets/personnages/fiona/fiona.bmp", NULL);
-    GUI_demarrage[9].dp = load_bitmap("../assets/personnages/thomas/thomas.bmp", NULL);
-
+    GUI_demarrage[5].dp = load_bitmap("../assets/personnages/Farquaad/Farquaad_12.bmp", NULL);
+    GUI_demarrage[6].dp = load_bitmap("../assets/personnages/Shrek/Shrek_12.bmp", NULL);
+    GUI_demarrage[7].dp = load_bitmap("../assets/personnages/Chat/Chat_12.bmp", NULL);
+    GUI_demarrage[8].dp = load_bitmap("../assets/personnages/Fiona/Fiona_12.bmp", NULL);
+    GUI_demarrage[9].dp = load_bitmap("../assets/personnages/Thomas/thomas.bmp", NULL);
 
 
     alert("Bienvenue sur SHREK MANIA WORLD !", NULL, NULL, "Suivant", NULL, 0, 0);
-    Snake(tableau_joueurs);
+
+
+
     for (int i=0; i<NOMBRE_JOUEURS; i++) {
 
         strcpy(chaine_temp, "");
@@ -110,7 +111,7 @@ int main() {
             }
         }
 
-        blit(menu, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+        blit(map_menu, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
         blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
         if (i == 0) {
@@ -123,7 +124,7 @@ int main() {
 
             do_dialog(GUI_demarrage, 3);
 
-        } while (strlen(chaine_temp) < 1);
+        } while (strlen(chaine_temp) < 1 || (GUI_demarrage[5].flags != D_SELECTED && GUI_demarrage[6].flags != D_SELECTED && GUI_demarrage[7].flags != D_SELECTED && GUI_demarrage[8].flags != D_SELECTED && GUI_demarrage[9].flags != D_SELECTED));
 
 
         strcpy(tableau_joueurs[i].nom, chaine_temp);
@@ -136,36 +137,35 @@ int main() {
 
             GUI_demarrage[5].flags = D_HIDDEN;
 
-            charger_sprites(tableau_joueurs[i], "Farquaad");
-
+            charger_sprites(&tableau_joueurs[i], "Farquaad");
 
         } else if (GUI_demarrage[6].flags == D_SELECTED) { //Shrek
 
             GUI_demarrage[6].flags = D_HIDDEN;
 
-            charger_sprites(tableau_joueurs[i], "Shrek");
+            charger_sprites(&tableau_joueurs[i], "Shrek");
 
         } else if (GUI_demarrage[7].flags == D_SELECTED) { // Le chat potté
 
             GUI_demarrage[7].flags = D_HIDDEN;
 
-            charger_sprites(tableau_joueurs[i], "Chat");
+            charger_sprites(&tableau_joueurs[i], "Chat");
 
         } else if (GUI_demarrage[8].flags == D_SELECTED) { // Fiona
 
             GUI_demarrage[8].flags = D_HIDDEN;
 
-            charger_sprites(tableau_joueurs[i], "Fiona");
+            charger_sprites(&tableau_joueurs[i], "Fiona");
 
         } else if (GUI_demarrage[9].flags == D_SELECTED) { // Thomas
 
             GUI_demarrage[9].flags = D_HIDDEN;
 
-            charger_sprites(tableau_joueurs[i], "Thomas");
+            charger_sprites(&tableau_joueurs[i], "Thomas");
         }
 
-        tableau_joueurs[i].x = 300 + (20 * i); // Valeurs à changer
-        tableau_joueurs[i].y = 300 + (20 * i); // Valeurs à changer
+        tableau_joueurs[i].x = 400 + (100 * i); // Valeurs à changer
+        tableau_joueurs[i].y = 200 + (100 * i); // Valeurs à changer
         tableau_joueurs[i].tx = tableau_joueurs[i].sprites[0]->w;
         tableau_joueurs[i].ty = tableau_joueurs[i].sprites[0]->h;
 
@@ -180,15 +180,18 @@ int main() {
 
     }
 
-    while (!readkey()) {
+    while (1) {
 
-        blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+        blit(map_menu, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
 
         for (int i=0; i<NOMBRE_JOUEURS; i++) {
 
-            masked_blit(tableau_joueurs[i].sprites[0], page, 0, 0, tableau_joueurs[i].x, tableau_joueurs[i].y, tableau_joueurs[i].sprites[0]->w, tableau_joueurs[i].sprites[0]->h);
+            masked_blit(tableau_joueurs[i].sprites[0],page,0,0,tableau_joueurs[i].x,tableau_joueurs[i].y,tableau_joueurs[i].tx,tableau_joueurs[i].ty);
 
         }
+
+        blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
 
     }
@@ -196,7 +199,7 @@ int main() {
 
 
     destroy_bitmap(page);
-    destroy_bitmap(menu);
+    destroy_bitmap(map_menu);
     allegro_exit();
 
     return 0;
