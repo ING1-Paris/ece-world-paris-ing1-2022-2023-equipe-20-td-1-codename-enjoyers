@@ -97,7 +97,7 @@ int main() {
 
 
     alert("Bienvenue sur SHREK MANIA WORLD !", NULL, NULL, "Suivant", NULL, 0, 0);
-
+    Snake(tableau_joueurs);
     for (int i=0; i<NOMBRE_JOUEURS; i++) {
 
         strcpy(chaine_temp, "");
@@ -167,7 +167,6 @@ int main() {
 
     destroy_bitmap(page);
     destroy_bitmap(menu);
-
     allegro_exit();
 
     return 0;

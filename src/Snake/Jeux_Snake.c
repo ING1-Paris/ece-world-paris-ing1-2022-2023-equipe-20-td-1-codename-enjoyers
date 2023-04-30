@@ -77,7 +77,7 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS]){
         }*/
 
         // Temporaire
-        test = load_bitmap("../assets/personnages/farquaad/farquaad_immobile_avant_0.bmp",NULL);
+        test = load_bitmap("../assets/personnages/Farquaad/Farquaad_0.bmp",NULL);
 
         if (!test){
             allegro_message("Impossible de charger le personnage");
@@ -100,7 +100,7 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS]){
         while (!key[KEY_ESC]){
             blit(decor,page,0,0,0,0,SCREEN_W, SCREEN_H);
             for (int j = 0; j < Longueur; ++j) {
-                blit(head_tmp->Skin[head_tmp->skin_used],page,0,0,head_tmp->x,head_tmp->y,head_tmp->tx,head_tmp->ty);
+                masked_blit(head_tmp->Skin[head_tmp->skin_used],page,0,0,head_tmp->x,head_tmp->y,head_tmp->tx,head_tmp->ty);
                 head_tmp=head_tmp->next_corp;
             }
             head_tmp=head;
