@@ -1,4 +1,7 @@
-#include "../../header.h"
+#include <allegro.h>
+#include <time.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 
 /**********************/
@@ -6,6 +9,75 @@
 /**********************/
 
 // chaque acteur qui se déplace
+typedef struct acteur
+{
+
+    // position du coin sup. gauche
+    int x,y;
+
+    // vecteur deplacement
+    int dx,dy;
+
+    // largeur hauteur
+    int tx,ty;
+
+    // couleur (ne sera plus pertinent avec des sprites importés...)
+    int couleur;
+
+    // type (ici 2 types mais on peut en mettre plus):
+    //   0 laser
+    //   1 missile (accélération horizontale)
+    int type;
+
+    // comportement :
+    //   0 normal déplacement
+    //   1 explosion
+    int comportement;
+    int cptexplo; // temps depuis l'explosion
+
+    // vivant :
+    //   0 mort (doit disparaitre de la liste)
+    //   1 vivant
+    int vivant;
+
+} t_acteur;
+
+// Une collection de acteurs
+typedef struct listeActeurs
+{
+    // nombre maxi d'éléments
+    // =taille du tableau de pointeurs
+    int max;
+
+    // nombre effectif de pointeurs utilisés
+    // (les autres sont à NULL)
+    int n;
+
+    // le tableau de pointeurs (alloué dynamiquement)
+    t_acteur **tab;
+
+} t_listeActeurs;
+
+
+// Spécifique à cet exemple : un fusil et un ballon
+
+// Un élément à déplacement interactif
+typedef struct joueur{
+    int x,y;     // position
+    int tx,ty;   // taille
+    int vit;     // vitesse des déplacements (nombre de pixels)
+    int cpttir0; // tempo armement 0
+    int cpttir1; // tempo armement 1
+    BITMAP *img; // sprite (image chargée)
+} t_joueur;
+
+// Un élément à déplacement automatique aléatoire
+typedef struct ballon{
+    int x,y;     // position
+    int dx;      // vecteur déplacement
+    int tx,ty;   // taille
+    BITMAP *img; // sprite (image chargée)
+} t_ballon;
 
 
 /*********************/
@@ -27,24 +99,13 @@ int libreListeActeurs(t_listeActeurs *la);
 //compteur de ballons éclatés
 int cpt_ballons ;
 
-
-//temps écoulés joueur 1 et 2
-clock_t start_time, current_time;
-double temps_ecouleJ1;
-double temps_ecouleJ2;
-
-// Mémorisation de l'heure de début
-long start_time;
-
-void heure(){
-    start_time = clock();
-}
+//temps performance joueur
+double temps_ecoule;
 
 // Allouer et ajouter un acteur à la liste
 // et retourner l'adresse de ce nouveau acteur
 // retourne NULL en cas de problème
 // pour ce projet il faut x y de départ et type
-//   ( à adapter selon besoins )
 t_acteur * ajouterActeur(t_listeActeurs *la,int x,int y,int type);
 
 // Enlever et libèrer un acteur qui était dans la liste en indice i
@@ -89,13 +150,13 @@ void collisionListeActeursRouge(t_ballon *ballon_rouge,t_listeActeurs *la);
 // Spécifique à cet exemple : gérer le fusil et le ballon
 
 // Allouer et initialiser joueur
-t_joueur_ballons * creerJoueur(char *nomimage);
+t_joueur * creerJoueur(char *nomimage);
 
 // Actualiser joueur (bouger interactivement et tirer...)
-void actualiserJoueur(t_joueur_ballons *joueur,t_listeActeurs *la);
+void actualiserJoueur(t_joueur *joueur,t_listeActeurs *la);
 
 // Dessiner joueur sur la bitmap bmp
-void dessinerJoueur(BITMAP *bmp,t_joueur_ballons *joueur);
+void dessinerJoueur(BITMAP *bmp,t_joueur *joueur);
 
 
 // Allouer et initialiser ballon_bleu
@@ -126,7 +187,7 @@ void dessinerBallon_rouge(BITMAP *bmp,t_ballon *ballon_rouge);
 /* initialisation puis boucle d'animation */
 /******************************************/
 
-void tir_aux_ballons()
+int main()
 {
 
     // Buffer
@@ -139,18 +200,10 @@ void tir_aux_ballons()
     t_listeActeurs *acteurs;
 
     // Le fusil manipulé par le joueur
-    t_joueur_ballons *fusil;
+    t_joueur *fusil;
 
     // Les ballons qui se déplacent automatiquement
     BITMAP *img[5];
-
-    // =====> CORRIGER CA    img[0] = (t_joueur_ballons *) malloc(1 * sizeof(t_joueur_ballons));   <======
-
-    t_ballon tabBallons[5];
-    for(int i =0; i< 5; i++){
-
-
-    }
 
     t_ballon *ballon1;
     t_ballon *ballon2;
@@ -197,54 +250,56 @@ void tir_aux_ballons()
     acteurs=creerListeActeurs(100);
 
     // BOUCLE DE JEU
-    while (!key[KEY_ESC])
-    {
-        heure();
+    for(int j=0; j<2; j++) {
+        time_t temps_precedent = time(NULL);
+        printf("debut %.2f\n", temps_ecoule);
+        while (!key[KEY_ENTER]) {
+            time_t temps_actuel = time(NULL);
+            temps_ecoule = difftime(temps_actuel, temps_precedent);
 
-        // Calcul du temps écoulé en secondes
-        temps_ecouleJ1 = (double)(start_time - current_time) / CLOCKS_PER_SEC;
-        temps_ecouleJ2 = (double)(start_time - current_time) / CLOCKS_PER_SEC;
+            // effacer buffer en appliquant décor  (pas de clear_bitmap)
+            blit(decor, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
-        // effacer buffer en appliquant décor  (pas de clear_bitmap)
-        blit(decor,page,0,0,0,0,SCREEN_W,SCREEN_H);
+            // bouger tout le monde
+            actualiserJoueur(fusil, acteurs);
+            actualiserBallon_bleu(ballon1);
+            actualiserBallon_rose(ballon2);
+            actualiserBallon_vert(ballon3);
+            actualiserBallon_violet(ballon4);
+            actualiserBallon_rouge(ballon5);
 
-        // bouger tout le monde
-        actualiserJoueur(fusil,acteurs);
-        actualiserBallon_bleu(ballon1);
-        actualiserBallon_rose(ballon2);
-        actualiserBallon_vert(ballon3);
-        actualiserBallon_violet(ballon4);
-        actualiserBallon_rouge(ballon5);
+            actualiserListeActeurs(acteurs);
 
-        actualiserListeActeurs(acteurs);
+            // gérer les collisions
+            collisionListeActeursBleu(ballon1, acteurs);
+            collisionListeActeursRose(ballon2, acteurs);
+            collisionListeActeursVert(ballon3, acteurs);
+            collisionListeActeursViolet(ballon4, acteurs);
+            collisionListeActeursRouge(ballon5, acteurs);
 
-        // gérer les collisions
-        collisionListeActeursBleu(ballon1,acteurs);
-        collisionListeActeursRose(ballon2,acteurs);
-        collisionListeActeursVert(ballon3,acteurs);
-        collisionListeActeursViolet(ballon4,acteurs);
-        collisionListeActeursRouge(ballon5,acteurs);
+            // afficher tout le monde
+            dessinerJoueur(page, fusil);
+            dessinerBallon_bleu(page, ballon1);
+            dessinerBallon_rose(page, ballon2);
+            dessinerBallon_vert(page, ballon3);
+            dessinerBallon_violet(page, ballon4);
+            dessinerBallon_rouge(page, ballon5);
 
-        // afficher tout le monde
-        dessinerJoueur(page,fusil);
-        dessinerBallon_bleu(page,ballon1);
-        dessinerBallon_rose(page,ballon2);
-        dessinerBallon_vert(page,ballon3);
-        dessinerBallon_violet(page,ballon4);
-        dessinerBallon_rouge(page,ballon5);
+            dessinerListeActeurs(page, acteurs);
 
-        dessinerListeActeurs(page,acteurs);
+            // afficher tout ça à l'écran
+            blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
-        // afficher tout ça à l'écran
-        blit(page,screen,0,0,0,0,SCREEN_W,SCREEN_H);
-
-        // petite temporisation
-        rest(10);
+            // petite temporisation
+            rest(10);
+        }
+        allegro_message("vous avez éclaté les 5 ballons en %.1f secondes", temps_ecoule);
+        printf("fin %.1f\n", temps_ecoule);
     }
-    allegro_message("vous avez éclaté les 5 ballons en %.2f secondes", temps_ecouleJ1);
 
+    return 0;
 }
-
+END_OF_MAIN();
 
 
 
@@ -614,11 +669,11 @@ void collisionListeActeursRouge(t_ballon *ballon_rouge,t_listeActeurs *la){
 }
 
 // Allouer et initialiser un joueur
-t_joueur_ballons * creerJoueur(char *nomimage){
-    t_joueur_ballons *nouv;
+t_joueur * creerJoueur(char *nomimage){
+    t_joueur *nouv;
 
     // Allouer
-    nouv = (t_joueur_ballons *)malloc(1*sizeof(t_joueur_ballons));
+    nouv = (t_joueur *)malloc(1*sizeof(t_joueur));
 
     // Initialiser
 
@@ -643,7 +698,7 @@ t_joueur_ballons * creerJoueur(char *nomimage){
 }
 
 // Actualiser joueur (bouger interactivement et tirer...)
-void actualiserJoueur(t_joueur_ballons *joueur,t_listeActeurs *la){
+void actualiserJoueur(t_joueur *joueur,t_listeActeurs *la){
 
     // Déplacements instantanés (pas d'inertie)
     // gestion d'un blocage dans une zone écran (moitié gauche)
@@ -675,7 +730,7 @@ void actualiserJoueur(t_joueur_ballons *joueur,t_listeActeurs *la){
 }
 
 // Dessiner joueur sur la bitmap bmp
-void dessinerJoueur(BITMAP *bmp,t_joueur_ballons *joueur){
+void dessinerJoueur(BITMAP *bmp,t_joueur *joueur){
     draw_sprite(bmp,joueur->img,joueur->x,joueur->y);
 }
 
