@@ -19,7 +19,7 @@
 /****************************/
 
 
-typedef struct rondin{
+typedef struct rondin {
 
     int tx,ty;   // taille
     BITMAP *img;
@@ -32,13 +32,13 @@ typedef struct rondin{
 
 
 
-typedef struct joueur
+typedef struct joueur_riviere
 {
     int tx, ty;
     int x, y; // coordonn�es (en pixels) des pieds de l'acteur
     int vit;
     BITMAP *img;       // image de l'acteur
-} t_joueur;
+} t_joueur_riviere;
 
 
 
@@ -60,13 +60,13 @@ void AfficherRondin(BITMAP *bmp,t_rondin *rondin_a_afficher);
 void AfficherTabRondin(BITMAP *bmp,t_rondin * tab[NRONDIN]);
 
 
-t_joueur * creationJoueur(char *nomimage);
-void AfficherJoueur(BITMAP *bmp,t_joueur *joueur_a_afficher);
+t_joueur_riviere * creationJoueur(char *nomimage);
+void AfficherJoueur(BITMAP *bmp,t_joueur_riviere *joueur_a_afficher);
 
 
 void dessineTuile(BITMAP *bmp, int ituile, int xmap, int ymap);
 void dessineTerrain(BITMAP *bmp, int terrain[NYMAP][NXMAP]);
-int typeTerrain(t_joueur *joueur, int dx, int dy, int type);
+int typeTerrain(t_joueur_riviere *joueur, int dx, int dy, int type);
 
 
 BITMAP * load_bitmap_check(char *nomImage);
@@ -206,10 +206,10 @@ void AfficherTabRondin(BITMAP *bmp,t_rondin * tab[NRONDIN]){
 
 
 
-t_joueur * creationJoueur(char *nomimage){
-    t_joueur *joueur_temp;
+t_joueur_riviere * creationJoueur(char *nomimage){
+    t_joueur_riviere *joueur_temp;
 
-    joueur_temp = (t_joueur *)malloc(1*sizeof(t_joueur));
+    joueur_temp = (t_joueur_riviere *)malloc(1*sizeof(t_joueur_riviere));
 
 
     joueur_temp->img=load_bitmap(nomimage,NULL);
@@ -230,7 +230,7 @@ t_joueur * creationJoueur(char *nomimage){
 }
 
 
-void AfficherJoueur(BITMAP *bmp,t_joueur *joueur_a_afficher){
+void AfficherJoueur(BITMAP *bmp,t_joueur_riviere *joueur_a_afficher){
     draw_sprite(bmp, joueur_a_afficher->img, joueur_a_afficher->x - joueur_a_afficher->img->w/2, joueur_a_afficher->y - joueur_a_afficher->img->h + 8);
 }
 
@@ -269,7 +269,7 @@ void dessineTerrain(BITMAP *bmp, int terrain[NYMAP][NXMAP]){
 }
 
 
-int typeTerrain(t_joueur *joueur, int dx, int dy, int type){
+int typeTerrain(t_joueur_riviere *joueur, int dx, int dy, int type){
     int xmap,ymap,ituile;
     int decx,decy;
     int cx,cy;
@@ -332,7 +332,7 @@ void jeu_riviere()
 {
 
     t_rondin *mesRondins[NRONDIN];
-    t_joueur *joueur;    // Un joueur (� cr�er)
+    t_joueur_riviere *joueur;    // Un joueur (� cr�er)
     BITMAP *page;        // BITMAP buffer d'affichage
 
 

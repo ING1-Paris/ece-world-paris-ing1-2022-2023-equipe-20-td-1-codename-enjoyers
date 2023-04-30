@@ -38,7 +38,7 @@ int main() {
 
 
     // OUVERTURE DE LA BOITE DE DIALOGUE
-    char chaine_temp[64] = "";
+    char chaine_temp[256] = "";
 
     DIALOG GUI_demarrage[] =
         {
@@ -119,33 +119,55 @@ int main() {
 
         }
 
-        do_dialog(GUI_demarrage, 3);
+        do {
+
+            do_dialog(GUI_demarrage, 3);
+
+        } while (strlen(chaine_temp) < 1);
+
 
         strcpy(tableau_joueurs[i].nom, chaine_temp);
         tableau_joueurs[i].score = 0;
         tableau_joueurs[i].dx = 10;
         tableau_joueurs[i].dy = 10;
 
-        if (GUI_demarrage[5].flags == D_SELECTED) {
+        // Remplir le tableau de sprites de chaque joueur en fonction du perso qu'il a choisi
+        if (GUI_demarrage[5].flags == D_SELECTED) { // Farquaad
 
             GUI_demarrage[5].flags = D_HIDDEN;
 
-        } else if (GUI_demarrage[6].flags == D_SELECTED) {
+            charger_sprites(tableau_joueurs[i], "Farquaad");
+
+
+        } else if (GUI_demarrage[6].flags == D_SELECTED) { //Shrek
 
             GUI_demarrage[6].flags = D_HIDDEN;
 
-        } else if (GUI_demarrage[7].flags == D_SELECTED) {
+            charger_sprites(tableau_joueurs[i], "Shrek");
+
+        } else if (GUI_demarrage[7].flags == D_SELECTED) { // Le chat potté
 
             GUI_demarrage[7].flags = D_HIDDEN;
 
-        } else if (GUI_demarrage[8].flags == D_SELECTED) {
+            charger_sprites(tableau_joueurs[i], "Chat");
+
+        } else if (GUI_demarrage[8].flags == D_SELECTED) { // Fiona
 
             GUI_demarrage[8].flags = D_HIDDEN;
 
-        } else if (GUI_demarrage[9].flags == D_SELECTED) {
+            charger_sprites(tableau_joueurs[i], "Fiona");
+
+        } else if (GUI_demarrage[9].flags == D_SELECTED) { // Thomas
 
             GUI_demarrage[9].flags = D_HIDDEN;
+
+            charger_sprites(tableau_joueurs[i], "Thomas");
         }
+
+        tableau_joueurs[i].x = 300 + (20 * i); // Valeurs à changer
+        tableau_joueurs[i].y = 300 + (20 * i); // Valeurs à changer
+        tableau_joueurs[i].tx = tableau_joueurs[i].sprites[0]->w;
+        tableau_joueurs[i].ty = tableau_joueurs[i].sprites[0]->h;
 
 
         blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
@@ -161,6 +183,14 @@ int main() {
     while (!readkey()) {
 
         blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
+        for (int i=0; i<NOMBRE_JOUEURS; i++) {
+
+            masked_blit(tableau_joueurs[i].sprites[0], page, 0, 0, tableau_joueurs[i].x, tableau_joueurs[i].y, tableau_joueurs[i].sprites[0]->w, tableau_joueurs[i].sprites[0]->h);
+
+        }
+
+
     }
 
 
