@@ -36,7 +36,6 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS]){
         exit(EXIT_FAILURE);
     }
 
-
     // charger les images de la séquence d'animation pour le corp du Snake
 
     for (int i=0;i<12;i++) {
@@ -62,8 +61,8 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS]){
 
         head->dx=0;
         head->dy=0;
-        head->tx = Joueur[i].tx;
-        head->ty = Joueur[i].ty;
+        head->tx = 48;
+        head->ty = 48;
         head->x = 400;
         head->y = 400;
         for (int j = 0; j < TAILLE_TAB*30; j=j+30) {
@@ -74,23 +73,14 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS]){
         head->next_corp = NULL;
         head->skin_used = 0;
 
-        /*for (int j = 0; j < 12; ++j) {
-            head->Skin[j]=Joueur[i].Skin[j];
-        }*/
-
-        // Temporaire
-        test = load_bitmap("../assets/personnages/Farquaad/Farquaad_0.bmp",NULL);
-
-        if (!test){
-            allegro_message("Impossible de charger le personnage");
-            exit(EXIT_FAILURE);
+        for (int j = 0; j < 12; ++j) {
+            head->Skin[j]=Joueur[i].sprites[j];
         }
-        head->Skin[0]=test;
 
+        //Mise en place des 2 premieres parties du corps
         head->next_corp= Creer_maillon(head,SNAKE1);
-
-
         head->next_corp->next_corp= Creer_maillon(head->next_corp,SNAKE1);
+
         Longueur = 3;
 
         head->next_corp->x=370;

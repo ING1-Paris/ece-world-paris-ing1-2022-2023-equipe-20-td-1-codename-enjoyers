@@ -21,8 +21,8 @@ t_corp_de_snake* Creer_maillon(t_corp_de_snake* maillon_precedent,BITMAP* tab_de
         Nouveau_maillon->last_y[i] = Nouveau_maillon->y;
     }
 
-    Nouveau_maillon->tx = maillon_precedent->tx;
-    Nouveau_maillon->ty = maillon_precedent->ty;
+    Nouveau_maillon->tx = 48;
+    Nouveau_maillon->ty = 48;
 
     Nouveau_maillon->dx = 0;
     Nouveau_maillon->dy = 0;
