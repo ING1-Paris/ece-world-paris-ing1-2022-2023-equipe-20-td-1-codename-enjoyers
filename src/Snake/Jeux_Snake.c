@@ -20,7 +20,6 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS]){
     // Variable Serpent
     t_corp_de_snake* head = NULL;
     t_corp_de_snake* head_tmp = NULL;
-
     int Longueur = 0;
 
     // Variable joueur
@@ -67,8 +66,11 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS]){
         head->ty = Joueur[i].ty;
         head->x = 400;
         head->y = 400;
-        head->last_x = 400;
-        head->last_y = 400;
+        for (int j = 0; j < TAILLE_TAB*30; j=j+30) {
+            head->last_x[i] = 400-j;
+            head->last_y[i] = 400-j;
+        }
+
         head->next_corp = NULL;
         head->skin_used = 0;
 
@@ -99,11 +101,49 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS]){
 
         while (!key[KEY_ESC]){
             blit(decor,page,0,0,0,0,SCREEN_W, SCREEN_H);
-            for (int j = 0; j < Longueur; ++j) {
-                masked_blit(head_tmp->Skin[head_tmp->skin_used],page,0,0,head_tmp->x,head_tmp->y,head_tmp->tx,head_tmp->ty);
-                head_tmp=head_tmp->next_corp;
+
+            // Deplacement joueur
+
+            if(key[KEY_RIGHT]){
+                if(head->dx != -5){
+                    head->dx = 5;
+                    head->dy = 0;
+                }
             }
-            head_tmp=head;
+            if(key[KEY_LEFT]){
+                if(head->dx != 5){
+                    head->dx = -5;
+                    head->dy = 0;
+                }
+            }
+            if(key[KEY_DOWN]){
+                if(head->dy != -5) {
+                    head->dy = 5;
+                    head->dx = 0;
+                }
+            }
+            if(key[KEY_UP]){
+                if(head->dy != 5) {
+                    head->dy = -5;
+                    head->dx = 0;
+                }
+            }
+
+            //Actualisation des positions du Snake
+            Actualisation_Snake(head);
+
+            // Affichage du Snake
+            if (head->dy == 5){
+                Invertion(head,page);
+            }
+            else {
+                for (int j = 0; j < Longueur; ++j) {
+                    masked_blit(head_tmp->Skin[head_tmp->skin_used],page,0,0,head_tmp->x,head_tmp->y,head_tmp->tx,head_tmp->ty);
+                    head_tmp=head_tmp->next_corp;
+                }
+                head_tmp=head;
+            }
+
             blit(page,screen,0,0,0,0,SCREEN_W, SCREEN_H);
             rest(20);
         }

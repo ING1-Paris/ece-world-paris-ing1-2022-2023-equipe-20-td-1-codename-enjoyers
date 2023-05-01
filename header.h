@@ -41,11 +41,14 @@ void charger_sprites(t_joueur * joueur_actuel, char nom_perso[256]);
 
 
 //LE SNAKE
+
+#define TAILLE_TAB 6
+
 typedef struct Maillon {
     BITMAP* Skin[12];
     int skin_used;
     int x,y;
-    int last_x,last_y;
+    int last_x[TAILLE_TAB],last_y[TAILLE_TAB];
     int tx,ty;
     int dx,dy;
     struct Maillon* next_corp;
@@ -53,7 +56,8 @@ typedef struct Maillon {
 
 void Snake(t_joueur Joueur[NOMBRE_JOUEURS]);
 t_corp_de_snake* Creer_maillon(t_corp_de_snake* maillon_precedent,BITMAP* tab_de_Skin[12]);
-
+void Actualisation_Snake(t_corp_de_snake* head);
+void Invertion(t_corp_de_snake* Liste_init,BITMAP* page);
 
 
 

@@ -2,6 +2,7 @@
 
 int main() {
 
+
     srand(time(NULL));
 
     allegro_init();
@@ -180,7 +181,7 @@ int main() {
 
     }
 
-    while (1) {
+    while (!key[KEY_ESC]) {
 
         blit(map_menu, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
@@ -192,6 +193,8 @@ int main() {
         }
 
         blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
+        //Snake(tableau_joueurs);
 
 
     }
