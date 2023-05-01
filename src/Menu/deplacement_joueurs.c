@@ -4,8 +4,10 @@
 
 #include "../../header.h"
 
-void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS]) {
+void deplacement_joueurs(BITMAP * bmp, t_joueur tableau_joueurs[NOMBRE_JOUEURS], t_hitbox tab_hitboxes[NOMBRE_HITBOXES]) {
 
+    int compteur = 0;
+    int i;
 
     // DEPLACEMENTS DU JOUEUR 1
     if (key[KEY_UP]) {
@@ -18,7 +20,24 @@ void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS]) {
         } else {
 
             tableau_joueurs[0].y = tableau_joueurs[0].y - tableau_joueurs[0].dy;
+
         }
+
+        for (i=0; i<NOMBRE_HITBOXES; i++) {
+
+            if (collision_joueur_hitbox(&tab_hitboxes[i], &tableau_joueurs[0])) {
+
+                // on bloque
+
+                printf("Collision ! \n");
+
+                tableau_joueurs[0].y = tableau_joueurs[0].y + tableau_joueurs[0].dy;
+
+            }
+
+
+        }
+
 
     }
 
@@ -33,6 +52,22 @@ void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS]) {
 
             tableau_joueurs[0].y = tableau_joueurs[0].y + tableau_joueurs[0].dy;
         }
+
+        for (i=0; i<NOMBRE_HITBOXES; i++) {
+
+            if (collision_joueur_hitbox(&tab_hitboxes[i], &tableau_joueurs[0])) {
+
+                // on bloque
+
+                printf("Collision ! \n");
+
+                tableau_joueurs[0].y = tableau_joueurs[0].y - tableau_joueurs[0].dy;
+
+            }
+
+        }
+
+
 
     }
 
@@ -49,6 +84,22 @@ void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS]) {
 
         }
 
+        for (i=0; i<NOMBRE_HITBOXES; i++) {
+
+            if (collision_joueur_hitbox(&tab_hitboxes[i], &tableau_joueurs[0])) {
+
+                // on bloque
+
+                printf("Collision ! \n");
+
+                tableau_joueurs[0].x = tableau_joueurs[0].x - tableau_joueurs[0].dx;
+
+            }
+
+        }
+
+
+
 
     }
 
@@ -63,6 +114,22 @@ void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS]) {
 
             tableau_joueurs[0].x = tableau_joueurs[0].x - tableau_joueurs[0].dx;
         }
+
+        for (i=0; i<NOMBRE_HITBOXES; i++) {
+
+            if (collision_joueur_hitbox(&tab_hitboxes[i], &tableau_joueurs[0])) {
+
+                // on bloque
+
+                printf("Collision ! \n");
+
+                tableau_joueurs[0].x = tableau_joueurs[0].x + tableau_joueurs[0].dx;
+
+            }
+
+        }
+
+
 
     }
 
@@ -92,6 +159,22 @@ void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS]) {
             tableau_joueurs[1].y = tableau_joueurs[1].y - tableau_joueurs[1].dy;
         }
 
+        for (i=0; i<NOMBRE_HITBOXES; i++) {
+
+            if (collision_joueur_hitbox(&tab_hitboxes[i], &tableau_joueurs[1])) {
+
+                // on bloque
+
+                printf("Collision ! \n");
+
+                tableau_joueurs[1].y = tableau_joueurs[1].y + tableau_joueurs[1].dy;
+
+            }
+
+        }
+
+
+
     }
 
 
@@ -106,6 +189,24 @@ void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS]) {
             tableau_joueurs[1].y = tableau_joueurs[1].y + tableau_joueurs[1].dy;
         }
 
+
+        for (i=0; i<NOMBRE_HITBOXES; i++) {
+
+            if (collision_joueur_hitbox(&tab_hitboxes[i], &tableau_joueurs[1])) {
+
+                // on bloque
+
+                printf("Collision ! \n");
+
+                tableau_joueurs[1].y = tableau_joueurs[1].y - tableau_joueurs[1].dy;
+
+            }
+
+
+        }
+
+
+
     }
 
 
@@ -118,6 +219,20 @@ void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS]) {
         } else {
 
             tableau_joueurs[1].x = tableau_joueurs[1].x + tableau_joueurs[1].dx;
+
+        }
+
+        for (i=0; i<NOMBRE_HITBOXES; i++) {
+
+            if (collision_joueur_hitbox(&tab_hitboxes[i], &tableau_joueurs[1])) {
+
+                // on bloque
+
+                printf("Collision ! \n");
+
+                tableau_joueurs[1].x = tableau_joueurs[1].x - tableau_joueurs[1].dx;
+
+            }
 
         }
 
@@ -135,6 +250,22 @@ void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS]) {
 
             tableau_joueurs[1].x = tableau_joueurs[1].x - tableau_joueurs[1].dx;
         }
+
+        for (i=0; i<NOMBRE_HITBOXES; i++) {
+
+            if (collision_joueur_hitbox(&tab_hitboxes[i], &tableau_joueurs[1])) {
+
+                // on bloque
+
+                printf("Collision ! \n");
+
+                tableau_joueurs[1].x = tableau_joueurs[1].x + tableau_joueurs[1].dx;
+
+            }
+
+        }
+
+
 
     }
 

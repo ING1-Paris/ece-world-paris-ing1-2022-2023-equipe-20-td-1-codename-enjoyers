@@ -230,8 +230,7 @@ int main() {
 
         charger_hitboxes(page, tableau_hitboxes);
 
-
-        deplacement_joueurs(tableau_joueurs);
+        deplacement_joueurs(page, tableau_joueurs, tableau_hitboxes);
 
         masked_blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
