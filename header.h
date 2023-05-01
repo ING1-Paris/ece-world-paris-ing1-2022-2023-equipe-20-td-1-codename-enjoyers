@@ -11,6 +11,7 @@
 #include <allegro.h>
 
 #define NOMBRE_JOUEURS 2
+#define NOMBRE_HITBOXES 12
 
 
 
@@ -26,7 +27,16 @@ typedef struct joueur {
 
 } t_joueur;
 
+typedef struct hitbox {
+
+    int x1, y1;
+    int x2, y2;
+
+} t_hitbox;
+
 void charger_sprites(t_joueur * joueur_actuel, char nom_perso[256]);
+void charger_hitboxes(BITMAP * bmp, t_hitbox tab_hitboxes[NOMBRE_HITBOXES]);
+void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS]);
 
 
 

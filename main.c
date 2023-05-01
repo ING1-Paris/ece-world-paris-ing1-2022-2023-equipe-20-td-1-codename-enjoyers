@@ -12,6 +12,11 @@ int main() {
     set_window_title("SHREK MANIA WORLD");
 
 
+
+
+
+
+
     /// CREATION DU MODE GRAPHIQUE
     // -----------------------------
     set_color_depth(desktop_color_depth());
@@ -26,12 +31,32 @@ int main() {
     /// -----------------------------
 
 
+
+
+
+
     /// INITIALISER LES VARIABLES ICI
     // -----------------------------
 
     // BITMAPS
     BITMAP * page; // BITMAP de la page (double buffer)
     BITMAP * map_menu;
+
+    // HITBOXES
+    t_hitbox tableau_hitboxes[NOMBRE_HITBOXES] = {
+            {4*48, 1*48, 7*48, 4*48},
+            {12*48, 1*48, 15*48, 4*48},
+            {0*48, 6*48, 3*48, 9*48},
+            {5*48, 6*48, 8*48, 9*48},
+            {16*48, 5*48, 19*48, 8*48},
+            {0*48, 0*48, 3*48, 4*48},
+            {3*48, 0*48, 4*48, 1*48},
+            {17*48, 0*48, 20*48, 4*48},
+            {15*48, 0*48, 17*48, 2*48},
+            {11*48, 10*48, 13*48, 12*48},
+            {0*48, 12*48, 9*48, 13*48},
+            {11*48, 12*48, 20*48, 13*48}
+    };
 
     // JOUEURS
     t_joueur tableau_joueurs[NOMBRE_JOUEURS];
@@ -73,12 +98,22 @@ int main() {
 
 
 
+
+
+
     /// CHARGEMENT DES VARIABLES
     // -----------------------------
 
+    // CHARGEMENT DE LA MAP DU MENU
     map_menu = load_bitmap("../assets/maps/menu.bmp", NULL);
 
+
     /// -----------------------------
+
+
+
+
+
 
 
 
@@ -128,8 +163,9 @@ int main() {
 
         strcpy(tableau_joueurs[i].nom, chaine_temp);
         tableau_joueurs[i].score = 0;
-        tableau_joueurs[i].dx = 10;
-        tableau_joueurs[i].dy = 10;
+        tableau_joueurs[i].dx = 15;
+        tableau_joueurs[i].dy = 15;
+
 
         // Remplir le tableau de sprites de chaque joueur en fonction du perso qu'il a choisi
         if (GUI_demarrage[5].flags == D_SELECTED) { // Farquaad
@@ -176,10 +212,12 @@ int main() {
             alert("Remplissez a present les informations du joueur 2 !", NULL, NULL, "Suivant", NULL, 0, 0);
         }
 
-
     }
 
-    while (1) {
+
+
+
+    while (!key[KEY_SPACE]) {
 
         blit(map_menu, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
@@ -190,7 +228,14 @@ int main() {
 
         }
 
-        blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+        charger_hitboxes(page, tableau_hitboxes);
+
+
+        deplacement_joueurs(tableau_joueurs);
+
+        masked_blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
+        rest(50);
 
 
     }
