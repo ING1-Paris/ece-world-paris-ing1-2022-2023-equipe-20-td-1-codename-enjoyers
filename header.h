@@ -67,7 +67,7 @@ typedef struct Maillon {
 void Snake(t_joueur Joueur[NOMBRE_JOUEURS]);
 t_corp_de_snake* Creer_maillon(t_corp_de_snake* maillon_precedent,BITMAP* tab_de_Skin[12]);
 void Actualisation_Snake(t_corp_de_snake* head);
-void Invertion(t_corp_de_snake* Liste_init,BITMAP* page);
+void Invertion(t_corp_de_snake* Liste_init,BITMAP* page,int Animation);
 
 
 

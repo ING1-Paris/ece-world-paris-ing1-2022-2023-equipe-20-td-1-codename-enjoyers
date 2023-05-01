@@ -219,6 +219,8 @@ int main() {
 
     while (!key[KEY_SPACE]) {
 
+        Snake(tableau_joueurs);
+
         blit(map_menu, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
 
@@ -232,14 +234,12 @@ int main() {
 
 
         deplacement_joueurs(tableau_joueurs);
-
         masked_blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
         rest(50);
 
 
     }
-
 
 
     destroy_bitmap(page);

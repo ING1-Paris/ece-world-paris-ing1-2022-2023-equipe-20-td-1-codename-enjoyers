@@ -46,6 +46,10 @@ void Actualisation_Snake(t_corp_de_snake* head){
 
     if (head->x < head->last_x[0]){
         head->last_x[TAILLE_TAB-2] = head->last_x[TAILLE_TAB-2]+15;
+        head->last_y[TAILLE_TAB-2] = head->last_y[TAILLE_TAB-2]+2;
+    }
+    if (head->x > head->last_x[0]){
+        head->last_y[TAILLE_TAB-2] = head->last_y[TAILLE_TAB-2]+2;
     }
 
     if(head->y != head->last_y[0]){
@@ -69,21 +73,39 @@ void Actualisation_Snake(t_corp_de_snake* head){
         head->last_x[0] = head->x ;
         head->last_y[0] = head->y ;
 
+        //Direction de l'image
+        /*if (head->next_corp->last_x[0] > head->next_corp->x){
+            //direction a gauche
+            head->next_corp->skin_used = 3;
+        }
+
+        if (head->next_corp->last_x[0] < head->next_corp->x){
+            //direction a droite
+            head->next_corp->skin_used = 6;
+        }
+
+        if (head->next_corp->last_y[0] > head->next_corp->y){
+            //direction en haut
+            head->next_corp->skin_used = 9;
+        }
+
+        if (head->next_corp->last_y[0] < head->next_corp->y){
+            //direction en bas
+            head->next_corp->skin_used = 0;
+        }*/
+
         head->next_corp->x=head->last_x[TAILLE_TAB-1] ;
         head->next_corp->y=head->last_y[TAILLE_TAB-1] ;
 
-
         head = head->next_corp;
     }
-
-
-
 }
 
-void Invertion(t_corp_de_snake* Liste_init,BITMAP* page){
+void Invertion(t_corp_de_snake* Liste_init,BITMAP* page,int Animation){
     if (Liste_init != NULL){
-        Invertion(Liste_init->next_corp,page);
-        masked_blit(Liste_init->Skin[Liste_init->skin_used],page,0,0,Liste_init->x,Liste_init->y,Liste_init->tx,Liste_init->ty);
+        Invertion(Liste_init->next_corp,page,Animation);
+        masked_blit(Liste_init->Skin[Liste_init->skin_used+Animation],page,0,0,Liste_init->x,Liste_init->y,Liste_init->tx,Liste_init->ty);
+
     }
 }
 
