@@ -24,6 +24,7 @@ typedef struct joueur {
     int tx,ty;   // taille
     int dx, dy;     // vitesse des déplacements (nombre de pixels)
     BITMAP * sprites[13];
+    int Sprite_actif;
 
 } t_joueur;
 
@@ -36,7 +37,7 @@ typedef struct hitbox {
 
 void charger_sprites(t_joueur * joueur_actuel, char nom_perso[256]);
 void charger_hitboxes(BITMAP * bmp, t_hitbox tab_hitboxes[NOMBRE_HITBOXES]);
-void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS]);
+void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS],int innactivite[NOMBRE_JOUEURS]);
 
 
 

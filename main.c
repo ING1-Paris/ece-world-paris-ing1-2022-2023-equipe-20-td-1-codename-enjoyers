@@ -61,6 +61,9 @@ int main() {
     // JOUEURS
     t_joueur tableau_joueurs[NOMBRE_JOUEURS];
 
+    // SPRITES
+    int Innactivite[NOMBRE_JOUEURS]={1,1};
+    int animation[NOMBRE_JOUEURS]={0,0};
 
     // OUVERTURE DE LA BOITE DE DIALOGUE
     char chaine_temp[256] = "";
@@ -203,6 +206,7 @@ int main() {
         tableau_joueurs[i].y = 200 + (100 * i); // Valeurs à changer
         tableau_joueurs[i].tx = tableau_joueurs[i].sprites[0]->w;
         tableau_joueurs[i].ty = tableau_joueurs[i].sprites[0]->h;
+        tableau_joueurs[i].Sprite_actif = 2;
 
 
         blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
@@ -219,21 +223,47 @@ int main() {
 
     while (!key[KEY_SPACE]) {
 
-        Snake(tableau_joueurs);
+        //Snake(tableau_joueurs);
 
         blit(map_menu, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
 
-        for (int i=0; i<NOMBRE_JOUEURS; i++) {
-
-            masked_blit(tableau_joueurs[i].sprites[0],page,0,0,tableau_joueurs[i].x,tableau_joueurs[i].y,tableau_joueurs[i].tx,tableau_joueurs[i].ty);
-
-        }
-
         charger_hitboxes(page, tableau_hitboxes);
 
+        for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
+            Innactivite[i]=1;
+        }
 
-        deplacement_joueurs(tableau_joueurs);
+        deplacement_joueurs(tableau_joueurs,Innactivite);
+
+
+        for (int i=0; i<NOMBRE_JOUEURS; i++) {
+
+            //On verifie si le personnage est innactif ou non
+            if (Innactivite[i] == 1){
+
+                tableau_joueurs[i].Sprite_actif = tableau_joueurs[i].Sprite_actif +2;
+                animation[i] = 0;
+
+            }
+            else{
+
+                if (animation[i] == 0)
+                    animation[i] = 1;
+                else {
+                    animation[i] = 0;
+                }
+            }
+
+            //Affichage du joueur
+            masked_blit(tableau_joueurs[i].sprites[tableau_joueurs[i].Sprite_actif+animation[i]],page,0,0,tableau_joueurs[i].x,tableau_joueurs[i].y,tableau_joueurs[i].tx,tableau_joueurs[i].ty);
+
+
+            //On enleve le sprite d'inactivite
+            if (Innactivite[i] == 1)
+                tableau_joueurs[i].Sprite_actif = tableau_joueurs[i].Sprite_actif -2;
+        }
+
         masked_blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
         rest(50);

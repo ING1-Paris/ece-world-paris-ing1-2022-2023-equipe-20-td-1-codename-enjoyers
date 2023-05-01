@@ -4,10 +4,12 @@
 
 #include "../../header.h"
 
-void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS]) {
+void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS],int innactivite[NOMBRE_JOUEURS]) {
+    //Inactivite permet de savoir quand le Joueur est immobile
 
 
     // DEPLACEMENTS DU JOUEUR 1
+
     if (key[KEY_UP]) {
 
         // Controle des bords de la fenetre
@@ -18,6 +20,8 @@ void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS]) {
         } else {
 
             tableau_joueurs[0].y = tableau_joueurs[0].y - tableau_joueurs[0].dy;
+            tableau_joueurs[0].Sprite_actif = 9;
+            innactivite[0] = 0;
         }
 
     }
@@ -32,6 +36,8 @@ void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS]) {
         } else {
 
             tableau_joueurs[0].y = tableau_joueurs[0].y + tableau_joueurs[0].dy;
+            tableau_joueurs[0].Sprite_actif = 0;
+            innactivite[0] = 0;
         }
 
     }
@@ -46,6 +52,8 @@ void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS]) {
         } else {
 
             tableau_joueurs[0].x = tableau_joueurs[0].x + tableau_joueurs[0].dx;
+            tableau_joueurs[0].Sprite_actif = 6;
+            innactivite[0] = 0;
 
         }
 
@@ -62,6 +70,8 @@ void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS]) {
         } else {
 
             tableau_joueurs[0].x = tableau_joueurs[0].x - tableau_joueurs[0].dx;
+            tableau_joueurs[0].Sprite_actif = 3;
+            innactivite[0] = 0;
         }
 
     }
@@ -90,6 +100,8 @@ void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS]) {
         } else {
 
             tableau_joueurs[1].y = tableau_joueurs[1].y - tableau_joueurs[1].dy;
+            tableau_joueurs[1].Sprite_actif = 9;
+            innactivite[1] = 0;
         }
 
     }
@@ -104,6 +116,8 @@ void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS]) {
         } else {
 
             tableau_joueurs[1].y = tableau_joueurs[1].y + tableau_joueurs[1].dy;
+            tableau_joueurs[1].Sprite_actif = 0;
+            innactivite[1] = 0;
         }
 
     }
@@ -118,6 +132,8 @@ void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS]) {
         } else {
 
             tableau_joueurs[1].x = tableau_joueurs[1].x + tableau_joueurs[1].dx;
+            tableau_joueurs[1].Sprite_actif = 6;
+            innactivite[1] = 0;
 
         }
 
@@ -134,6 +150,8 @@ void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS]) {
         } else {
 
             tableau_joueurs[1].x = tableau_joueurs[1].x - tableau_joueurs[1].dx;
+            tableau_joueurs[1].Sprite_actif = 3;
+            innactivite[1] = 0;
         }
 
     }
