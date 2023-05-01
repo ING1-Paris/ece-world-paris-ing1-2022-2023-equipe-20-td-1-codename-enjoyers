@@ -1,25 +1,31 @@
 
 #include <allegro.h>
+#include <time.h>
+#include <math.h>
+
 
 #define NTUILE     213   // Nombre de tuiles graphiques utilisées
 #define TXTUILE    16    // Largeur des tuiles
 #define TYTUILE    16    // Hauteur des tuiles
 #define NCOLTUILE  20    // Nombre de colonnes de tuiles dans le fichier image
 
-#define NXMAP      50      // Nombre de tuiles en largeur sur le terrain
-#define NYMAP      35      // Nombre de tuiles en hauteur sur le terrain
+#define NXMAP      63      // Nombre de tuiles en largeur sur le terrain
+#define NYMAP      44      // Nombre de tuiles en hauteur sur le terrain
 
-#define NRONDIN 8 // Nombre de RONDIN
+#define NRONDIN 1 // Nombre de RONDIN
 #define TX 40 // Largeur
 #define TY 16 // Hauteur
 
+
+double temps_ecoule;
+double tmpJ1;
 
 /****************************/
 /*       STRUCTURE          */
 /****************************/
 
 
-typedef struct rondin {
+typedef struct rondin{
 
     int tx,ty;   // taille
     BITMAP *img;
@@ -32,13 +38,13 @@ typedef struct rondin {
 
 
 
-typedef struct joueur_riviere
+typedef struct joueur
 {
     int tx, ty;
     int x, y; // coordonn�es (en pixels) des pieds de l'acteur
     int vit;
     BITMAP *img;       // image de l'acteur
-} t_joueur_riviere;
+} t_joueur;
 
 
 
@@ -53,25 +59,24 @@ int terrain[NYMAP][NXMAP];
 
 t_rondin* creerRondin(char *nomimage);
 void actualiserRondin(t_rondin* rondin_a_actualiser);
-
 void actualiserTabRondin(t_rondin * tab[NRONDIN]);
 void remplirTabRondin(t_rondin* MesRondins[NRONDIN]);
 void AfficherRondin(BITMAP *bmp,t_rondin *rondin_a_afficher);
 void AfficherTabRondin(BITMAP *bmp,t_rondin * tab[NRONDIN]);
 
 
-t_joueur_riviere * creationJoueur(char *nomimage);
-void AfficherJoueur(BITMAP *bmp,t_joueur_riviere *joueur_a_afficher);
+t_joueur * creationJoueur(char *nomimage);
+void ActualiserJoueur(BITMAP *bmp, t_rondin **img, t_joueur* joueur_a_actualiser, t_rondin* tabrondin[NRONDIN]);
+void AfficherJoueur(BITMAP *bmp,t_joueur *joueur_a_afficher);
 
+void AfficherJoueurRondin(t_rondin *img,t_joueur *joueur_a_afficher);
 
-void dessineTuile(BITMAP *bmp, int ituile, int xmap, int ymap);
-void dessineTerrain(BITMAP *bmp, int terrain[NYMAP][NXMAP]);
-int typeTerrain(t_joueur_riviere *joueur, int dx, int dy, int type);
+//void dessineTuile(BITMAP *bmp, int ituile, int xmap, int ymap);
+//void dessineTerrain(BITMAP *bmp, int terrain[NYMAP][NXMAP]);
+//int typeTerrain(t_joueur *joueur, int dx, int dy, int type);
 
 
 BITMAP * load_bitmap_check(char *nomImage);
-
-void jeu_riviere();
 
 
 
@@ -139,11 +144,9 @@ int terrain[NYMAP][NXMAP] = {
 
 
 
-
-
-
 t_rondin* creerRondin(char *nomimage){
     t_rondin* rondin_temp;
+    int position[(525 - 322) + 322]; //creer un truc pour ne pas que les rondins se chevauchent
 
     rondin_temp = (t_rondin *) malloc(sizeof(t_rondin));
 
@@ -157,8 +160,10 @@ t_rondin* creerRondin(char *nomimage){
     rondin_temp->tx = rondin_temp->img->w;
     rondin_temp->ty = rondin_temp->img->h;
 
-    rondin_temp->posx=(rand()%SCREEN_W-TX+1-TX)+TX;
-    rondin_temp->posy=rand()%(360-335)+335;
+    rondin_temp->posx= (rand()%SCREEN_W-TX+1-TX)+TX;
+    rondin_temp->posy = 322;//rand() % (525 - 300) + 300;
+
+
 
     rondin_temp->depx = 1;
 
@@ -188,7 +193,7 @@ void actualiserTabRondin(t_rondin * tab[NRONDIN]) {
 
 void remplirTabRondin(t_rondin* MesRondins[NRONDIN]){
     for (int i = 0; i < NRONDIN; ++i) {
-        MesRondins[i] = creerRondin("rondin3.bmp");
+        MesRondins[i] = creerRondin("bois1.bmp");
     }
 }
 
@@ -205,11 +210,10 @@ void AfficherTabRondin(BITMAP *bmp,t_rondin * tab[NRONDIN]){
 
 
 
+t_joueur * creationJoueur(char *nomimage){
+    t_joueur *joueur_temp;
 
-t_joueur_riviere * creationJoueur(char *nomimage){
-    t_joueur_riviere *joueur_temp;
-
-    joueur_temp = (t_joueur_riviere *)malloc(1*sizeof(t_joueur_riviere));
+    joueur_temp = (t_joueur *)malloc(1*sizeof(t_joueur));
 
 
     joueur_temp->img=load_bitmap(nomimage,NULL);
@@ -222,17 +226,77 @@ t_joueur_riviere * creationJoueur(char *nomimage){
     joueur_temp->tx = joueur_temp->img->w;
     joueur_temp->ty = joueur_temp->img->h;
 
-    joueur_temp->x = 32;
+    joueur_temp->x = 600;
     joueur_temp->y = 200;
     joueur_temp->vit = 1;
 
     return joueur_temp;
 }
 
+void AfficherJoueurRondin(t_rondin *img,t_joueur *joueur_a_afficher){
+    draw_sprite((BITMAP *) img, joueur_a_afficher->img, joueur_a_afficher->x - joueur_a_afficher->img->w / 2, joueur_a_afficher->y - joueur_a_afficher->img->h + 8);
 
-void AfficherJoueur(BITMAP *bmp,t_joueur_riviere *joueur_a_afficher){
+}
+
+void ActualiserJoueur(BITMAP *bmp, t_rondin **img, t_joueur* joueur_a_actualiser, t_rondin* tabrondin[NRONDIN]){
+
+    if ((key[KEY_RIGHT]))
+        joueur_a_actualiser->x += 4;
+
+    if (key[KEY_LEFT] )//&& !typeTerrain(joueur, -4, 0, 1))
+        joueur_a_actualiser->x -= 4;
+
+    if(key[KEY_DOWN]) //&& !typeTerrain(joueur, 0, 4, 1))
+    {
+        if (joueur_a_actualiser->y <= 320)
+            joueur_a_actualiser->y += 4;
+
+        else {
+            textprintf_centre_ex(bmp, font, SCREEN_W/2, SCREEN_H/2, makecol(255, 255, 255), 0, "PLOUF !");
+            joueur_a_actualiser->y = 200;
+            joueur_a_actualiser->x = 600;
+        }
+    }
+
+    for (int i = 0; i < NRONDIN; ++i) {
+        if((key[KEY_SPACE])&&((joueur_a_actualiser->x >= tabrondin[i]->posx)&&(joueur_a_actualiser->y >= tabrondin[i]->posy))) {
+            joueur_a_actualiser->vit=tabrondin[i]->depx;
+            joueur_a_actualiser->x = tabrondin[i]->posx+70;
+            joueur_a_actualiser->y=tabrondin[i]->posy+10;
+            //AfficherJoueurRondin(tabrondin[i], joueur_a_actualiser);
+
+        }
+
+        else if (key[KEY_SPACE]) {
+            joueur_a_actualiser->y = joueur_a_actualiser->y + 10;
+
+            if (joueur_a_actualiser->y > 320) {
+
+                joueur_a_actualiser->y = 200;
+                joueur_a_actualiser->x = 600;
+
+                textprintf_centre_ex(bmp, font, SCREEN_W/2, SCREEN_H/2, makecol(255, 255, 255), 0, "PLOUF !");
+
+
+            }
+        }
+    }
+
+
+    if (key[KEY_UP] )//&& !typeTerrain(joueur, 0, -4, 1))
+        joueur_a_actualiser->y -= 4;
+
+    //if( key[KEY_SPACE] ) && !typeTerrain(joueur,0,-4,1) )
+
+
+}
+
+
+void AfficherJoueur(BITMAP *bmp,t_joueur *joueur_a_afficher){
     draw_sprite(bmp, joueur_a_afficher->img, joueur_a_afficher->x - joueur_a_afficher->img->w/2, joueur_a_afficher->y - joueur_a_afficher->img->h + 8);
 }
+
+
 
 
 /******************************************/
@@ -250,13 +314,13 @@ void dessineTuile(BITMAP *bmp, int ituile, int xmap, int ymap){
          xmap*TXTUILE, ymap*TYTUILE, TXTUILE, TYTUILE);
 
 
-    if (key[KEY_SPACE])
+    /*if (key[KEY_SPACE])
     {
         if (typeTuiles[ituile]==1)
             rect(bmp, xmap*TXTUILE, ymap*TYTUILE, xmap*TXTUILE+TXTUILE-1, ymap*TYTUILE +TYTUILE-1, makecol(255,0,0));
         if (typeTuiles[ituile]==2)
             rect(bmp, xmap*TXTUILE, ymap*TYTUILE, xmap*TXTUILE+TXTUILE-1, ymap*TYTUILE +TYTUILE-1, makecol(0,0,255));
-    }
+    }*/
 }
 
 
@@ -269,7 +333,7 @@ void dessineTerrain(BITMAP *bmp, int terrain[NYMAP][NXMAP]){
 }
 
 
-int typeTerrain(t_joueur_riviere *joueur, int dx, int dy, int type){
+/*int typeTerrain(t_joueur *joueur, int dx, int dy, int type){
     int xmap,ymap,ituile;
     int decx,decy;
     int cx,cy;
@@ -286,7 +350,7 @@ int typeTerrain(t_joueur_riviere *joueur, int dx, int dy, int type){
             if (cx<0 || cx>=NXMAP*TXTUILE || cy<0 || cy>=NYMAP*TYTUILE)
             {
                 if (type==1)
-                    return 1;  // Oui c'est un obstacle
+                    return 1;           // Oui c'est un obstacle
                 else
                     return 0;          // Non ce n'est pas autre chose...
             }
@@ -305,7 +369,7 @@ int typeTerrain(t_joueur_riviere *joueur, int dx, int dy, int type){
 
     // Donc NON, on n'a pas trouvé le type recherché
     return 0;
-}
+}*/
 
 
 
@@ -328,83 +392,91 @@ BITMAP * load_bitmap_check(char *nomImage){
 /*          PROGRAMME PRINCIPAL           */
 /******************************************/
 
-void jeu_riviere()
-{
+void jeu_riviere() {
 
     t_rondin *mesRondins[NRONDIN];
-    t_joueur_riviere *joueur;    // Un joueur (� cr�er)
+    t_joueur *joueur;    // Un joueur (� cr�er)
     BITMAP *page;        // BITMAP buffer d'affichage
-
+    BITMAP *decor;
 
     // Lancer allegro et le mode graphique
     allegro_init();
     install_keyboard();
 
     set_color_depth(desktop_color_depth());
-    if (set_gfx_mode(GFX_AUTODETECT_WINDOWED,800,600,0,0)!=0)
-    {
+    if (set_gfx_mode(GFX_AUTODETECT_WINDOWED, 1000, 700, 0, 0) != 0) {
         allegro_message("prb gfx mode");
         allegro_exit();
         exit(EXIT_FAILURE);
     }
 
-    page=create_bitmap(SCREEN_W,SCREEN_H);
+    page = create_bitmap(SCREEN_W, SCREEN_H);
     clear_bitmap(page);
 
-    tableTuiles=load_bitmap_check("images/tilemapZelda/tableTuiles.bmp");
+    //tableTuiles = load_bitmap_check("images/tilemapZelda/tableTuiles.bmp");
 
 
-    joueur = creationJoueur("images/tilemapZelda/sprite.bmp");
 
     remplirTabRondin(mesRondins);
 
-
-    while (!key[KEY_ESC])
-    {
-
-        dessineTerrain(page, terrain);
-        AfficherTabRondin(page,mesRondins);
-        AfficherJoueur(page, joueur);
-        actualiserTabRondin(mesRondins);
+    decor = load_bitmap_check("MAP_RIVIERE_TEST2.bmp");
 
 
-        if (    key[KEY_RIGHT] && !typeTerrain(joueur,4,0,1) )
-            joueur->x+=4;
 
-        if (    key[KEY_LEFT] && !typeTerrain(joueur,-4,0,1) )
-            joueur->x-=4;
+    for (int j = 0; j < 2; j++) {
+        time_t temps_precedent = time(NULL);
 
-        if (    key[KEY_DOWN] && !typeTerrain(joueur,0,4,1) )
-            joueur->y+=4;
-
-        if (    key[KEY_UP] && !typeTerrain(joueur,0,-4,1) )
-            joueur->y-=4;
+        joueur = creationJoueur("shrek4.bmp");
 
 
-        for (int i = 0; i < NRONDIN; ++i) {
-            while(joueur->y  == mesRondins[i]->posy){
-                joueur->x = 600;     joueur->y = 200;
+        while (joueur->y <= 580) {
 
-            }
+
+            blit(decor,page,0,0,0,0,SCREEN_W,SCREEN_H);
+
+            //dessineTerrain(page, terrain);
+            AfficherTabRondin(page, mesRondins);
+            AfficherJoueur(page, joueur);
+            actualiserTabRondin(mesRondins);
+
+            textprintf_centre_ex(decor, font, 400, 570, makecol(255, 255, 255), 0, "%d",joueur->y);
+
+
+            time_t temps_actuel = time(NULL);
+            temps_ecoule = difftime(temps_actuel, temps_precedent);
+
+
+            ActualiserJoueur(decor, mesRondins, joueur, mesRondins);
+
+
+            /*if (typeTerrain(joueur, 0, 0, 2)) { // dans l'eau ?
+                joueur->x = 32;
+                joueur->y = 200;
+                //acteur->x+=1;
+                textprintf_centre_ex(page, font, 400, 570, makecol(255, 255, 255), 0, " COULE ");
+            } else
+                textprintf_centre_ex(page, font, 400, 570, makecol(255, 255, 255), 0, "MARCHE");*/
+
+
+
+            blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
+
+            rest(15);
+
+
         }
 
+        allegro_message("vous avez traversé la rivière en %.1f secondes", temps_ecoule);
+        if (j == 0)
+            tmpJ1 = temps_ecoule;
+        else {
+            if (tmpJ1 < temps_ecoule)
+                allegro_message("Joueur 1, vous avez gagné un ticket !");
+            else
+                allegro_message("Joueur 2, vous avez gagné un ticket !");
 
-        if ( typeTerrain(joueur,0,0,2) ) { // dans l'eau ?
-            joueur->x = 32;     joueur->y = 200;
-            //acteur->x+=1;
-            textprintf_centre_ex(page, font, 400, 570, makecol(255, 255, 255), 0, " COULE ");
         }
-
-
-        else
-            textprintf_centre_ex(page,font,400,570,makecol(255,255,255),0,"MARCHE");
-
-
-        // affichage du buffer mis a jour a l'ecran
-        blit(page,screen,0,0,0,0,SCREEN_W,SCREEN_H);
-
-
-        rest(15);
 
     }
 }
