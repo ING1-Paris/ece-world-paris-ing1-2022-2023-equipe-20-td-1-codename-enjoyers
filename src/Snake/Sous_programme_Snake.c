@@ -13,14 +13,16 @@ t_corp_de_snake* Creer_maillon(t_corp_de_snake* maillon_precedent,BITMAP* tab_de
     }
     Nouveau_maillon->skin_used = 0;
 
-    Nouveau_maillon->x = maillon_precedent->last_x;
-    Nouveau_maillon->y = maillon_precedent->last_y;
+    Nouveau_maillon->x = maillon_precedent->last_x[5];
+    Nouveau_maillon->y = maillon_precedent->last_y[5];
 
-    Nouveau_maillon->last_x = Nouveau_maillon->x;
-    Nouveau_maillon->last_y = Nouveau_maillon->y;
+    for (int i = 0; i < TAILLE_TAB; ++i) {
+        Nouveau_maillon->last_x[i] = Nouveau_maillon->x;
+        Nouveau_maillon->last_y[i] = Nouveau_maillon->y;
+    }
 
-    Nouveau_maillon->tx = maillon_precedent->tx;
-    Nouveau_maillon->ty = maillon_precedent->ty;
+    Nouveau_maillon->tx = 48;
+    Nouveau_maillon->ty = 48;
 
     Nouveau_maillon->dx = 0;
     Nouveau_maillon->dy = 0;
@@ -29,3 +31,60 @@ t_corp_de_snake* Creer_maillon(t_corp_de_snake* maillon_precedent,BITMAP* tab_de
 
     return Nouveau_maillon;
 }
+
+void Actualisation_Snake(t_corp_de_snake* head){
+
+    int temp[2][TAILLE_TAB];
+
+
+    //Deplacement de la tete
+
+    head->x = head->x + head->dx;
+    head->y = head->y + head->dy;
+
+    // Correction de l'image
+
+    if (head->x < head->last_x[0]){
+        head->last_x[TAILLE_TAB-2] = head->last_x[TAILLE_TAB-2]+15;
+    }
+
+    if(head->y != head->last_y[0]){
+        head->last_x[TAILLE_TAB-2] = head->last_x[TAILLE_TAB-2]+8;
+    }
+
+    //Deplacement du corp
+
+    while (head->next_corp != NULL){
+
+        for (int i = 0; i < TAILLE_TAB; ++i) {
+            temp[0][i]= head->last_x[i];
+            temp[1][i]= head->last_y[i];
+        }
+
+        for (int i = 0; i < TAILLE_TAB; ++i) {
+            head->last_x[i+1] = temp[0][i] ;
+            head->last_y[i+1] = temp[1][i] ;
+        }
+
+        head->last_x[0] = head->x ;
+        head->last_y[0] = head->y ;
+
+        head->next_corp->x=head->last_x[TAILLE_TAB-1] ;
+        head->next_corp->y=head->last_y[TAILLE_TAB-1] ;
+
+
+        head = head->next_corp;
+    }
+
+
+
+}
+
+void Invertion(t_corp_de_snake* Liste_init,BITMAP* page){
+    if (Liste_init != NULL){
+        Invertion(Liste_init->next_corp,page);
+        masked_blit(Liste_init->Skin[Liste_init->skin_used],page,0,0,Liste_init->x,Liste_init->y,Liste_init->tx,Liste_init->ty);
+    }
+}
+
+
