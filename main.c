@@ -58,6 +58,18 @@ int main() {
             {11*48, 12*48, 20*48, 13*48}
     };
 
+    // EVENTBOXES
+    t_hitbox tableau_eventboxes[NOMBRE_EVENTBOXES] = {
+
+            {5*48, 4*48, 6*48, 5*48},
+            {13*48, 4*48, 14*48, 5*48},
+            {1*48, 9*48, 2*48, 10*48},
+            {6*48, 9*48, 7*48, 10*48},
+            {17*48, 8*48, 18*48, 9*48},
+            {10*48, 9*48, 14*48, 11*48},
+            {0, 0, 1, 1}
+    };
+
     // JOUEURS
     t_joueur tableau_joueurs[NOMBRE_JOUEURS];
 
@@ -217,7 +229,7 @@ int main() {
 
 
 
-    while (!key[KEY_SPACE]) {
+    while (!key[KEY_ESC]) {
 
         blit(map_menu, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
@@ -230,7 +242,11 @@ int main() {
 
         charger_hitboxes(page, tableau_hitboxes);
 
+        charger_eventboxes(page, tableau_eventboxes);
+
         deplacement_joueurs(page, tableau_joueurs, tableau_hitboxes);
+
+        activation_event(tableau_joueurs, tableau_eventboxes);
 
         masked_blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
