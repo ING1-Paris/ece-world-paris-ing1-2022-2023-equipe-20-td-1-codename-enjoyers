@@ -12,6 +12,7 @@
 
 #define NOMBRE_JOUEURS 2
 #define NOMBRE_HITBOXES 12
+#define NOMBRE_EVENTBOXES 7
 
 
 
@@ -37,7 +38,10 @@ typedef struct hitbox {
 
 void charger_sprites(t_joueur * joueur_actuel, char nom_perso[256]);
 void charger_hitboxes(BITMAP * bmp, t_hitbox tab_hitboxes[NOMBRE_HITBOXES]);
-void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS],int innactivite[NOMBRE_JOUEURS]);
+void deplacement_joueurs(BITMAP * bmp, t_joueur tableau_joueurs[NOMBRE_JOUEURS], t_hitbox tab_hitboxes[NOMBRE_HITBOXES],int innactivite[NOMBRE_JOUEURS]);
+int collision_joueur_hitbox(t_hitbox * hitbox, t_joueur * joueur_actuel);
+void charger_eventboxes(BITMAP * bmp, t_hitbox tab_eventboxes[NOMBRE_EVENTBOXES]);
+void activation_event(t_joueur tab_joueurs[NOMBRE_JOUEURS], t_hitbox tab_eventboxes[NOMBRE_EVENTBOXES]);
 
 
 

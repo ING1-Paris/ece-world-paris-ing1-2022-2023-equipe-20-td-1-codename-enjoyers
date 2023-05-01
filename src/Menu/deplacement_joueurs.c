@@ -4,12 +4,12 @@
 
 #include "../../header.h"
 
-void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS],int innactivite[NOMBRE_JOUEURS]) {
-    //Inactivite permet de savoir quand le Joueur est immobile
+void deplacement_joueurs(BITMAP * bmp, t_joueur tableau_joueurs[NOMBRE_JOUEURS], t_hitbox tab_hitboxes[NOMBRE_HITBOXES],int innactivite[NOMBRE_JOUEURS]) {
 
+    int compteur = 0;
+    int i;
 
     // DEPLACEMENTS DU JOUEUR 1
-
     if (key[KEY_UP]) {
 
         // Controle des bords de la fenetre
@@ -23,6 +23,22 @@ void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS],int innactivit
             tableau_joueurs[0].Sprite_actif = 9;
             innactivite[0] = 0;
         }
+
+        for (i=0; i<NOMBRE_HITBOXES; i++) {
+
+            if (collision_joueur_hitbox(&tab_hitboxes[i], &tableau_joueurs[0])) {
+
+                // on bloque
+
+                printf("Collision ! \n");
+
+                tableau_joueurs[0].y = tableau_joueurs[0].y + tableau_joueurs[0].dy;
+
+            }
+
+
+        }
+
 
     }
 
@@ -39,6 +55,22 @@ void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS],int innactivit
             tableau_joueurs[0].Sprite_actif = 0;
             innactivite[0] = 0;
         }
+
+        for (i=0; i<NOMBRE_HITBOXES; i++) {
+
+            if (collision_joueur_hitbox(&tab_hitboxes[i], &tableau_joueurs[0])) {
+
+                // on bloque
+
+                printf("Collision ! \n");
+
+                tableau_joueurs[0].y = tableau_joueurs[0].y - tableau_joueurs[0].dy;
+
+            }
+
+        }
+
+
 
     }
 
@@ -57,6 +89,22 @@ void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS],int innactivit
 
         }
 
+        for (i=0; i<NOMBRE_HITBOXES; i++) {
+
+            if (collision_joueur_hitbox(&tab_hitboxes[i], &tableau_joueurs[0])) {
+
+                // on bloque
+
+                printf("Collision ! \n");
+
+                tableau_joueurs[0].x = tableau_joueurs[0].x - tableau_joueurs[0].dx;
+
+            }
+
+        }
+
+
+
 
     }
 
@@ -73,6 +121,22 @@ void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS],int innactivit
             tableau_joueurs[0].Sprite_actif = 3;
             innactivite[0] = 0;
         }
+
+        for (i=0; i<NOMBRE_HITBOXES; i++) {
+
+            if (collision_joueur_hitbox(&tab_hitboxes[i], &tableau_joueurs[0])) {
+
+                // on bloque
+
+                printf("Collision ! \n");
+
+                tableau_joueurs[0].x = tableau_joueurs[0].x + tableau_joueurs[0].dx;
+
+            }
+
+        }
+
+
 
     }
 
@@ -104,6 +168,22 @@ void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS],int innactivit
             innactivite[1] = 0;
         }
 
+        for (i=0; i<NOMBRE_HITBOXES; i++) {
+
+            if (collision_joueur_hitbox(&tab_hitboxes[i], &tableau_joueurs[1])) {
+
+                // on bloque
+
+                printf("Collision ! \n");
+
+                tableau_joueurs[1].y = tableau_joueurs[1].y + tableau_joueurs[1].dy;
+
+            }
+
+        }
+
+
+
     }
 
 
@@ -120,6 +200,24 @@ void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS],int innactivit
             innactivite[1] = 0;
         }
 
+
+        for (i=0; i<NOMBRE_HITBOXES; i++) {
+
+            if (collision_joueur_hitbox(&tab_hitboxes[i], &tableau_joueurs[1])) {
+
+                // on bloque
+
+                printf("Collision ! \n");
+
+                tableau_joueurs[1].y = tableau_joueurs[1].y - tableau_joueurs[1].dy;
+
+            }
+
+
+        }
+
+
+
     }
 
 
@@ -134,6 +232,20 @@ void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS],int innactivit
             tableau_joueurs[1].x = tableau_joueurs[1].x + tableau_joueurs[1].dx;
             tableau_joueurs[1].Sprite_actif = 6;
             innactivite[1] = 0;
+
+        }
+
+        for (i=0; i<NOMBRE_HITBOXES; i++) {
+
+            if (collision_joueur_hitbox(&tab_hitboxes[i], &tableau_joueurs[1])) {
+
+                // on bloque
+
+                printf("Collision ! \n");
+
+                tableau_joueurs[1].x = tableau_joueurs[1].x - tableau_joueurs[1].dx;
+
+            }
 
         }
 
@@ -153,6 +265,22 @@ void deplacement_joueurs(t_joueur tableau_joueurs[NOMBRE_JOUEURS],int innactivit
             tableau_joueurs[1].Sprite_actif = 3;
             innactivite[1] = 0;
         }
+
+        for (i=0; i<NOMBRE_HITBOXES; i++) {
+
+            if (collision_joueur_hitbox(&tab_hitboxes[i], &tableau_joueurs[1])) {
+
+                // on bloque
+
+                printf("Collision ! \n");
+
+                tableau_joueurs[1].x = tableau_joueurs[1].x + tableau_joueurs[1].dx;
+
+            }
+
+        }
+
+
 
     }
 
