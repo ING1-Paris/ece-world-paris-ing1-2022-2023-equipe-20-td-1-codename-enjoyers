@@ -4,12 +4,11 @@
 
 #include "../../header.h"
 
-void charger_hitboxes(BITMAP * bmp, t_hitbox tab_hitboxes[NOMBRE_HITBOXES]) {
+void charger_hitboxes(BITMAP * bmp, t_hitbox tab_hitboxes[NOMBRE_HITBOXES], int couleur) {
 
     // Procédure de chargement des hitboxes des maisons
 
     int i;
-    int couleur = makecol(255, 0, 255);
 
 
     for (i=0; i<NOMBRE_HITBOXES; i++) {

@@ -35,6 +35,8 @@ int main() {
 
 
 
+
+
     /// INITIALISER LES VARIABLES ICI
     // -----------------------------
 
@@ -129,6 +131,25 @@ int main() {
 
 
 
+    /// ZONE DE TEST
+    // -----------------------------
+
+    guitar_hero();
+
+    printf("\n\n\n");
+    system("pause");
+
+    // -----------------------------
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -181,6 +202,7 @@ int main() {
         tableau_joueurs[i].dx = 15;
         tableau_joueurs[i].dy = 15;
         tableau_joueurs[i].Sprite_actif = 0;
+        tableau_joueurs[i].tickets = 5;
 
 
         // Remplir le tableau de sprites de chaque joueur en fonction du perso qu'il a choisi
@@ -231,17 +253,15 @@ int main() {
     }
 
 
-
-
-    while (!key[KEY_ESC]) {
+    /*while (!key[KEY_ESC]) {
 
         //Snake(tableau_joueurs);
 
         blit(map_menu, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
-        //charger_hitboxes(page, tableau_hitboxes);
+        charger_hitboxes(page, tableau_hitboxes, makecol(0, 0, 255));
 
-        //charger_hitboxes(page, tableau_eventboxes);
+        charger_hitboxes(page, tableau_eventboxes, makecol(0, 255, 0));
 
         for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
             Innactivite[i]=1;
@@ -286,7 +306,7 @@ int main() {
         rest(50);
 
 
-    }
+    }*/
 
 
 
