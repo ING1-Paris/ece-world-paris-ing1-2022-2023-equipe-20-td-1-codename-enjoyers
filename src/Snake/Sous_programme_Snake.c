@@ -13,8 +13,9 @@ t_corp_de_snake* Creer_maillon(t_corp_de_snake* maillon_precedent,BITMAP* tab_de
     }
     Nouveau_maillon->skin_used = 0;
 
-    Nouveau_maillon->x = maillon_precedent->last_x[5];
-    Nouveau_maillon->y = maillon_precedent->last_y[5];
+    Nouveau_maillon->x = -100;
+    Nouveau_maillon->y = -100;
+
 
     for (int i = 0; i < TAILLE_TAB; ++i) {
         Nouveau_maillon->last_x[i] = Nouveau_maillon->x;
@@ -73,27 +74,6 @@ void Actualisation_Snake(t_corp_de_snake* head){
         head->last_x[0] = head->x ;
         head->last_y[0] = head->y ;
 
-        //Direction de l'image
-        /*if (head->next_corp->last_x[0] > head->next_corp->x){
-            //direction a gauche
-            head->next_corp->skin_used = 3;
-        }
-
-        if (head->next_corp->last_x[0] < head->next_corp->x){
-            //direction a droite
-            head->next_corp->skin_used = 6;
-        }
-
-        if (head->next_corp->last_y[0] > head->next_corp->y){
-            //direction en haut
-            head->next_corp->skin_used = 9;
-        }
-
-        if (head->next_corp->last_y[0] < head->next_corp->y){
-            //direction en bas
-            head->next_corp->skin_used = 0;
-        }*/
-
         head->next_corp->x=head->last_x[TAILLE_TAB-1] ;
         head->next_corp->y=head->last_y[TAILLE_TAB-1] ;
 
@@ -109,4 +89,75 @@ void Invertion(t_corp_de_snake* Liste_init,BITMAP* page,int Animation){
     }
 }
 
+void Ajout_de_Longueur(t_corp_de_snake* Head,BITMAP* Tab_de_sprites[12],int * Longueur){
+    *Longueur = *Longueur + 1;
+    while (Head->next_corp != NULL){
+        Head = Head->next_corp;
+    }
+    Head->next_corp = Creer_maillon(Head,Tab_de_sprites);
+}
 
+int Collision_Acteur(t_corp_de_snake* head,t_corp_de_snake* corp){
+    int retour;
+    int m[4], imin, i;
+
+    m[0] = head->x + 30 - corp->x; // 0: à droite
+    m[1] = corp->x + 30 - head->x; // 1: à gauche
+    m[2] = head->y + 20 - corp->y; // 2: en bas
+    m[3] = corp->y + 20 - head->y; // 3: en haut
+
+
+    imin=0;
+    for (i=1;i<4;i++)
+        if (m[i]<m[imin])
+            imin=i;
+
+    // A priori pas de collision
+    retour=0;
+
+    // Si la plus petite marge n'est pas strictement négative
+    // alors c'est qu'on a une collision et cette collision est de ce coté
+    if (m[imin]>=0)
+        retour=1;  // on retourne l'indice du coté + 1 (car 0 signifie "pas de collision")
+
+    return retour;
+}
+
+void generation_Pomme(t_Pomme* Pomme){
+
+    Pomme->x = rand()%(700-100+1)+100;
+    Pomme->y = rand()%(600-100+1)+100;
+}
+
+int actualistation_Pomme(t_corp_de_snake* head,t_Pomme* Pomme){
+    int retour;
+    int m[4], imin, i;
+
+    m[0] = head->x + 30 - Pomme->x; // 0: à droite
+    m[1] = Pomme->x + 30 - head->x; // 1: à gauche
+    m[2] = head->y  + 29 - Pomme->y; // 2: en bas
+    m[3] = Pomme->y + 10 - head->y; // 3: en haut
+
+
+    imin=0;
+    for (i=1;i<4;i++)
+        if (m[i]<m[imin])
+            imin=i;
+
+    // A priori pas de collision
+    retour=0;
+
+    // Si la plus petite marge n'est pas strictement négative
+    // alors c'est qu'on a une collision et cette collision est de ce coté
+    if (m[imin]>=0)
+        retour=1;  // on retourne l'indice du coté + 1 (car 0 signifie "pas de collision")
+
+    return retour;
+}
+
+void Interaction_Pomme(t_corp_de_snake* head,t_Pomme* Pomme,int *Longeur,BITMAP* tab_de_Skin[12]){
+    if (actualistation_Pomme(head,Pomme)== 1){
+        Ajout_de_Longueur(head,tab_de_Skin,Longeur);
+        generation_Pomme(Pomme);
+    }
+}
