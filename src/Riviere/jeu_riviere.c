@@ -1,7 +1,7 @@
 
+//#include "../../header.h"
+
 #include <allegro.h>
-#include <time.h>
-#include <math.h>
 
 
 #define NTUILE     213   // Nombre de tuiles graphiques utilisées

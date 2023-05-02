@@ -239,9 +239,9 @@ int main() {
 
         blit(map_menu, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
-        charger_hitboxes(page, tableau_hitboxes);
+        //charger_hitboxes(page, tableau_hitboxes);
 
-        charger_eventboxes(page, tableau_eventboxes);
+        //charger_hitboxes(page, tableau_eventboxes);
 
         for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
             Innactivite[i]=1;

@@ -9,7 +9,7 @@ void charger_hitboxes(BITMAP * bmp, t_hitbox tab_hitboxes[NOMBRE_HITBOXES]) {
     // Procédure de chargement des hitboxes des maisons
 
     int i;
-    int couleur = makecol(0, 0, 255);
+    int couleur = makecol(255, 0, 255);
 
 
     for (i=0; i<NOMBRE_HITBOXES; i++) {
