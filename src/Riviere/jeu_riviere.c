@@ -165,7 +165,7 @@ t_rondin* creerRondin(char *nomimage){
 
 
 
-    rondin_temp->depx = 1;
+    rondin_temp->depx = 2;
 
     return rondin_temp;
 }

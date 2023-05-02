@@ -18,13 +18,24 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS]){
     int attente = 0;
 
     // Variable Serpent
+    int Nombre_de_player = 1;
     t_corp_de_snake* head = NULL;
     t_corp_de_snake* head_tmp = NULL;
-    int Longueur = 0;
+    int Longueur[2] = {0,0};
 
     // Variable joueur
     Joueur[1].tx = 29;
     Joueur[1].ty = 29;
+
+    // Variable hitbox
+    t_hitbox tab_hitboxes[4];
+
+    //Variable Pomme
+    t_Pomme Pomme [2];
+
+    for (int i = 0; i < 2; ++i) {
+        Pomme[i].Skin=load_bitmap("../assets/Item/Snake/Snake_pomme.bmp",NULL);
+    }
 
     // Initialisation de la page
     page = create_bitmap(SCREEN_W, SCREEN_H);
@@ -59,40 +70,68 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS]){
 
         // Remplissage du premier maillon
 
-        head->dx=0;
-        head->dy=0;
+        head->dx = 5;
+        head->dy = 0;
+        head->skin_used = 6;
         head->tx = 48;
         head->ty = 48;
-        head->x = 400;
         head->y = 400;
-        for (int j = 0; j < TAILLE_TAB*30; j=j+30) {
-            head->last_x[i] = 400-j;
-            head->last_y[i] = 400-j;
+
+        for (int j = 0; j < TAILLE_TAB; j=j+1) {
+            head->last_x[j] = 400-(j*5);
+            head->last_y[j] = 400-(j*5);
         }
 
         head->next_corp = NULL;
-        head->skin_used = 8;
 
         for (int j = 0; j < 12; ++j) {
             head->Skin[j]=Joueur[i].sprites[j];
         }
 
         //Mise en place des 2 premieres parties du corps
-        head->next_corp= Creer_maillon(head,SNAKE1);
-        head->next_corp->next_corp= Creer_maillon(head->next_corp,SNAKE1);
-        head->next_corp->next_corp->next_corp= Creer_maillon(head->next_corp->next_corp,SNAKE1);
-
-        Longueur = 4;
-
-        head->next_corp->x=370;
-        head->next_corp->next_corp->x=340;
+        Longueur[0] = 1;
+        for (int j = 0; j < 4; ++j) {
+            Ajout_de_Longueur(head,SNAKE1,&Longueur[0]);
+        }
 
         head_tmp = head;
+
+        for (int j = 0; j < 5; ++j) {
+            head_tmp->x=400-j*30;
+            head_tmp = head_tmp->next_corp;
+        }
+
+
+        //Creation des Murs
+        tab_hitboxes[0].x1 = 0;
+        tab_hitboxes[0].y1 = 0;
+        tab_hitboxes[0].x2 = 60;
+        tab_hitboxes[0].y2 = SCREEN_H;
+
+        tab_hitboxes[1].x1 = 60;
+        tab_hitboxes[1].y1 = 0;
+        tab_hitboxes[1].x2 = 892;
+        tab_hitboxes[1].y2 = 76;
+
+        tab_hitboxes[2].x1 = 60;
+        tab_hitboxes[2].y1 = 689;
+        tab_hitboxes[2].x2 = 892;
+        tab_hitboxes[2].y2 = SCREEN_H;
+
+        tab_hitboxes[3].x1 = 892;
+        tab_hitboxes[3].y1 = 0;
+        tab_hitboxes[3].x2 = SCREEN_W;
+        tab_hitboxes[3].y2 = SCREEN_H;
+
+        //Creation de la Pomme
+        generation_Pomme(&Pomme[0]);
+
 
         /// Debut du Jeu \\\
 
         while (!key[KEY_ESC]){
             blit(decor,page,0,0,0,0,SCREEN_W, SCREEN_H);
+            //Coordonée de la map = 60;76 892;689
 
             // Deplacement joueur
 
@@ -125,21 +164,28 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS]){
                 }
             }
 
-            //Actualisation des positions du Snake
+            //Actualisation des positions du Snake et des Pommes
             Actualisation_Snake(head);
+            for (int j = 0; j < Nombre_de_player; ++j) {
+                Interaction_Pomme(head,&Pomme[j],&Longueur[0],SNAKE1);
+            }
+
+            //Affichage Pomme
+            masked_blit(Pomme[0].Skin,page,0,0,Pomme[0].x,Pomme[0].y,29,29);
 
             // Affichage du Snake
             if (head->dy == 5){
                 Invertion(head,page,Animation);
             }
+
             else {
-                for (int j = 0; j < Longueur; ++j) {
+                while (head_tmp != NULL){
                     masked_blit(head_tmp->Skin[(head_tmp->skin_used)+Animation],page,0,0,head_tmp->x,head_tmp->y,head_tmp->tx,head_tmp->ty);
                     head_tmp=head_tmp->next_corp;
 
                 }
-                head_tmp=head;
             }
+
             //Gestion de l'animation
             if (attente == 4){
                 if (Animation == 1){
@@ -151,6 +197,35 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS]){
             }
             attente++;
 
+            //Collision\\
+
+            //Collision avec les murs
+            Joueur[0].x = head->x;
+            Joueur[0].y = head->y;
+            for (int j = 0; j < 4; ++j) {
+                if (collision_joueur_hitbox(&tab_hitboxes[j],&Joueur[0])){
+                    printf("C'est perdu !\n");
+                }
+            }
+
+            //Collision avec le corp du serpent
+            head_tmp = head->next_corp->next_corp->next_corp->next_corp;
+
+            while (head_tmp != NULL){
+                if (Collision_Acteur(head,head_tmp)){
+                    printf("C'est perdu !\n");
+
+                }
+                head_tmp = head_tmp->next_corp;
+
+            }
+            head_tmp = head;
+
+
+
+
+
+            //Double buffer
             blit(page,screen,0,0,0,0,SCREEN_W, SCREEN_H);
             rest(20);
         }
