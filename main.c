@@ -180,6 +180,7 @@ int main() {
         tableau_joueurs[i].score = 0;
         tableau_joueurs[i].dx = 15;
         tableau_joueurs[i].dy = 15;
+        tableau_joueurs[i].Sprite_actif = 0;
 
 
         // Remplir le tableau de sprites de chaque joueur en fonction du perso qu'il a choisi
@@ -237,13 +238,6 @@ int main() {
         //Snake(tableau_joueurs);
 
         blit(map_menu, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-
-
-        for (int i=0; i<NOMBRE_JOUEURS; i++) {
-
-            masked_blit(tableau_joueurs[i].sprites[0],page,0,0,tableau_joueurs[i].x,tableau_joueurs[i].y,tableau_joueurs[i].tx,tableau_joueurs[i].ty);
-
-        }
 
         charger_hitboxes(page, tableau_hitboxes);
 
