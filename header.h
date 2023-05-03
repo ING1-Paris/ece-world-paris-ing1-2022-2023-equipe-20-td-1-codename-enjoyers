@@ -233,6 +233,7 @@ typedef struct ballon {
 
 //LA RIVIERE
 
+void jeu_riviere();
 
 #define NRONDIN 8
 #define TX 40 // Largeur

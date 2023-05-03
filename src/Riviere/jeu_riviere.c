@@ -12,7 +12,7 @@ double tmpJ1;
 /*          PROGRAMME PRINCIPAL           */
 /******************************************/
 
-void jeu_riviere(t_joueur Joueur[NOMBRE_JOUEURS]) {
+void jeu_riviere() {
 
     t_rondin *mesRondins[NRONDIN];
     t_joueuur *joueur;    // Un joueur (� cr�er)
@@ -20,33 +20,19 @@ void jeu_riviere(t_joueur Joueur[NOMBRE_JOUEURS]) {
     BITMAP *decor;
 
 
-    // Lancer allegro et le mode graphique
-    allegro_init();
-    install_keyboard();
-
-    set_color_depth(desktop_color_depth());
-    if (set_gfx_mode(GFX_AUTODETECT_WINDOWED, 1000, 700, 0, 0) != 0) {
-        allegro_message("prb gfx mode");
-        allegro_exit();
-        exit(EXIT_FAILURE);
-    }
-
-    page = create_bitmap(SCREEN_W, SCREEN_H);
-    clear_bitmap(page);
-
     //tableTuiles = load_bitmap_check("images/tilemapZelda/tableTuiles.bmp");
 
 
     remplirTabRondin(mesRondins);
 
-    decor = load_bitmap_check("MAP_RIVIERE.bmp");
+    decor = load_bitmap_check("../assets/maps/MAP_RIVIERE.bmp");
 
 
 
     for (int j = 0; j < NOMBRE_JOUEURS; j++) {
         time_t temps_precedent = time(NULL);
 
-        joueur = creationJoueur("Shrek_4.bmp");
+        joueur = creationJoueur("../assets/personnages/Shrek/Shrek_0.bmp");
 
 
         while (joueur->y <= 580) {
