@@ -281,13 +281,4 @@ BITMAP * load_bitmap_check(char *nomImage);
 
 
 
-
-
-
-
-
-
-
-
-
 #endif //PROJET_HEADER_H

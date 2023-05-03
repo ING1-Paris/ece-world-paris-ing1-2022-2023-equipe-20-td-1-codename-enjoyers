@@ -39,14 +39,14 @@ void jeu_riviere(t_joueur Joueur[NOMBRE_JOUEURS]) {
 
     remplirTabRondin(mesRondins);
 
-    decor = load_bitmap_check("MAP_RIVIERE_TEST2.bmp");
+    decor = load_bitmap_check("MAP_RIVIERE.bmp");
 
 
 
     for (int j = 0; j < NOMBRE_JOUEURS; j++) {
         time_t temps_precedent = time(NULL);
 
-        joueur = creationJoueur("shrek4.bmp");
+        joueur = creationJoueur("Shrek_4.bmp");
 
 
         while (joueur->y <= 580) {
