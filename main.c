@@ -42,7 +42,7 @@ int main() {
 
     // BITMAPS
     BITMAP * page; // BITMAP de la page (double buffer)
-    BITMAP * map_menu;
+    BITMAP * map_menu; // BITMAP de la carte du menu
 
     // HITBOXES
     t_hitbox tableau_hitboxes[NOMBRE_HITBOXES] = {
@@ -256,6 +256,8 @@ int main() {
 
 
     while (!key[KEY_ESC]) {
+
+        jeu_riviere();
 
         Snake(tableau_joueurs,&Temps_d_epreuve);
 
