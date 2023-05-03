@@ -234,7 +234,7 @@ typedef struct ballon {
 //LA RIVIERE
 
 
-#define NRONDIN 14
+#define NRONDIN 8
 #define TX 40 // Largeur
 #define TY 16 // Hauteur
 

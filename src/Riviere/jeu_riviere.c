@@ -43,7 +43,7 @@ void jeu_riviere(t_joueur Joueur[NOMBRE_JOUEURS]) {
 
 
 
-    for (int j = 0; j < 2; j++) {
+    for (int j = 0; j < NOMBRE_JOUEURS; j++) {
         time_t temps_precedent = time(NULL);
 
         joueur = creationJoueur("shrek4.bmp");
