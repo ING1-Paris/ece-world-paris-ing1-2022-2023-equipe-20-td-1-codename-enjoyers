@@ -8,7 +8,7 @@ char *listbox_getter(int index, int *list_size) {
 
     static char *strings[] =
             {
-                    "Sea of Thieves Shanty",  "Megalovania (difficile)"
+                    "Pirates des Caraibes (facile)",  "Megalovania (difficile)"
             };
 
     if (index < 0) {

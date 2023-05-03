@@ -13,7 +13,6 @@ void guitar_hero() {
     clock_t end;
     unsigned long millis;
 
-    SAMPLE * musique;
     char nom_fichier_musique[256];
 
     BITMAP * page = create_bitmap(SCREEN_W, SCREEN_H);
@@ -64,16 +63,6 @@ void guitar_hero() {
 
     // On charge le fichier MIDI/audio de la musique en question
     sprintf(nom_fichier_musique, "../assets/Item/GuitarHero/%s.wav", listbox_getter(GUI_guitar_hero[2].d1, (int*) TAILLE_TAB_CHANSONS));
-
-    musique = load_sample(nom_fichier_musique);
-
-    if (!musique) {
-
-        allegro_message("Impossible de trouver le fichier %s :/", nom_fichier_musique);
-        allegro_exit();
-        exit(EXIT_FAILURE);
-    }
-
 
     // On cherche les notes maximum et minimum
     note_max = chanson_jouee[0].note;
@@ -131,7 +120,7 @@ void guitar_hero() {
 
         }
 
-        chanson_jouee[i].y_centre = 30;
+        chanson_jouee[i].y_centre = 0;
         chanson_jouee[i].radius = 25;
         chanson_jouee[i].dy = 1;
         chanson_jouee[i].affichage = 0;
@@ -157,7 +146,7 @@ void guitar_hero() {
 
             if (chanson_jouee[index].millis == millis) {
 
-                printf("La note %d est jouee. Diff de temps: %d theorique, %lu reel \n", chanson_jouee[index].note, chanson_jouee[index].millis, millis);
+                printf("La note %d de la portee %d est dessinee. Diff de temps: %d theorique, %lu reel \n", chanson_jouee[index].note, chanson_jouee[index].portee, chanson_jouee[index].millis, millis);
 
                 spawn_cercles(page, &chanson_jouee[index]);
             }
@@ -176,7 +165,7 @@ void guitar_hero() {
             }
         }
 
-        if (chanson_jouee[0].y_centre == 640 && chanson_jouee[0].affichage == 1) {
+        if (chanson_jouee[0].y_centre == 640) {
 
             PlaySound(TEXT(nom_fichier_musique), NULL, SND_ASYNC);
 
