@@ -125,7 +125,7 @@ int main() {
     map_menu = load_bitmap("../assets/maps/menu.bmp", NULL);
 
 
-    /// -----------------------------
+    // -----------------------------
 
 
 

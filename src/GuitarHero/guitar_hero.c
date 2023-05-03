@@ -13,6 +13,9 @@ void guitar_hero() {
     clock_t end;
     unsigned long millis;
 
+    SAMPLE * musique;
+    char nom_fichier_musique[256];
+
     BITMAP * page = create_bitmap(SCREEN_W, SCREEN_H);
 
     t_cercle_fixe tableau_cercles_fixes[5] = {
@@ -58,6 +61,19 @@ void guitar_hero() {
     int corde;
 
     t_note * chanson_jouee = charger_musique(listbox_getter(GUI_guitar_hero[2].d1, (int*) TAILLE_TAB_CHANSONS), &taille_tableau);
+
+    // On charge le fichier MIDI/audio de la musique en question
+    sprintf(nom_fichier_musique, "../assets/Item/GuitarHero/%s.wav", listbox_getter(GUI_guitar_hero[2].d1, (int*) TAILLE_TAB_CHANSONS));
+
+    musique = load_sample(nom_fichier_musique);
+
+    if (!musique) {
+
+        allegro_message("Impossible de trouver le fichier %s :/", nom_fichier_musique);
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+
 
     // On cherche les notes maximum et minimum
     note_max = chanson_jouee[0].note;
@@ -158,6 +174,13 @@ void guitar_hero() {
 
                 circlefill(page, chanson_jouee[i].x_centre, chanson_jouee[i].y_centre, chanson_jouee[i].radius, chanson_jouee[i].couleur);
             }
+        }
+
+        if (chanson_jouee[0].y_centre == 640 && chanson_jouee[0].affichage == 1) {
+
+            PlaySound(TEXT(nom_fichier_musique), NULL, SND_ASYNC);
+
+            //allegro_message("Musique on !");
         }
 
         blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);

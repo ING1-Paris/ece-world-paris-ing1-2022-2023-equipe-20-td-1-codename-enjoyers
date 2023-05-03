@@ -8,7 +8,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <conio.h>
 #include <allegro.h>
+#include <winalleg.h>
+#include <mmsystem.h>
 
 #define NOMBRE_JOUEURS 2
 #define NOMBRE_HITBOXES 12
@@ -64,7 +67,7 @@ typedef struct note_musique {
     int y_centre;
     int radius;
     int couleur;
-    int dy;
+    float dy;
     int affichage;
 
 } t_note;
@@ -88,6 +91,7 @@ long map(long x, long in_min, long in_max, long out_min, long out_max);
 void spawn_cercles(BITMAP * bmp, t_note * note_a_jouer);
 void actualiser_cercle(t_note * note_a_jouer);
 void actualiser_tab_cercles(BITMAP * bmp, t_note * tableau_notes, int taille_tab);
+int collision_cercles(t_cercle_fixe *a1, t_note *a2);
 
 
 
