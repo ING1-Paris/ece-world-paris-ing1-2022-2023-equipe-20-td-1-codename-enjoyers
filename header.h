@@ -228,4 +228,66 @@ typedef struct ballon {
 
 
 
+
+
+
+//LA RIVIERE
+
+
+#define NRONDIN 14
+#define TX 40 // Largeur
+#define TY 16 // Hauteur
+
+typedef struct rondin{
+
+    int tx,ty;   // taille
+    BITMAP *img;
+    int posx,posy;
+    int depx;
+
+}t_rondin;
+
+
+
+typedef struct joueuur
+{
+    int tx, ty;
+    int x, y; // coordonn�es (en pixels) des pieds de l'acteur
+    int vit;
+    BITMAP *img;       // image de l'acteur
+} t_joueuur;
+
+
+
+t_rondin* creerRondin(char *nomimage);
+void actualiserRondin(t_rondin* rondin_a_actualiser);
+void actualiserTabRondin(t_rondin * tab[NRONDIN]);
+void remplirTabRondin(t_rondin* MesRondins[NRONDIN]);
+void AfficherRondin(BITMAP *bmp,t_rondin *rondin_a_afficher);
+void AfficherTabRondin(BITMAP *bmp,t_rondin * tab[NRONDIN]);
+
+
+t_joueuur * creationJoueur(char *nomimage);
+void ActualiserJoueur(BITMAP *bmp, t_rondin **img, t_joueuur* joueur_a_actualiser, t_rondin* tabrondin[NRONDIN]);
+void AfficherJoueur(BITMAP *bmp,t_joueuur *joueur_a_afficher);
+
+
+BITMAP * load_bitmap_check(char *nomImage);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #endif //PROJET_HEADER_H
