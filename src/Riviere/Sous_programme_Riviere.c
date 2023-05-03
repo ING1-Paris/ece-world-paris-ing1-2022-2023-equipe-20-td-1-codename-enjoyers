@@ -113,7 +113,7 @@ t_joueuur * creationJoueur(char *nomimage){
 
     joueur_temp->x = 600;
     joueur_temp->y = 200;
-    joueur_temp->vit = 1;
+    joueur_temp->vit = 2;
 
     return joueur_temp;
 }

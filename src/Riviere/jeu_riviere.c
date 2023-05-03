@@ -18,6 +18,7 @@ void jeu_riviere() {
     t_joueuur *joueur;    // Un joueur (� cr�er)
     BITMAP *page;        // BITMAP buffer d'affichage
     BITMAP *decor;
+    page = create_bitmap(SCREEN_W, SCREEN_H);
 
 
     //tableTuiles = load_bitmap_check("images/tilemapZelda/tableTuiles.bmp");
