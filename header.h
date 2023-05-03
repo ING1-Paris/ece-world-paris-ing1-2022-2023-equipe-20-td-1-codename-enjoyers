@@ -124,15 +124,19 @@ typedef struct Pomme{
 
 }t_Pomme;
 
-void Snake(t_joueur Joueur[NOMBRE_JOUEURS]);
-t_corp_de_snake* Creer_maillon(t_corp_de_snake* maillon_precedent,BITMAP* tab_de_Skin[12]);
+void Snake(t_joueur Joueur[NOMBRE_JOUEURS],unsigned long* Temps);
+t_corp_de_snake* Creer_maillon(BITMAP* tab_de_Skin[12]);
 void Actualisation_Snake(t_corp_de_snake* head);
+void Deplacement_Snake_1(t_corp_de_snake * head);
+void Deplacement_Snake_2(t_corp_de_snake * head);
 void Ajout_de_Longueur(t_corp_de_snake* Head,BITMAP* Tab_de_sprites[12],int* Longueur);
 void Invertion(t_corp_de_snake* Liste_init,BITMAP* page,int Animation);
 int Collision_Acteur(t_corp_de_snake* head,t_corp_de_snake* corp);
 void generation_Pomme(t_Pomme* Pomme);
 int actualistation_Pomme(t_corp_de_snake* head,t_Pomme* Pomme);
 void Interaction_Pomme(t_corp_de_snake* head,t_Pomme* Pomme,int *Longeur,BITMAP* tab_de_Skin[12]);
+void Mort_de_serpent(t_corp_de_snake * head);
+int Fin_de_partie(int serpent_en_vie[2]);
 
 
 
@@ -221,6 +225,68 @@ typedef struct ballon {
 } t_ballon;
 
 // ----------------------------------------
+
+
+
+
+
+
+//LA RIVIERE
+
+
+#define NRONDIN 14
+#define TX 40 // Largeur
+#define TY 16 // Hauteur
+
+typedef struct rondin{
+
+    int tx,ty;   // taille
+    BITMAP *img;
+    int posx,posy;
+    int depx;
+
+}t_rondin;
+
+
+
+typedef struct joueuur
+{
+    int tx, ty;
+    int x, y; // coordonn�es (en pixels) des pieds de l'acteur
+    int vit;
+    BITMAP *img;       // image de l'acteur
+} t_joueuur;
+
+
+
+t_rondin* creerRondin(char *nomimage);
+void actualiserRondin(t_rondin* rondin_a_actualiser);
+void actualiserTabRondin(t_rondin * tab[NRONDIN]);
+void remplirTabRondin(t_rondin* MesRondins[NRONDIN]);
+void AfficherRondin(BITMAP *bmp,t_rondin *rondin_a_afficher);
+void AfficherTabRondin(BITMAP *bmp,t_rondin * tab[NRONDIN]);
+
+
+t_joueuur * creationJoueur(char *nomimage);
+void ActualiserJoueur(BITMAP *bmp, t_rondin **img, t_joueuur* joueur_a_actualiser, t_rondin* tabrondin[NRONDIN]);
+void AfficherJoueur(BITMAP *bmp,t_joueuur *joueur_a_afficher);
+
+
+BITMAP * load_bitmap_check(char *nomImage);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

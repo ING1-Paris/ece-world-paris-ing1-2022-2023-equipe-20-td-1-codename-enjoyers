@@ -3,7 +3,7 @@
 //
 #include "../../header.h"
 
-t_corp_de_snake* Creer_maillon(t_corp_de_snake* maillon_precedent,BITMAP* tab_de_Skin[12]){
+t_corp_de_snake* Creer_maillon(BITMAP* tab_de_Skin[12]){
     t_corp_de_snake* Nouveau_maillon;
 
     Nouveau_maillon = (t_corp_de_snake*)malloc(sizeof(t_corp_de_snake));
@@ -94,7 +94,7 @@ void Ajout_de_Longueur(t_corp_de_snake* Head,BITMAP* Tab_de_sprites[12],int * Lo
     while (Head->next_corp != NULL){
         Head = Head->next_corp;
     }
-    Head->next_corp = Creer_maillon(Head,Tab_de_sprites);
+    Head->next_corp = Creer_maillon(Tab_de_sprites);
 }
 
 int Collision_Acteur(t_corp_de_snake* head,t_corp_de_snake* corp){
@@ -160,4 +160,83 @@ void Interaction_Pomme(t_corp_de_snake* head,t_Pomme* Pomme,int *Longeur,BITMAP*
         Ajout_de_Longueur(head,tab_de_Skin,Longeur);
         generation_Pomme(Pomme);
     }
+}
+void Deplacement_Snake_1(t_corp_de_snake * head){
+    if(key[KEY_RIGHT]){
+        if(head->dx != -5){
+            head->dx = 5;
+            head->dy = 0;
+            head->skin_used = 6;
+        }
+    }
+    if(key[KEY_LEFT]){
+        if(head->dx != 5){
+            head->dx = -5;
+            head->dy = 0;
+            head->skin_used = 3;
+        }
+    }
+    if(key[KEY_DOWN]){
+        if(head->dy != -5) {
+            head->dy = 5;
+            head->dx = 0;
+            head->skin_used = 0;
+        }
+    }
+    if(key[KEY_UP]){
+        if(head->dy != 5) {
+            head->dy = -5;
+            head->dx = 0;
+            head->skin_used = 9;
+        }
+    }
+}
+
+void Deplacement_Snake_2(t_corp_de_snake * head){
+    if(key[KEY_D]){
+        if(head->dx != -5){
+            head->dx = 5;
+            head->dy = 0;
+            head->skin_used = 6;
+        }
+    }
+    if(key[KEY_A]){
+        if(head->dx != 5){
+            head->dx = -5;
+            head->dy = 0;
+            head->skin_used = 3;
+        }
+    }
+    if(key[KEY_S]){
+        if(head->dy != -5) {
+            head->dy = 5;
+            head->dx = 0;
+            head->skin_used = 0;
+        }
+    }
+    if(key[KEY_W]){
+        if(head->dy != 5) {
+            head->dy = -5;
+            head->dx = 0;
+            head->skin_used = 9;
+        }
+    }
+}
+
+void Mort_de_serpent(t_corp_de_snake * head){
+    while (head != NULL){
+        head->x = -200;
+        head->y = -200;
+        head->dx = 0;
+        head->dy = 0;
+        head= head->next_corp;
+    }
+}
+
+int Fin_de_partie(int serpent_en_vie[2]){
+        if (serpent_en_vie[0] == 0 && serpent_en_vie[1] == 0){
+            return 1;
+        }
+
+    return 0;
 }
