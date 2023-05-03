@@ -124,15 +124,19 @@ typedef struct Pomme{
 
 }t_Pomme;
 
-void Snake(t_joueur Joueur[NOMBRE_JOUEURS]);
-t_corp_de_snake* Creer_maillon(t_corp_de_snake* maillon_precedent,BITMAP* tab_de_Skin[12]);
+void Snake(t_joueur Joueur[NOMBRE_JOUEURS],unsigned long* Temps);
+t_corp_de_snake* Creer_maillon(BITMAP* tab_de_Skin[12]);
 void Actualisation_Snake(t_corp_de_snake* head);
+void Deplacement_Snake_1(t_corp_de_snake * head);
+void Deplacement_Snake_2(t_corp_de_snake * head);
 void Ajout_de_Longueur(t_corp_de_snake* Head,BITMAP* Tab_de_sprites[12],int* Longueur);
 void Invertion(t_corp_de_snake* Liste_init,BITMAP* page,int Animation);
 int Collision_Acteur(t_corp_de_snake* head,t_corp_de_snake* corp);
 void generation_Pomme(t_Pomme* Pomme);
 int actualistation_Pomme(t_corp_de_snake* head,t_Pomme* Pomme);
 void Interaction_Pomme(t_corp_de_snake* head,t_Pomme* Pomme,int *Longeur,BITMAP* tab_de_Skin[12]);
+void Mort_de_serpent(t_corp_de_snake * head);
+int Fin_de_partie(int serpent_en_vie[2]);
 
 
 

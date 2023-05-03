@@ -74,6 +74,7 @@ int main() {
 
     // JOUEURS
     t_joueur tableau_joueurs[NOMBRE_JOUEURS];
+    unsigned long Temps_d_epreuve;
 
     // SPRITES
     int Innactivite[NOMBRE_JOUEURS]={1,1};
@@ -134,10 +135,10 @@ int main() {
     /// ZONE DE TEST
     // -----------------------------
 
-    guitar_hero();
+    //guitar_hero();
 
     printf("\n\n\n");
-    system("pause");
+    //system("pause");
 
     // -----------------------------
 
@@ -253,9 +254,9 @@ int main() {
     }
 
 
-    /*while (!key[KEY_ESC]) {
+    while (!key[KEY_ESC]) {
 
-        //Snake(tableau_joueurs);
+        Snake(tableau_joueurs,&Temps_d_epreuve);
 
         blit(map_menu, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
@@ -306,7 +307,7 @@ int main() {
         rest(50);
 
 
-    }*/
+    }
 
 
 
