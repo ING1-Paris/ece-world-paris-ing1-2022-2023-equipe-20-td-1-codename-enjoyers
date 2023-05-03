@@ -10,6 +10,8 @@
 /****************************/
 
 
+
+
 t_rondin* creerRondin(char *nomimage){
     t_rondin* rondin_temp;
 
@@ -76,7 +78,7 @@ void actualiserTabRondin(t_rondin * tab[NRONDIN]) {
 
 void remplirTabRondin(t_rondin* MesRondins[NRONDIN]){
     for (int i = 0; i < NRONDIN; ++i) {
-        MesRondins[i] = creerRondin("bois1.bmp");
+        MesRondins[i] = creerRondin("../assets/Item/Riviere/bois1.bmp");
     }
 }
 

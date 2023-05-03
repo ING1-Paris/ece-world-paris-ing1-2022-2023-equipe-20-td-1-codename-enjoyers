@@ -233,8 +233,9 @@ typedef struct ballon {
 
 //LA RIVIERE
 
+void jeu_riviere();
 
-#define NRONDIN 14
+#define NRONDIN 8
 #define TX 40 // Largeur
 #define TY 16 // Hauteur
 
@@ -273,15 +274,6 @@ void AfficherJoueur(BITMAP *bmp,t_joueuur *joueur_a_afficher);
 
 
 BITMAP * load_bitmap_check(char *nomImage);
-
-
-
-
-
-
-
-
-
 
 
 
