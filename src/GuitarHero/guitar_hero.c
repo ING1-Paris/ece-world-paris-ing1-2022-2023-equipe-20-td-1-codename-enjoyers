@@ -135,6 +135,9 @@ void guitar_hero() {
     // On démarre le chronomètre
     begin = clock();
 
+    // Lancer la chanson
+    // PlaySound(TEXT(nom_fichier_musique), NULL, SND_ASYNC);
+
     // On lance la boucle de jeu
     while (alive) {
 
@@ -165,12 +168,6 @@ void guitar_hero() {
             }
         }
 
-        if (chanson_jouee[0].y_centre == 640) {
-
-            PlaySound(TEXT(nom_fichier_musique), NULL, SND_ASYNC);
-
-            //allegro_message("Musique on !");
-        }
 
         blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 

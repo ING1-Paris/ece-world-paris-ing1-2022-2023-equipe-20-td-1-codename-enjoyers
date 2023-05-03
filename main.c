@@ -42,7 +42,7 @@ int main() {
 
     // BITMAPS
     BITMAP * page; // BITMAP de la page (double buffer)
-    BITMAP * map_menu;
+    BITMAP * map_menu; // BITMAP de la carte du menu
 
     // HITBOXES
     t_hitbox tableau_hitboxes[NOMBRE_HITBOXES] = {
@@ -135,7 +135,7 @@ int main() {
     /// ZONE DE TEST
     // -----------------------------
 
-    //guitar_hero();
+    guitar_hero();
 
     printf("\n\n\n");
     //system("pause");
