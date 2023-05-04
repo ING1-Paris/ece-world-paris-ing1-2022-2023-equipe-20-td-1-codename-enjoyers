@@ -136,7 +136,7 @@ int main() {
     // -----------------------------
 
     //guitar_hero();
-    //jeu_riviere(tableau_joueurs);
+    jeu_riviere(tableau_joueurs);
 
     printf("\n\n\n");
     //system("pause");

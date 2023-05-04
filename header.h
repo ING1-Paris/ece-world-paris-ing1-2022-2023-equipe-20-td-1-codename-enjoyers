@@ -256,7 +256,7 @@ typedef struct joueuur
     int x, y; // coordonn�es (en pixels) des pieds de l'acteur
     int vit;
     int skin_utilise;
-    BITMAP *skin_perso[13];       // image de l'acteur
+    BITMAP *skin_perso[13];    // image de l'acteur
 } t_joueuur;
 
 

@@ -154,18 +154,18 @@ void ActualiserJoueur(BITMAP *bmp, t_joueuur* joueur_a_actualiser, t_rondin* tab
 
     if (key[KEY_RIGHT])
         joueur_a_actualiser->x =  joueur_a_actualiser->x + joueur_a_actualiser->vit;
-        joueur_a_actualiser->skin_utilise = 1;
+        joueur_a_actualiser->skin_utilise = 6;
 
     if (key[KEY_LEFT] )
         joueur_a_actualiser->x = joueur_a_actualiser->x - joueur_a_actualiser->vit;
-        joueur_a_actualiser->skin_utilise = 2;
+        joueur_a_actualiser->skin_utilise = 3;
 
 
     if(key[KEY_DOWN])
     {
         if (joueur_a_actualiser->y <= 330) {
             joueur_a_actualiser->y = joueur_a_actualiser->y + joueur_a_actualiser->vit;
-            joueur_a_actualiser->skin_utilise = 3;
+            joueur_a_actualiser->skin_utilise = 0;
         }
 
         else {
@@ -177,7 +177,7 @@ void ActualiserJoueur(BITMAP *bmp, t_joueuur* joueur_a_actualiser, t_rondin* tab
 
     if (key[KEY_UP] )
         joueur_a_actualiser->y = joueur_a_actualiser->y - joueur_a_actualiser->vit;
-        joueur_a_actualiser->skin_utilise = 3;
+        joueur_a_actualiser->skin_utilise = 9;
 
 
 }
@@ -187,7 +187,9 @@ void detectionBuche();
 
 void AfficherJoueur(BITMAP *bmp,t_joueuur *joueur_a_afficher){
     for (int i = 0; i < 13; ++i) {
-        draw_sprite(bmp, joueur_a_afficher->skin_perso[i], joueur_a_afficher->x - joueur_a_afficher->skin_perso[i]->w/2, joueur_a_afficher->y - joueur_a_afficher->skin_perso[i]->h + 8);
+        masked_blit(joueur_a_afficher->skin_perso[joueur_a_afficher->skin_utilise],bmp,0,0,joueur_a_afficher->x,joueur_a_afficher->y,joueur_a_afficher->tx,joueur_a_afficher->ty);
+
+        //draw_sprite(bmp, joueur_a_afficher->skin_perso[i], joueur_a_afficher->x - joueur_a_afficher->skin_perso[i]->w/2, joueur_a_afficher->y - joueur_a_afficher->skin_perso[i]->h + 8);
 
     }
 }
