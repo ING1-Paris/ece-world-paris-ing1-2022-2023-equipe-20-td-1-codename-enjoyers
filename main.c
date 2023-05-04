@@ -136,7 +136,7 @@ int main() {
     // -----------------------------
 
     //guitar_hero();
-    jeu_riviere();
+    //jeu_riviere(tableau_joueurs);
 
     printf("\n\n\n");
     //system("pause");
@@ -257,7 +257,7 @@ int main() {
 
     while (!key[KEY_ESC]) {
 
-        jeu_riviere();
+        //jeu_riviere(tableau_joueurs);
 
         Snake(tableau_joueurs,&Temps_d_epreuve);
 

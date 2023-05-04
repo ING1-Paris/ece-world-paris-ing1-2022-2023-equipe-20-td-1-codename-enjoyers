@@ -12,17 +12,18 @@ double tmpJ1;
 /*          PROGRAMME PRINCIPAL           */
 /******************************************/
 
-void jeu_riviere() {
+void jeu_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS]) {
 
+    t_joueur *joueur_riviere;
     t_rondin *mesRondins[NRONDIN];
-    t_joueuur *joueur;    // Un joueur (� cr�er)
+    t_joueuur *joueur[NOMBRE_JOUEURS];    // Un joueur (� cr�er)
     BITMAP *page;        // BITMAP buffer d'affichage
     BITMAP *decor;
+    BITMAP *perso[13];
+    char nomfichier[256];
+
+
     page = create_bitmap(SCREEN_W, SCREEN_H);
-
-
-    //tableTuiles = load_bitmap_check("images/tilemapZelda/tableTuiles.bmp");
-
 
     remplirTabRondin(mesRondins);
 
@@ -31,39 +32,44 @@ void jeu_riviere() {
 
 
     for (int j = 0; j < NOMBRE_JOUEURS; j++) {
+
+        //Debut du chronometre
         time_t temps_precedent = time(NULL);
 
-        joueur = creationJoueur("../assets/personnages/Shrek/Shrek_0.bmp");
+        //joueur[j] = creationJoueur(perso);
+
+        joueur[j] = (t_joueuur *)malloc(sizeof(t_joueur));
 
 
-        while (joueur->y <= 580) {
+        for (int i = 0; i < 12; ++i) {
+            joueur[j]->skin_perso[i]=joueur_riv[j].sprites[i];
+        }
+
+        joueur[j]->vit = 5;
+        joueur[j]->tx = 30;
+        joueur[j]->ty = 30;
+        joueur[j]->y = 400;
+
+
+
+        while (joueur[j]->y <= 580) {
 
 
             blit(decor,page,0,0,0,0,SCREEN_W,SCREEN_H);
 
             //dessineTerrain(page, terrain);
             AfficherTabRondin(page, mesRondins);
-            AfficherJoueur(page, joueur);
+            AfficherJoueur(page, joueur[j]);
             actualiserTabRondin(mesRondins);
 
-            textprintf_centre_ex(decor, font, 400, 570, makecol(255, 255, 255), 0, "%d",joueur->y);
+            textprintf_centre_ex(decor, font, 400, 570, makecol(255, 255, 255), 0, "%d",joueur[j]->y);
 
 
             time_t temps_actuel = time(NULL);
             temps_ecoule = difftime(temps_actuel, temps_precedent);
 
 
-            ActualiserJoueur(decor, mesRondins, joueur, mesRondins);
-
-
-            /*if (typeTerrain(joueur, 0, 0, 2)) { // dans l'eau ?
-                joueur->x = 32;
-                joueur->y = 200;
-                //acteur->x+=1;
-                textprintf_centre_ex(page, font, 400, 570, makecol(255, 255, 255), 0, " COULE ");
-            } else
-                textprintf_centre_ex(page, font, 400, 570, makecol(255, 255, 255), 0, "MARCHE");*/
-
+            ActualiserJoueur(decor, joueur[j], mesRondins);
 
 
             blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
@@ -86,5 +92,9 @@ void jeu_riviere() {
         }
 
     }
+
+    //time_t end = time(NULL);
+    //*Temps = (unsigned long) difftime(end,begin);
+
 }
 

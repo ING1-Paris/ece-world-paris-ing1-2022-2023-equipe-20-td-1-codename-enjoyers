@@ -27,7 +27,7 @@ t_rondin* creerRondin(char *nomimage){
     rondin_temp->tx = rondin_temp->img->w;
     rondin_temp->ty = rondin_temp->img->h;
 
-    rondin_temp->posx= (rand()%SCREEN_W-TX+1-TX)+TX;
+    rondin_temp->posx= 3;//(rand()%SCREEN_W-TX+1-TX)+TX;
 
     rondin_temp->posy = rand() % 5;
 
@@ -95,35 +95,35 @@ void AfficherTabRondin(BITMAP *bmp,t_rondin * tab[NRONDIN]){
 
 
 
-t_joueuur * creationJoueur(char *nomimage){
+t_joueuur * creationJoueur(BITMAP* tab_de_Skin[12]){
+
+
     t_joueuur *joueur_temp;
 
     joueur_temp = (t_joueuur *)malloc(1*sizeof(t_joueuur));
 
-
-    joueur_temp->img=load_bitmap(nomimage,NULL);
-    if (!joueur_temp->img)
+    for (int j = 0; j < 12; ++j)
     {
-        allegro_message("pas pu trouver %s",nomimage);
-        exit(EXIT_FAILURE);
+        joueur_temp->skin_perso[j] = tab_de_Skin[j];
+
     }
 
-    joueur_temp->tx = joueur_temp->img->w;
-    joueur_temp->ty = joueur_temp->img->h;
-
+    joueur_temp->tx = 48;
+    joueur_temp->ty = 48;
     joueur_temp->x = 600;
     joueur_temp->y = 200;
     joueur_temp->vit = 2;
+
 
     return joueur_temp;
 }
 
 
-void ActualiserJoueur(BITMAP *bmp, t_rondin **img, t_joueuur* joueur_a_actualiser, t_rondin* tabrondin[NRONDIN]){
+void ActualiserJoueur(BITMAP *bmp, t_joueuur* joueur_a_actualiser, t_rondin* tabrondin[NRONDIN]){
 
     for (int i = 0; i < NRONDIN; ++i) {
 
-        if ((joueur_a_actualiser->x+10 >= tabrondin[i]->posx) && (joueur_a_actualiser->y+20 >= tabrondin[i]->posy)) {
+        if ((joueur_a_actualiser->x+70 == tabrondin[i]->posx) && (joueur_a_actualiser->y+10 == tabrondin[i]->posy)) {
 
             //blit(bmp, bmp, joueur_a_actualiser->x, joueur_a_actualiser->y, tabrondin[i]->posx, tabrondin[i]->posy, SCREEN_W, SCREEN_H);
 
@@ -154,10 +154,10 @@ void ActualiserJoueur(BITMAP *bmp, t_rondin **img, t_joueuur* joueur_a_actualise
     if (key[KEY_RIGHT])
         joueur_a_actualiser->x =  joueur_a_actualiser->x + joueur_a_actualiser->vit;
 
-    if (key[KEY_LEFT] )//&& !typeTerrain(joueur, -4, 0, 1))
+    if (key[KEY_LEFT] )
         joueur_a_actualiser->x = joueur_a_actualiser->x - joueur_a_actualiser->vit;
 
-    if(key[KEY_DOWN]) //&& !typeTerrain(joueur, 0, 4, 1))
+    if(key[KEY_DOWN])
     {
         if (joueur_a_actualiser->y <= 330)
             joueur_a_actualiser->y = joueur_a_actualiser->y + joueur_a_actualiser->vit;
@@ -169,17 +169,20 @@ void ActualiserJoueur(BITMAP *bmp, t_rondin **img, t_joueuur* joueur_a_actualise
         }
     }
 
-    if (key[KEY_UP] )//&& !typeTerrain(joueur, 0, -4, 1))
+    if (key[KEY_UP] )
         joueur_a_actualiser->y = joueur_a_actualiser->y - joueur_a_actualiser->vit;
-
-    //if( key[KEY_SPACE] ) && !typeTerrain(joueur,0,-4,1) )
 
 
 }
 
 
+void detectionBuche();
+
 void AfficherJoueur(BITMAP *bmp,t_joueuur *joueur_a_afficher){
-    draw_sprite(bmp, joueur_a_afficher->img, joueur_a_afficher->x - joueur_a_afficher->img->w/2, joueur_a_afficher->y - joueur_a_afficher->img->h + 8);
+    for (int i = 0; i < 13; ++i) {
+        draw_sprite(bmp, joueur_a_afficher->skin_perso[i], joueur_a_afficher->x - joueur_a_afficher->skin_perso[i]->w/2, joueur_a_afficher->y - joueur_a_afficher->skin_perso[i]->h + 8);
+
+    }
 }
 
 
