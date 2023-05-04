@@ -14,7 +14,6 @@ double tmpJ1;
 
 void jeu_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS]) {
 
-    t_joueur *joueur_riviere;
     t_rondin *mesRondins[NRONDIN];
     t_joueuur *joueur[NOMBRE_JOUEURS];    // Un joueur (� cr�er)
     BITMAP *page;        // BITMAP buffer d'affichage
@@ -41,15 +40,15 @@ void jeu_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS]) {
 
         joueur[j] = (t_joueuur *)malloc(sizeof(t_joueur));
 
+        joueur[j]->skin_utilise = 6;
+        joueur[j]->vit = 5;
+        joueur[j]->tx = 48;
+        joueur[j]->ty = 48;
+        joueur[j]->y = 400;
 
         for (int i = 0; i < 12; ++i) {
             joueur[j]->skin_perso[i]=joueur_riv[j].sprites[i];
         }
-
-        joueur[j]->vit = 5;
-        joueur[j]->tx = 30;
-        joueur[j]->ty = 30;
-        joueur[j]->y = 400;
 
 
 

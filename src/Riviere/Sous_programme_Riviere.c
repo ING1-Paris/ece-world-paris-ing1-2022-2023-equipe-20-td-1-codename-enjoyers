@@ -108,6 +108,7 @@ t_joueuur * creationJoueur(BITMAP* tab_de_Skin[12]){
 
     }
 
+    joueur_temp->skin_utilise = 0;
     joueur_temp->tx = 48;
     joueur_temp->ty = 48;
     joueur_temp->x = 600;
@@ -153,14 +154,19 @@ void ActualiserJoueur(BITMAP *bmp, t_joueuur* joueur_a_actualiser, t_rondin* tab
 
     if (key[KEY_RIGHT])
         joueur_a_actualiser->x =  joueur_a_actualiser->x + joueur_a_actualiser->vit;
+        joueur_a_actualiser->skin_utilise = 1;
 
     if (key[KEY_LEFT] )
         joueur_a_actualiser->x = joueur_a_actualiser->x - joueur_a_actualiser->vit;
+        joueur_a_actualiser->skin_utilise = 2;
+
 
     if(key[KEY_DOWN])
     {
-        if (joueur_a_actualiser->y <= 330)
+        if (joueur_a_actualiser->y <= 330) {
             joueur_a_actualiser->y = joueur_a_actualiser->y + joueur_a_actualiser->vit;
+            joueur_a_actualiser->skin_utilise = 3;
+        }
 
         else {
             textprintf_centre_ex(bmp, font, SCREEN_W/2, SCREEN_H/2, makecol(255, 255, 255), 0, "PLOUF !");
@@ -171,6 +177,7 @@ void ActualiserJoueur(BITMAP *bmp, t_joueuur* joueur_a_actualiser, t_rondin* tab
 
     if (key[KEY_UP] )
         joueur_a_actualiser->y = joueur_a_actualiser->y - joueur_a_actualiser->vit;
+        joueur_a_actualiser->skin_utilise = 3;
 
 
 }
