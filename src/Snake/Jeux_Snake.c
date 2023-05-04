@@ -291,7 +291,7 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS],unsigned long* Temps){
 
 
     //Information de fin de jeu
-
+    masked_blit(Nom_du_jeu,page,0,0,SCREEN_W/2-200,50,400,178);
     rectfill(page,340,200,640,220,makecol(255,255,255));
     rect(page,340,200,640,220,makecol(0,0,0));
     if (Joueur[0].score > Joueur[1].score)
