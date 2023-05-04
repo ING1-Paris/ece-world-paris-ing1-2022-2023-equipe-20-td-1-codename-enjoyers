@@ -122,6 +122,18 @@ t_joueuur * creationJoueur(BITMAP* tab_de_Skin[12]){
 
 void ActualiserJoueur(BITMAP *bmp, t_joueuur* joueur_a_actualiser, t_rondin* tabrondin[NRONDIN]){
 
+    if (key[KEY_RIGHT]) {
+        joueur_a_actualiser->x = joueur_a_actualiser->x + joueur_a_actualiser->vit;
+        joueur_a_actualiser->skin_utilise = 6;
+    }
+
+    if (key[KEY_LEFT] ) {
+        joueur_a_actualiser->skin_utilise = 3;
+        joueur_a_actualiser->x = joueur_a_actualiser->x - joueur_a_actualiser->vit;
+    }
+
+    /*
+
     for (int i = 0; i < NRONDIN; ++i) {
 
         if ((joueur_a_actualiser->x+70 == tabrondin[i]->posx) && (joueur_a_actualiser->y+10 == tabrondin[i]->posy)) {
@@ -133,39 +145,20 @@ void ActualiserJoueur(BITMAP *bmp, t_joueuur* joueur_a_actualiser, t_rondin* tab
             joueur_a_actualiser->y = tabrondin[i]->posy + 10;
             //AfficherJoueurRondin(tabrondin[i], joueur_a_actualiser);
 
-
-            /*else (key[KEY_SPACE])
-
-                joueur_a_actualiser->y = joueur_a_actualiser->y + 10;
-
-                if (joueur_a_actualiser->y > 320) {
-
-                    joueur_a_actualiser->y = 200;
-                    joueur_a_actualiser->x = 600;
-
-                    textprintf_centre_ex(bmp, font, SCREEN_W / 2, SCREEN_H / 2, makecol(255, 255, 255), 0, "PLOUF !");
-                }*/
-
             if ((key[KEY_DOWN])&&((joueur_a_actualiser->y+70==tabrondin[i]->posy)&&(joueur_a_actualiser->x+70 == tabrondin[i]->posx))){
                 joueur_a_actualiser->x = tabrondin[i]->posx + 100;
-                joueur_a_actualiser->y = tabrondin[i]->posy + 10;            }
+                joueur_a_actualiser->y = tabrondin[i]->posy + 10;
+            }
         }
     }
-
-    if (key[KEY_RIGHT])
-        joueur_a_actualiser->x =  joueur_a_actualiser->x + joueur_a_actualiser->vit;
-        joueur_a_actualiser->skin_utilise = 6;
-
-    if (key[KEY_LEFT] )
-        joueur_a_actualiser->x = joueur_a_actualiser->x - joueur_a_actualiser->vit;
-        joueur_a_actualiser->skin_utilise = 3;
-
+    */
 
     if(key[KEY_DOWN])
     {
-        if (joueur_a_actualiser->y <= 330) {
+        joueur_a_actualiser->skin_utilise = 0;
+
+        if (joueur_a_actualiser->y <= 700) {
             joueur_a_actualiser->y = joueur_a_actualiser->y + joueur_a_actualiser->vit;
-            joueur_a_actualiser->skin_utilise = 0;
         }
 
         else {
@@ -175,22 +168,19 @@ void ActualiserJoueur(BITMAP *bmp, t_joueuur* joueur_a_actualiser, t_rondin* tab
         }
     }
 
-    if (key[KEY_UP] )
-        joueur_a_actualiser->y = joueur_a_actualiser->y - joueur_a_actualiser->vit;
+    if (key[KEY_UP] ) {
         joueur_a_actualiser->skin_utilise = 9;
-
-
+        joueur_a_actualiser->y = joueur_a_actualiser->y - joueur_a_actualiser->vit;
+    }
 }
 
 
 void detectionBuche();
 
-void AfficherJoueur(BITMAP *bmp,t_joueuur *joueur_a_afficher){
-    for (int i = 0; i < 13; ++i) {
-        masked_blit(joueur_a_afficher->skin_perso[joueur_a_afficher->skin_utilise],bmp,0,0,joueur_a_afficher->x,joueur_a_afficher->y,joueur_a_afficher->tx,joueur_a_afficher->ty);
-
-        //draw_sprite(bmp, joueur_a_afficher->skin_perso[i], joueur_a_afficher->x - joueur_a_afficher->skin_perso[i]->w/2, joueur_a_afficher->y - joueur_a_afficher->skin_perso[i]->h + 8);
-
+void AfficherJoueur(t_joueuur *joueur_a_afficher, BITMAP *bmp,int animation){
+    if (joueur_a_afficher != NULL){
+        //AfficherJoueur(joueur_a_afficher, bmp, animation);
+        masked_blit(joueur_a_afficher->skin_perso[joueur_a_afficher->skin_utilise + animation],bmp,0,0,joueur_a_afficher->x,joueur_a_afficher->y,joueur_a_afficher->tx,joueur_a_afficher->ty);
     }
 }
 
