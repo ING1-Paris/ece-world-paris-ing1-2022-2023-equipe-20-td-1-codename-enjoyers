@@ -21,6 +21,7 @@ void jeu_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS]) {
     BITMAP *decor;
     BITMAP *perso[13];
     char nomfichier[256];
+    int k;
 
 
     page = create_bitmap(SCREEN_W, SCREEN_H);
