@@ -16,13 +16,13 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS],unsigned long* Temps){
     char nomfichier[256];
     int Animation = 0;
     int attente = 0;
+    BITMAP * Nom_du_jeu = load_bitmap("../assets/Item/Snake/Nom_du_Snake.bmp",NULL);
 
     // Variable Serpent
-    int mode_de_jeu = 2;
-    t_corp_de_snake* head[2] = {NULL,NULL};
-    t_corp_de_snake* head_tmp[2] = {NULL,NULL};
-    int Longueur[2] = {0,0};
-    int Serpent_en_vie[2] = {1,1};
+    t_corp_de_snake* head[NOMBRE_JOUEURS] = {NULL,NULL};
+    t_corp_de_snake* head_tmp[NOMBRE_JOUEURS] = {NULL,NULL};
+    int Longueur[NOMBRE_JOUEURS] = {0,0};
+    int Serpent_en_vie[NOMBRE_JOUEURS] = {1,1};
 
     // Variable hitbox
     t_hitbox tab_hitboxes[4];
@@ -37,6 +37,8 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS],unsigned long* Temps){
     for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
         Joueur[i].score=0;
     }
+    int alive_temps[NOMBRE_JOUEURS]={1,1};
+    time_t Mort_du_seprent[NOMBRE_JOUEURS];
 
     // Initialisation de la page
     page = create_bitmap(SCREEN_W, SCREEN_H);
@@ -83,7 +85,7 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS],unsigned long* Temps){
     tab_hitboxes[3].y2 = SCREEN_H;
 
     //Creation des Pommes
-    for (int i = 0; i < mode_de_jeu; ++i) {
+    for (int i = 0; i < 2; ++i) {
         generation_Pomme(&Pomme[i]);
     }
 
@@ -115,9 +117,9 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS],unsigned long* Temps){
         }
 
         //Mise en place des 2 premieres parties du corps
-        Longueur[0] = 1;
+        Longueur[i] = 1;
         for (int j = 0; j < 4; ++j) {
-            Ajout_de_Longueur(head[i],SNAKE1,&Longueur[0]);
+            Ajout_de_Longueur(head[i],SNAKE1,&Longueur[i]);
         }
 
         head_tmp[i] = head[i];
@@ -127,6 +129,28 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS],unsigned long* Temps){
             head_tmp[i] = head_tmp[i]->next_corp;
         }
     }
+
+    blit(decor,page,0,0,0,0,SCREEN_W, SCREEN_H);
+
+    //menu avant le jeu
+    while (!key[KEY_SPACE]){
+
+        masked_blit(Nom_du_jeu,page,0,0,SCREEN_W/2-200,50,400,178);
+        rectfill(page,340,200,640,220,makecol(255,255,255));
+        rect(page,340,200,640,220,makecol(0,0,0));
+        textprintf_ex(page,font,350,210, makecol(0,0,0),-1,"Appuyer sur 'Space' Pour commencer !");
+
+        for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
+            head[i]->skin_used=2;
+            Invertion(head[i],page,Animation);
+
+        }
+        blit(page,screen,0,0,0,0,SCREEN_W, SCREEN_H);
+    }
+    for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
+        head[i]->skin_used=6;
+    }
+
 
 
     /// Debut du Jeu \\\
@@ -140,7 +164,7 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS],unsigned long* Temps){
         blit(decor,page,0,0,0,0,SCREEN_W, SCREEN_H);
         //Coordonée de la map jouable= 60;76 892;689
 
-        for (int j = 0; j < mode_de_jeu; ++j) {
+        for (int j = 0; j < NOMBRE_JOUEURS; ++j) {
 
             // Deplacement joueur
             if (j == 0 && Serpent_en_vie[0]==1)
@@ -151,7 +175,7 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS],unsigned long* Temps){
 
             //Actualisation des positions du Snake et des Pommes
             Actualisation_Snake(head[j]);
-            for (int k = 0; k < mode_de_jeu; ++k) {
+            for (int k = 0; k < NOMBRE_JOUEURS; ++k) {
                 Interaction_Pomme(head[j],&Pomme[k],&Longueur[j],SNAKE1);
             }
 
@@ -188,7 +212,7 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS],unsigned long* Temps){
 
             //Collision avec le corp des serpents
             head_tmp[j]=head[j];
-            for (int k = 0; k < mode_de_jeu; ++k) {
+            for (int k = 0; k < NOMBRE_JOUEURS; ++k) {
 
 
                 if (head[j] == head_tmp[k])
@@ -223,15 +247,59 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS],unsigned long* Temps){
 
         //gestion du Score
         for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
-            Joueur[i].score=Longueur[i]-4;
+            Joueur[i].score=Longueur[i]-5;
         }
 
+        //Gestion de L'interface in game
+
+        //J1
+        rectfill(page,10,10,250,70,makecol(255,255,255));
+        rect(page,10,10,250,70,makecol(0,0,0));
+        stretch_blit(Joueur[0].sprites[12],page,0,0,225,225,15,15,50,50);
+
+        textprintf_ex(page,font,70, 30, makecol(0,0,0),-1,"%s",Joueur[0].nom);
+        textprintf_ex(page,font,70, 50, makecol(0,0,0),-1,"Score: %d",Joueur[0].score);
+
+        //J2
+        rectfill(page,SCREEN_W-250,10,SCREEN_W-10,70,makecol(255,255,255));
+        rect(page,SCREEN_W-250,10,SCREEN_W-10,70,makecol(0,0,0));
+        stretch_blit(Joueur[1].sprites[12],page,0,0,225,225,SCREEN_W-250+5,15,50,50);
+
+        textprintf_ex(page,font,SCREEN_W-250+5+55, 30, makecol(0,0,0),-1,"%s",Joueur[1].nom);
+        textprintf_ex(page,font,SCREEN_W-250+5+55, 50, makecol(0,0,0),-1,"Score: %d",Joueur[1].score);
+
+        //gestion du temps
+        for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
+            if (Serpent_en_vie[i]==0 && alive_temps[i]==1){
+                Mort_du_seprent[i] = time(NULL);
+                alive_temps[i]=0;
+            }
+        }
 
         //Double buffer
         blit(page,screen,0,0,0,0,SCREEN_W, SCREEN_H);
         rest(20);
     }
-    //gestion du temps
-    time_t end = time(NULL);
-    *Temps = (unsigned long) difftime(end,begin);
+
+    /// Fin DU JEU \\\
+
+    //gestion du temps en fin de partie
+    for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
+        *Temps = (unsigned long) difftime(Mort_du_seprent[i],begin);
+        printf("Le joueur %d est reste en vie pendant %lus\n",i+1,*Temps);
+    }
+
+
+    //Information de fin de jeu
+
+    rectfill(page,340,200,640,220,makecol(255,255,255));
+    rect(page,340,200,640,220,makecol(0,0,0));
+    if (Joueur[0].score > Joueur[1].score)
+        textprintf_ex(page,font,350,210, makecol(0,0,0),-1,"Le Joueur %s gagne !",Joueur[0].nom);
+    else
+        textprintf_ex(page,font,350,210, makecol(0,0,0),-1,"Le Joueur %s gagne !",Joueur[1].nom);
+
+    blit(page,screen,0,0,0,0,SCREEN_W, SCREEN_H);
+
+    alert("Fin du jeu !", NULL, NULL, "Retour au menu", NULL, 0, 0);
 }
