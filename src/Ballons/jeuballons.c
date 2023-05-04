@@ -25,7 +25,7 @@ int libreListeActeurs(t_listeActeurs *la);
 int cpt_ballons ;
 
 //temps performance joueur
-double temps_ecoule;
+double temps_ecouleeee, tmpJ1;
 
 // Allouer et ajouter un acteur à la liste
 // et retourner l'adresse de ce nouveau acteur
@@ -177,10 +177,9 @@ void jeuballons()
     // BOUCLE DE JEU
     for(int j=0; j<2; j++) {
         time_t temps_precedent = time(NULL);
-        printf("debut %.2f\n", temps_ecoule);
         while (!key[KEY_ENTER]) {
             time_t temps_actuel = time(NULL);
-            temps_ecoule = difftime(temps_actuel, temps_precedent);
+            temps_ecouleeee = difftime(temps_actuel, temps_precedent);
 
             // effacer buffer en appliquant décor  (pas de clear_bitmap)
             blit(decor, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
@@ -218,8 +217,16 @@ void jeuballons()
             // petite temporisation
             rest(10);
         }
-        allegro_message("vous avez éclaté les 5 ballons en %.1f secondes", temps_ecoule);
-        printf("fin %.1f\n", temps_ecoule);
+        allegro_message("vous avez éclaté les 5 ballons en %.1f secondes", temps_ecouleeee);
+        if(j==0)
+            tmpJ1 = temps_ecouleeee;
+        else{
+            if(tmpJ1 < temps_ecouleeee)
+                allegro_message("Joueur 1, vous avez gagné un ticket !");
+            else
+                allegro_message("Joueur 2, vous avez gagné un ticket !");
+
+        }
     }
 
 }
