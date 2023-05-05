@@ -233,9 +233,9 @@ typedef struct ballon {
 
 //LA RIVIERE
 
-void jeu_riviere();
+void jeu_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps);
 
-#define NRONDIN 8
+#define NRONDIN 19
 #define TX 40 // Largeur
 #define TY 16 // Hauteur
 
@@ -255,7 +255,8 @@ typedef struct joueuur
     int tx, ty;
     int x, y; // coordonn�es (en pixels) des pieds de l'acteur
     int vit;
-    BITMAP *img;       // image de l'acteur
+    int skin_utilise;
+    BITMAP *skin_perso[13];    // image de l'acteur
 } t_joueuur;
 
 
@@ -268,9 +269,9 @@ void AfficherRondin(BITMAP *bmp,t_rondin *rondin_a_afficher);
 void AfficherTabRondin(BITMAP *bmp,t_rondin * tab[NRONDIN]);
 
 
-t_joueuur * creationJoueur(char *nomimage);
-void ActualiserJoueur(BITMAP *bmp, t_rondin **img, t_joueuur* joueur_a_actualiser, t_rondin* tabrondin[NRONDIN]);
-void AfficherJoueur(BITMAP *bmp,t_joueuur *joueur_a_afficher);
+t_joueuur * creationJoueur(BITMAP* tab_de_Skin[12]);
+void ActualiserJoueur(BITMAP *bmp, t_joueuur* joueur_a_actualiser, t_rondin* tabrondin[NRONDIN]);
+void AfficherJoueur(t_joueuur *joueur_a_afficher, BITMAP *bmp,int animation);
 
 
 BITMAP * load_bitmap_check(char *nomImage);
