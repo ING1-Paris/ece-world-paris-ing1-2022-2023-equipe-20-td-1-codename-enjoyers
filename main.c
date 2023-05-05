@@ -138,7 +138,7 @@ int main() {
     //guitar_hero();
     //jeu_riviere(tableau_joueurs, &Temps_d_epreuve);
 
-    printf("\n\n\n");
+    //printf("\n\n\n");
     //system("pause");
 
     // -----------------------------
@@ -164,7 +164,7 @@ int main() {
     GUI_demarrage[6].dp = load_bitmap("../assets/personnages/Shrek/Shrek_12.bmp", NULL);
     GUI_demarrage[7].dp = load_bitmap("../assets/personnages/Chat/Chat_12.bmp", NULL);
     GUI_demarrage[8].dp = load_bitmap("../assets/personnages/Fiona/Fiona_12.bmp", NULL);
-    GUI_demarrage[9].dp = load_bitmap("../assets/personnages/Thomas/thomas.bmp", NULL);
+    GUI_demarrage[9].dp = load_bitmap("../assets/personnages/Thomas/Thomas_12.bmp", NULL);
 
 
     alert("Bienvenue sur SHREK MANIA WORLD !", NULL, NULL, "Suivant", NULL, 0, 0);
@@ -257,7 +257,7 @@ int main() {
 
     while (!key[KEY_ESC]) {
 
-        //jeu_riviere(tableau_joueurs, &Temps_d_epreuve);
+        jeu_riviere(tableau_joueurs, &Temps_d_epreuve);
 
         Snake(tableau_joueurs,&Temps_d_epreuve);
 
