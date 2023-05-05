@@ -120,6 +120,7 @@ t_joueuur * creationJoueur(BITMAP* tab_de_Skin[12]){
 }
 
 
+
 void ActualiserJoueur(BITMAP *bmp, t_joueuur* joueur_a_actualiser, t_rondin* tabrondin[NRONDIN]){
 
     if (key[KEY_RIGHT]) {

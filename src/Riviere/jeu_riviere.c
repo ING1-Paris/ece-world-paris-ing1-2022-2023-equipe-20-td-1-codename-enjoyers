@@ -21,6 +21,7 @@ void jeu_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps) {
     int animation_perso_riv = 0;
     int attente_riv = 0;
     double temps_ecoule_riv;
+    int k;
 
     page = create_bitmap(SCREEN_W, SCREEN_H);
 

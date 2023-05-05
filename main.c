@@ -257,7 +257,7 @@ int main() {
 
     while (!key[KEY_ESC]) {
 
-        //jeu_riviere(tableau_joueurs, &Temps_d_epreuve);
+        jeu_riviere(tableau_joueurs, &Temps_d_epreuve);
 
         Snake(tableau_joueurs,&Temps_d_epreuve);
 
