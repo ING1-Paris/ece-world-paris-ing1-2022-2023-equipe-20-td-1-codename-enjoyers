@@ -259,7 +259,7 @@ int main() {
 
         jeu_riviere(tableau_joueurs, &Temps_d_epreuve);
 
-        Snake(tableau_joueurs,&Temps_d_epreuve);
+        //Snake(tableau_joueurs,&Temps_d_epreuve);
 
         blit(map_menu, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 

@@ -121,38 +121,41 @@ t_joueuur * creationJoueur(BITMAP* tab_de_Skin[12]){
 
 
 
-void ActualiserJoueur(BITMAP *bmp, t_joueuur* joueur_a_actualiser, t_rondin* tabrondin[NRONDIN]){
+void ActualiserJoueur(BITMAP *bmp, t_joueuur* joueur_a_actualiser, t_rondin* tabrondin[NRONDIN], int anim){
+
+    /*if (joueur_a_actualiser->y !=200){
+        joueur_a_actualiser->skin_utilise = 0;
+        joueur_a_actualiser->y= joueur_a_actualiser->y + joueur_a_actualiser->vit;
+    }*/
 
     if (key[KEY_RIGHT]) {
-        joueur_a_actualiser->x = joueur_a_actualiser->x + joueur_a_actualiser->vit;
-        joueur_a_actualiser->skin_utilise = 6;
+
+        if(joueur_a_actualiser->x==920){
+
+        }
+        else {
+            joueur_a_actualiser->x = joueur_a_actualiser->x + joueur_a_actualiser->vit;
+            joueur_a_actualiser->skin_utilise = 6;
+        }
     }
 
-    if (key[KEY_LEFT] ) {
+    if (key[KEY_LEFT] )
+    {
         joueur_a_actualiser->skin_utilise = 3;
         joueur_a_actualiser->x = joueur_a_actualiser->x - joueur_a_actualiser->vit;
     }
 
-    /*
 
-    for (int i = 0; i < NRONDIN; ++i) {
 
-        if ((joueur_a_actualiser->x+70 == tabrondin[i]->posx) && (joueur_a_actualiser->y+10 == tabrondin[i]->posy)) {
+    /*for (int i = 0; i < NRONDIN; ++i) {
 
-            //blit(bmp, bmp, joueur_a_actualiser->x, joueur_a_actualiser->y, tabrondin[i]->posx, tabrondin[i]->posy, SCREEN_W, SCREEN_H);
+        if ((joueur_a_actualiser->x = tabrondin[i]->posx) && (joueur_a_actualiser->y = tabrondin[i]->posy)) {
 
-            //joueur_a_actualiser->vit = tabrondin[i]->depx;
-            joueur_a_actualiser->x = tabrondin[i]->posx + 70;
-            joueur_a_actualiser->y = tabrondin[i]->posy + 10;
-            //AfficherJoueurRondin(tabrondin[i], joueur_a_actualiser);
+            AfficherJoueur(joueur_a_actualiser,tabrondin[i]->img,anim);
 
-            if ((key[KEY_DOWN])&&((joueur_a_actualiser->y+70==tabrondin[i]->posy)&&(joueur_a_actualiser->x+70 == tabrondin[i]->posx))){
-                joueur_a_actualiser->x = tabrondin[i]->posx + 100;
-                joueur_a_actualiser->y = tabrondin[i]->posy + 10;
-            }
         }
-    }
-    */
+    }*/
+
 
     if(key[KEY_DOWN])
     {
@@ -200,3 +203,196 @@ BITMAP * load_bitmap_check(char *nomImage){
 }
 
 
+
+
+void deplacement_joueurs_riv(BITMAP * bmp, t_joueuur *joueur_a_actualiser[NOMBRE_JOUEURS],int innactivite[NOMBRE_JOUEURS],t_rondin *rondin_riv[NRONDIN]) {
+
+    int compteur = 0;
+    int i;
+
+    // DEPLACEMENTS DU JOUEUR 1
+    if (key[KEY_UP]) {
+
+        if (joueur_a_actualiser[0]->y < 0) {
+            // on bloque
+        } else {
+
+            joueur_a_actualiser[0]->y = joueur_a_actualiser[0]->y - joueur_a_actualiser[0]->vit;
+            joueur_a_actualiser[0]->skin_utilise = 9;
+            innactivite[0] = 0;
+        }
+    }
+
+
+    if (key[KEY_DOWN]) {
+
+        if (joueur_a_actualiser[0]->y + joueur_a_actualiser[0]->ty >= SCREEN_H) {
+            // on bloque
+        } else {
+
+            joueur_a_actualiser[0]->y = joueur_a_actualiser[0]->y + joueur_a_actualiser[0]->vit;
+            joueur_a_actualiser[0]->skin_utilise = 0;
+            innactivite[0] = 0;
+        }
+    }
+
+
+    if (key[KEY_RIGHT]) {
+
+        if (joueur_a_actualiser[0]->x + joueur_a_actualiser[0]->tx >= SCREEN_W) {
+            // on bloque
+        } else {
+
+            joueur_a_actualiser[0]->x = joueur_a_actualiser[0]->x + joueur_a_actualiser[0]->vit;
+            joueur_a_actualiser[0]->skin_utilise = 6;
+            innactivite[0] = 0;
+
+        }
+    }
+
+
+    if (key[KEY_LEFT]) {
+
+        if (joueur_a_actualiser[0]->x < 0) {
+            // on bloque
+        } else {
+
+            joueur_a_actualiser[0]->x = joueur_a_actualiser[0]->x - joueur_a_actualiser[0]->vit;
+            joueur_a_actualiser[0]->skin_utilise = 3;
+            innactivite[0] = 0;
+        }
+
+    }
+
+
+    /*
+    // DEPLACEMENTS DU JOUEUR 2
+    if (key[KEY_W]) {
+
+        if (joueur_a_actualiser[1]->y < 0) {
+            // on bloque
+
+        } else {
+
+            joueur_a_actualiser[1]->y = joueur_a_actualiser[1]->y - joueur_a_actualiser[1]->vit;
+            joueur_a_actualiser[1]->skin_utilise = 9;
+            innactivite[1] = 0;
+        }
+    }
+
+
+    if (key[KEY_S]) {
+
+        if (joueur_a_actualiser[1]->y + joueur_a_actualiser[1]->ty >= SCREEN_H) {
+            // on bloque
+        } else {
+
+            joueur_a_actualiser[1]->y = joueur_a_actualiser[1]->y + joueur_a_actualiser[1]->vit;
+            joueur_a_actualiser[1]->skin_utilise= 0;
+            innactivite[1] = 0;
+        }
+    }
+
+
+    if (key[KEY_D]) {
+
+        if (joueur_a_actualiser[1]->x + joueur_a_actualiser[1]->tx >= SCREEN_W) {
+
+            // on bloque
+
+        } else {
+
+            joueur_a_actualiser[1]->x = joueur_a_actualiser[1]->x + joueur_a_actualiser[1]->vit;
+            joueur_a_actualiser[1]->skin_utilise = 6;
+            innactivite[1] = 0;
+
+        }
+
+        for (i=0; i<NRONDIN; i++) {
+
+            if (collision_joueur_buche(rondin_riv[i], joueur_a_actualiser[1])) {
+
+                // on bloque
+
+                printf("Collision ! \n");
+
+                joueur_a_actualiser[1]->x = joueur_a_actualiser[1]->x - joueur_a_actualiser[1]->vit;
+
+            }
+
+        }
+
+    }
+
+
+    if (key[KEY_A]) {
+
+        if (joueur_a_actualiser[1]->x < 0) {
+
+            // on bloque
+
+        } else {
+
+            joueur_a_actualiser[1]->x = joueur_a_actualiser[1]->x - joueur_a_actualiser[1]->vit;
+            joueur_a_actualiser[1]->skin_utilise = 3;
+            innactivite[1] = 0;
+        }
+
+        for (i=0; i<NRONDIN; i++) {
+
+            if (collision_joueur_buche(rondin_riv[i], joueur_a_actualiser[1])) {
+
+                // on bloque
+
+                printf("Collision ! \n");
+
+                joueur_a_actualiser[1]->x = joueur_a_actualiser[1]->x + joueur_a_actualiser[1]->vit;
+
+
+            }
+
+        }
+
+
+
+    }*/
+}
+
+
+int collision_joueur_buche(t_rondin * rondin, t_joueuur * joueur_actuel) {
+
+    int retour;
+    int m[4], imin, i;
+
+
+    m[0] = joueur_actuel->x + joueur_actuel->tx - rondin->posx; // 0: à droite
+    m[1] = rondin->posx - joueur_actuel->x; // 1: à gauche
+    m[2] = joueur_actuel->y + joueur_actuel->ty ; //- rondin->posy; // 2: en bas
+    m[3] = rondin->posy - joueur_actuel->y; // 3: en haut
+
+    // Chercher l'indice de la plus petite marge
+    imin=0;
+    for (i=1;i<4;i++)
+        if (m[i]<m[imin])
+            imin=i;
+
+    // A priori pas de collision
+    retour=0;
+
+    // Si la plus petite marge n'est pas strictement négative
+    // alors c'est qu'on a une collision et cette collision est de ce coté
+    if (m[imin]>=0)
+        retour=1;  // on retourne l'indice du coté + 1 (car 0 signifie "pas de collision")
+
+    return retour;
+}
+
+
+/*
+int collision_riv(t_rondin * rondin, t_joueur * joueur_actuel){
+    if (joueur_actuel->y+40 <= pixel marron)
+        return 1
+
+    else return 0
+}
+*/
