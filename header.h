@@ -269,19 +269,58 @@ void AfficherTabRondin(BITMAP *bmp,t_rondin * tab[NRONDIN]);
 
 
 t_joueuur * creationJoueur(BITMAP* tab_de_Skin[12]);
-
 void ActualiserJoueur(BITMAP *bmp, t_joueuur* joueur_a_actualiser, t_rondin* tabrondin[NRONDIN], int anim);
-
 void deplacement_joueurs_riv(BITMAP * bmp, t_joueuur *joueur_a_actualiser[NOMBRE_JOUEURS],int innactivite[NOMBRE_JOUEURS], t_rondin *rondin_riv[NRONDIN]);
-
 void AfficherJoueur(t_joueuur *joueur_a_afficher, BITMAP *bmp,int animation);
 
 int collision_joueur_buche(t_rondin * rondin, t_joueuur * joueur_actuel);
-
 int collision_riv(t_rondin * rondin, t_joueur * joueur_actuel);
 
 
 BITMAP * load_bitmap_check(char *nomImage);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//JEU DE LA TAUPE
+
+#define NOMBRE_TAUPE 1
+void jeu_taupe(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps);
+
+
+typedef struct taupe{
+
+    int tx,ty;    // taille
+    BITMAP *skin;
+    int skin_utilise;
+    int x,y;
+    int vit;
+
+}t_taupe;
+
+
+
+typedef struct joueur_taupe
+{
+    int tx, ty;
+    unsigned long temps;
+    int score;
+    //int x, y; // coordonn�es (en pixels) des pieds de l'acteur
+    int vit;
+    int skin_utilise;
+    BITMAP *skin_perso[13]; // image de l'acteur
+} t_joueur_taupe;
+
 
 
 

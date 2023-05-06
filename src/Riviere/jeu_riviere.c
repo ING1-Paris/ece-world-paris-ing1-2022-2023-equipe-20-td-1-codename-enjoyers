@@ -92,36 +92,36 @@ void jeu_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps) {
             deplacement_joueurs_riv(page, &joueur[j], &inactivite[j],&mesRondins[j]);
 
 
-                for (int i=0; i<NOMBRE_JOUEURS; i++) {
+            for (int i=0; i<NOMBRE_JOUEURS; i++) {
 
-                    //On verifie si le personnage est innactif ou non
-                    if (inactivite[i] == 1){
+                //On verifie si le personnage est innactif ou non
+                if (inactivite[i] == 1){
 
-                        joueur[i]->skin_utilise = joueur[i]->skin_utilise +2;
-                        animation_perso_riv[i] = 0;
-
-                    }
-                    else{
-
-                        if (animation_perso_riv[i] == 0)
-                            animation_perso_riv[i] = 1;
-                        else {
-                            animation_perso_riv[i] = 0;
-                        }
-                    }
-
-                    //Affichage du joueur
-                    //masked_blit(joueur_a_afficher->skin_perso[joueur_a_afficher->skin_utilise + animation],bmp,0,0,joueur_a_afficher->x,joueur_a_afficher->y,joueur_a_afficher->tx,joueur_a_afficher->ty);
-                    //ActualiserJoueur(decor, joueur[i], mesRondins, animation_perso_riv[i]);
-
-                    masked_blit(joueur[i]->skin_perso[joueur[i]->skin_utilise+animation_perso_riv[i]],page,0,0,joueur[i]->x,joueur[i]->y,joueur[i]->tx,joueur[i]->ty);
-
-
-                    //On enleve le sprite d'inactivite
-                    if (inactivite[i] == 1)
-                        joueur[i]->skin_utilise = joueur[i]->skin_utilise - 2;
+                    joueur[i]->skin_utilise = joueur[i]->skin_utilise +2;
+                    animation_perso_riv[i] = 0;
 
                 }
+                else{
+
+                    if (animation_perso_riv[i] == 0)
+                        animation_perso_riv[i] = 1;
+                    else {
+                        animation_perso_riv[i] = 0;
+                    }
+                }
+
+                //Affichage du joueur
+                //masked_blit(joueur_a_afficher->skin_perso[joueur_a_afficher->skin_utilise + animation],bmp,0,0,joueur_a_afficher->x,joueur_a_afficher->y,joueur_a_afficher->tx,joueur_a_afficher->ty);
+                //ActualiserJoueur(decor, joueur[i], mesRondins, animation_perso_riv[i]);
+
+                masked_blit(joueur[i]->skin_perso[joueur[i]->skin_utilise+animation_perso_riv[i]],page,0,0,joueur[i]->x,joueur[i]->y,joueur[i]->tx,joueur[i]->ty);
+
+
+                //On enleve le sprite d'inactivite
+                if (inactivite[i] == 1)
+                    joueur[i]->skin_utilise = joueur[i]->skin_utilise - 2;
+
+            }
 
 
             time_t temps_actuel = time(NULL);
