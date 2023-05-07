@@ -57,6 +57,7 @@ void activation_event(t_joueur tab_joueurs[NOMBRE_JOUEURS], t_hitbox tab_eventbo
 
 // GUITAR HERO
 #define TAILLE_TAB_CHANSONS 2
+#define TEMPO_DE_BASE 480000
 
 typedef struct note_musique {
 
@@ -85,14 +86,15 @@ typedef struct cercle_fixe {
 
 void guitar_hero();
 char *listbox_getter(int index, int *list_size);
-t_note * charger_musique(char nom_musique[256], int * taille_tab);
+t_note * charger_musique(char nom_musique[256], int * taille_tab, int * tempo);
 void charger_interface(BITMAP * bmp, t_cercle_fixe tab_cercles_fixes[5]);
 long map(long x, long in_min, long in_max, long out_min, long out_max);
 void spawn_cercles(BITMAP * bmp, t_note * note_a_jouer);
 void actualiser_cercle(t_note * note_a_jouer);
 void actualiser_tab_cercles(BITMAP * bmp, t_note * tableau_notes, int taille_tab);
 int collision_cercles(t_cercle_fixe *a1, t_note *a2);
-
+t_note * organiser_portees(t_note * tab_notes, int taille_tab_notes, int * taille_portee, int portee);
+void update_millis(t_note * note_a_update, int tempo);
 
 
 
