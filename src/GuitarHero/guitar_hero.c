@@ -7,15 +7,38 @@
 void guitar_hero() {
 
     // INITIALISATION - DECLARATION DES VARIABLES
-    int index;
-    int alive = 1;
+
+    //Variable de temps
     clock_t begin;
     clock_t end;
     unsigned long millis;
     int tempo_musique;
 
-    char nom_fichier_musique[256];
+    //Variable de parcours de tableau
+    int taille_tableau;
+    int note_max;
+    int note_min;
 
+    //Variable Portee 1
+    t_note * portee_1 = NULL;
+    int index_portee_1;
+    int taille_portee_1;
+
+    //Variable Portee 2
+    t_note * portee_2 = NULL;
+    int index_portee_2;
+    int taille_portee_2;
+
+
+    //Variable de fin de partie
+    int alive = 1;
+    int demarrage_musique = 1;
+
+    //Variable de gestion des fichiers
+    char nom_fichier_musique[256];
+    int corde;
+
+    //Variable de l'affichage
     BITMAP * page = create_bitmap(SCREEN_W, SCREEN_H);
 
     t_cercle_fixe tableau_cercles_fixes[5] = {
@@ -55,12 +78,8 @@ void guitar_hero() {
     printf("Index du string: %d \n", GUI_guitar_hero[2].d1);
     printf("String en question: %s \n", listbox_getter(GUI_guitar_hero[2].d1, (int *) TAILLE_TAB_CHANSONS));
 
-    int taille_tableau;
-    int note_max;
-    int note_min;
-    int corde;
-
-    t_note * chanson_jouee = charger_musique(listbox_getter(GUI_guitar_hero[2].d1, (int*) TAILLE_TAB_CHANSONS), &taille_tableau);
+    // Chargement du csv de la musique
+    t_note * chanson_jouee = charger_musique(listbox_getter(GUI_guitar_hero[2].d1, (int*) TAILLE_TAB_CHANSONS), &taille_tableau, &tempo_musique);
 
     // On charge le fichier MIDI/audio de la musique en question
     sprintf(nom_fichier_musique, "../assets/Item/GuitarHero/%s.wav", listbox_getter(GUI_guitar_hero[2].d1, (int*) TAILLE_TAB_CHANSONS));
@@ -84,7 +103,7 @@ void guitar_hero() {
 
     }
 
-    // On complete les informations des notes en fonction de leur hauteur
+    // On complète les informations des notes en fonction de leur hauteur
     for (int i=0; i<taille_tableau; i++) {
 
         corde = map(chanson_jouee[i].note, note_min, note_max, 0, 5);
@@ -186,7 +205,8 @@ void guitar_hero() {
             index_portee_2 = index_portee_2 + 1;
         }
 
-        actualiser_tab_cercles(page, chanson_jouee, taille_tableau);
+        actualiser_tab_cercles(page, portee_1, taille_portee_1);
+        actualiser_tab_cercles(page, portee_2, taille_portee_2);
 
         charger_interface(page, tableau_cercles_fixes);
 
