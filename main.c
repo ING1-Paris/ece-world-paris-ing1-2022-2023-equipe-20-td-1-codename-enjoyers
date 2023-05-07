@@ -76,6 +76,9 @@ int main() {
     t_joueur tableau_joueurs[NOMBRE_JOUEURS];
     unsigned long Temps_d_epreuve;
 
+    // EVENT
+    int Choix_epreuve = 0;
+
     // SPRITES
     int Innactivite[NOMBRE_JOUEURS]={1,1};
     int animation[NOMBRE_JOUEURS]={0,0};
@@ -135,7 +138,7 @@ int main() {
     /// ZONE DE TEST
     // -----------------------------
 
-    guitar_hero();
+    //guitar_hero();
     //jeu_riviere(tableau_joueurs, &Temps_d_epreuve);
 
     //printf("\n\n\n");
@@ -259,7 +262,6 @@ int main() {
 
         //jeu_riviere(tableau_joueurs, &Temps_d_epreuve);
 
-        //Snake(tableau_joueurs,&Temps_d_epreuve);
 
         blit(map_menu, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
@@ -273,7 +275,33 @@ int main() {
 
         deplacement_joueurs(page, tableau_joueurs, tableau_hitboxes,Innactivite);
 
-        activation_event(tableau_joueurs, tableau_eventboxes);
+
+        //Event
+        if (activation_event(tableau_joueurs, tableau_eventboxes) == 1){
+            Choix_epreuve = Recherche_event_le_plus_proche(&tableau_joueurs[0]);
+            printf("Event ! L'epreuve %d est selectionee\n",Choix_epreuve);
+            rest(20);
+        }
+        if (Choix_epreuve == 1){
+            Snake(tableau_joueurs,&Temps_d_epreuve);
+            Choix_epreuve = 0;
+        }
+        if (Choix_epreuve == 2){
+            guitar_hero();
+            Choix_epreuve = 0;
+        }
+        if (Choix_epreuve == 3){
+            Choix_epreuve = 0;
+        }
+        if (Choix_epreuve == 4){
+            Choix_epreuve = 0;
+        }
+        if (Choix_epreuve == 5){
+            Choix_epreuve = 0;
+        }
+        if (Choix_epreuve == 6){
+            Choix_epreuve = 0;
+        }
 
 
 
