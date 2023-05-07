@@ -209,6 +209,12 @@ void deplacement_joueurs_riv(BITMAP * bmp, t_joueuur *joueur_a_actualiser[NOMBRE
 
     int compteur = 0;
     int i;
+    int ligne;
+    int colonne;
+    int couleurPixel;
+    int marron = makecol(142, 72, 24);
+    int rouge = makecol(255, 0,0);
+
 
     // DEPLACEMENTS DU JOUEUR 1
     if (key[KEY_UP]) {
@@ -233,6 +239,21 @@ void deplacement_joueurs_riv(BITMAP * bmp, t_joueuur *joueur_a_actualiser[NOMBRE
             joueur_a_actualiser[0]->y = joueur_a_actualiser[0]->y + joueur_a_actualiser[0]->vit;
             joueur_a_actualiser[0]->skin_utilise = 0;
             innactivite[0] = 0;
+        }
+
+        for (int j = 0; j < NRONDIN; ++j) {
+            for(ligne = 0; ligne <rondin_riv[j]->img->h; ligne ++) {
+                for (colonne = 0; colonne < rondin_riv[j]->img->w; colonne++) {
+                    couleurPixel = getpixel(rondin_riv[j]->img, colonne, ligne);
+                    if ((joueur_a_actualiser[0]->x < rondin_riv[j]->posx)&&(couleurPixel == marron)){
+                        joueur_a_actualiser[0]->x=rondin_riv[j]->posx;
+                        joueur_a_actualiser[0]->y = rondin_riv[j]->posy;
+                        putpixel(rondin_riv[j]->img, colonne, ligne, rouge);
+                    }
+                }
+            }
+            //masked_blit(joueur_a_actualiser[0]->skin_perso[4], rondin_riv[j]->img,0,0,rondin_riv[j]->posy, rondin_riv[j]->posy,rondin_riv[j]->tx, rondin_riv[j]->ty);
+
         }
     }
 
@@ -265,7 +286,7 @@ void deplacement_joueurs_riv(BITMAP * bmp, t_joueuur *joueur_a_actualiser[NOMBRE
     }
 
 
-    /*
+
     // DEPLACEMENTS DU JOUEUR 2
     if (key[KEY_W]) {
 
@@ -308,20 +329,6 @@ void deplacement_joueurs_riv(BITMAP * bmp, t_joueuur *joueur_a_actualiser[NOMBRE
 
         }
 
-        for (i=0; i<NRONDIN; i++) {
-
-            if (collision_joueur_buche(rondin_riv[i], joueur_a_actualiser[1])) {
-
-                // on bloque
-
-                printf("Collision ! \n");
-
-                joueur_a_actualiser[1]->x = joueur_a_actualiser[1]->x - joueur_a_actualiser[1]->vit;
-
-            }
-
-        }
-
     }
 
 
@@ -338,24 +345,8 @@ void deplacement_joueurs_riv(BITMAP * bmp, t_joueuur *joueur_a_actualiser[NOMBRE
             innactivite[1] = 0;
         }
 
-        for (i=0; i<NRONDIN; i++) {
+    }
 
-            if (collision_joueur_buche(rondin_riv[i], joueur_a_actualiser[1])) {
-
-                // on bloque
-
-                printf("Collision ! \n");
-
-                joueur_a_actualiser[1]->x = joueur_a_actualiser[1]->x + joueur_a_actualiser[1]->vit;
-
-
-            }
-
-        }
-
-
-
-    }*/
 }
 
 
