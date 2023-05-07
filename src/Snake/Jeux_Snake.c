@@ -12,6 +12,7 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS],unsigned long* Temps){
     BITMAP* decor;
 
     // Variable Gestion des Skins
+    t_joueur hitbox;
     BITMAP* SNAKE1[12];
     char nomfichier[256];
     int Animation = 0;
@@ -198,12 +199,13 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS],unsigned long* Temps){
             }
 
             //Collision avec les murs
-            Joueur[0].x = head[j]->x;
-            Joueur[0].y = head[j]->y;
+            hitbox.x = head[j]->x;
+            hitbox.y = head[j]->y;
+            hitbox.tx = hitbox.ty = 48;
 
             for (int k = 0; k < 4; ++k) {
 
-                if (collision_joueur_hitbox(&tab_hitboxes[k],&Joueur[0])){
+                if (collision_joueur_hitbox(&tab_hitboxes[k],&hitbox)){
                     Serpent_en_vie[j] = 0;
                     Mort_de_serpent(head[j]);
                 }

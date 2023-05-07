@@ -7,14 +7,38 @@
 void guitar_hero() {
 
     // INITIALISATION - DECLARATION DES VARIABLES
-    int index;
-    int alive = 1;
+
+    //Variable de temps
     clock_t begin;
     clock_t end;
     unsigned long millis;
+    int tempo_musique;
 
+    //Variable de parcours de tableau
+    int taille_tableau;
+    int note_max;
+    int note_min;
+
+    //Variable Portee 1
+    t_note * portee_1 = NULL;
+    int index_portee_1;
+    int taille_portee_1;
+
+    //Variable Portee 2
+    t_note * portee_2 = NULL;
+    int index_portee_2;
+    int taille_portee_2;
+
+
+    //Variable de fin de partie
+    int alive = 1;
+    int demarrage_musique = 1;
+
+    //Variable de gestion des fichiers
     char nom_fichier_musique[256];
+    int corde;
 
+    //Variable de l'affichage
     BITMAP * page = create_bitmap(SCREEN_W, SCREEN_H);
 
     t_cercle_fixe tableau_cercles_fixes[5] = {
@@ -54,12 +78,8 @@ void guitar_hero() {
     printf("Index du string: %d \n", GUI_guitar_hero[2].d1);
     printf("String en question: %s \n", listbox_getter(GUI_guitar_hero[2].d1, (int *) TAILLE_TAB_CHANSONS));
 
-    int taille_tableau;
-    int note_max;
-    int note_min;
-    int corde;
-
-    t_note * chanson_jouee = charger_musique(listbox_getter(GUI_guitar_hero[2].d1, (int*) TAILLE_TAB_CHANSONS), &taille_tableau);
+    // Chargement du csv de la musique
+    t_note * chanson_jouee = charger_musique(listbox_getter(GUI_guitar_hero[2].d1, (int*) TAILLE_TAB_CHANSONS), &taille_tableau, &tempo_musique);
 
     // On charge le fichier MIDI/audio de la musique en question
     sprintf(nom_fichier_musique, "../assets/Item/GuitarHero/%s.wav", listbox_getter(GUI_guitar_hero[2].d1, (int*) TAILLE_TAB_CHANSONS));
@@ -70,7 +90,7 @@ void guitar_hero() {
 
     for (int i=0; i<taille_tableau; i++) {
 
-        printf("Portee: %d  Millis: %d  Note: %d \n", chanson_jouee[i].portee, chanson_jouee[i].millis, chanson_jouee[i].note); // pour lde debug
+        //printf("Portee: %d  Millis: %d  Note: %d \n", chanson_jouee[i].portee, chanson_jouee[i].millis, chanson_jouee[i].note); // pour lde debug
 
         if (chanson_jouee[i].note > note_max) {
 
@@ -83,7 +103,7 @@ void guitar_hero() {
 
     }
 
-    // On complete les informations des notes en fonction de leur hauteur
+    // On complète les informations des notes en fonction de leur hauteur
     for (int i=0; i<taille_tableau; i++) {
 
         corde = map(chanson_jouee[i].note, note_min, note_max, 0, 5);
@@ -126,17 +146,36 @@ void guitar_hero() {
         chanson_jouee[i].affichage = 0;
     }
 
+    // Update de tous les millis en fonction du tempo
+    for (int i = 0; i < taille_tableau; ++i) {
+
+        update_millis(&chanson_jouee[i], tempo_musique);
+
+    }
+
+
+    // Initialisation des deux portées
+    portee_1 = organiser_portees(chanson_jouee, taille_tableau, &taille_portee_1, 1);
+
+    portee_2 = organiser_portees(chanson_jouee, taille_tableau, &taille_portee_2, 2);
+
     // On charge l'interface fixe
     charger_interface(page, tableau_cercles_fixes);
 
     // On affiche le tout
     blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
+    // On initialise les index
+    index_portee_1 = 0;
+    index_portee_2 = 0;
+
+    printf("Affichage note 1 portee 1 \n");
+
+    printf("Note : %d, Millis: %d, portee: %d, X: %d, Y: %d, Radius: %d, Dy: %f, Affichage: %d\n", portee_2[0].note, portee_2[0].millis, portee_2[0].portee, portee_2[0].x_centre, portee_2[0].y_centre, portee_2[0].radius, portee_2[0].dy, portee_2[0].affichage);
+
     // On démarre le chronomètre
     begin = clock();
 
-    // Lancer la chanson
-    // PlaySound(TEXT(nom_fichier_musique), NULL, SND_ASYNC);
 
     // On lance la boucle de jeu
     while (alive) {
@@ -145,32 +184,60 @@ void guitar_hero() {
 
         millis = (end - begin) * 1000 / CLOCKS_PER_SEC;
 
-        for (index=0; index < taille_tableau; index++) {
+        //printf("%lu \n", millis);
 
-            if (chanson_jouee[index].millis == millis) {
+        if ((millis >= portee_1[index_portee_1].millis)  && index_portee_1 < taille_portee_1) {
 
-                printf("La note %d de la portee %d est dessinee. Diff de temps: %d theorique, %lu reel \n", chanson_jouee[index].note, chanson_jouee[index].portee, chanson_jouee[index].millis, millis);
+            spawn_cercles(page, &portee_1[index_portee_1]);
 
-                spawn_cercles(page, &chanson_jouee[index]);
-            }
+            printf("La note %d de la portee %d est dessinee. Diff de temps: %d theorique, %lu reel \n", portee_1[index_portee_1].note, portee_1[index_portee_1].portee, portee_1[index_portee_1].millis, millis);
+
+            index_portee_1 = index_portee_1 + 1;
         }
 
-        actualiser_tab_cercles(page, chanson_jouee, taille_tableau);
+
+        if ((millis >= portee_2[index_portee_2].millis)  && index_portee_2 < taille_portee_2) {
+
+            spawn_cercles(page, &portee_2[index_portee_2]);
+
+            printf("La note %d de la portee %d est dessinee. Diff de temps: %d theorique, %lu reel \n", portee_2[index_portee_2].note, portee_2[index_portee_2].portee, portee_2[index_portee_2].millis, millis);
+
+            index_portee_2 = index_portee_2 + 1;
+        }
+
+        actualiser_tab_cercles(page, portee_1, taille_portee_1);
+        actualiser_tab_cercles(page, portee_2, taille_portee_2);
 
         charger_interface(page, tableau_cercles_fixes);
 
+        for (int i=0; i<taille_portee_1; i++) {
 
-        for (int i=0; i<taille_tableau; i++) {
+            if (portee_1[i].affichage == 1) {
 
-            if (chanson_jouee[i].affichage == 1) {
+                circlefill(page, portee_1[i].x_centre, portee_1[i].y_centre, portee_1[i].radius, portee_1[i].couleur);
+            }
+        }
 
-                circlefill(page, chanson_jouee[i].x_centre, chanson_jouee[i].y_centre, chanson_jouee[i].radius, chanson_jouee[i].couleur);
+        for (int i=0; i<taille_portee_2; i++) {
+
+            if (portee_2[i].affichage == 1) {
+
+                circlefill(page, portee_2[i].x_centre, portee_2[i].y_centre, portee_2[i].radius, portee_2[i].couleur);
             }
         }
 
 
         blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
+
+        if ((portee_1[0].y_centre == 625 || portee_2[0].y_centre == 625) && demarrage_musique) {
+
+            // Lancer la chanson
+            PlaySound(TEXT(nom_fichier_musique), NULL, SND_ASYNC);
+
+            demarrage_musique = 0;
+
+        }
 
     }
 

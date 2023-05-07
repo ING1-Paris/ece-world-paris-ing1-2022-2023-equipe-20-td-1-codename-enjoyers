@@ -4,12 +4,12 @@
 
 #include "../../header.h"
 
-void activation_event(t_joueur tab_joueurs[NOMBRE_JOUEURS], t_hitbox tab_eventboxes[NOMBRE_EVENTBOXES]) {
+int activation_event(t_joueur tab_joueurs[NOMBRE_JOUEURS], t_hitbox tab_eventboxes[NOMBRE_EVENTBOXES]) {
 
     int i;
     int j;
 
-    if (key[KEY_SPACE]) {
+    if (key[KEY_ENTER]) {
 
         for (i=0; i<NOMBRE_JOUEURS; i++) {
 
@@ -17,7 +17,7 @@ void activation_event(t_joueur tab_joueurs[NOMBRE_JOUEURS], t_hitbox tab_eventbo
 
                 if (collision_joueur_hitbox(&tab_eventboxes[j], &tab_joueurs[i])) {
 
-                    printf("Event ! \n");
+                    return 1;
                 }
 
             }
@@ -25,5 +25,6 @@ void activation_event(t_joueur tab_joueurs[NOMBRE_JOUEURS], t_hitbox tab_eventbo
 
 
     }
+    return 0;
 
 }

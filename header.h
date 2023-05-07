@@ -45,8 +45,8 @@ void charger_sprites(t_joueur * joueur_actuel, char nom_perso[256]);
 void charger_hitboxes(BITMAP * bmp, t_hitbox tab_hitboxes[NOMBRE_HITBOXES], int couleur);
 void deplacement_joueurs(BITMAP * bmp, t_joueur tableau_joueurs[NOMBRE_JOUEURS], t_hitbox tab_hitboxes[NOMBRE_HITBOXES],int innactivite[NOMBRE_JOUEURS]);
 int collision_joueur_hitbox(t_hitbox * hitbox, t_joueur * joueur_actuel);
-void activation_event(t_joueur tab_joueurs[NOMBRE_JOUEURS], t_hitbox tab_eventboxes[NOMBRE_EVENTBOXES]);
-
+int activation_event(t_joueur tab_joueurs[NOMBRE_JOUEURS], t_hitbox tab_eventboxes[NOMBRE_EVENTBOXES]);
+int Recherche_event_le_plus_proche(t_joueur* Joueur);
 
 
 
@@ -57,6 +57,7 @@ void activation_event(t_joueur tab_joueurs[NOMBRE_JOUEURS], t_hitbox tab_eventbo
 
 // GUITAR HERO
 #define TAILLE_TAB_CHANSONS 2
+#define TEMPO_DE_BASE 480000
 
 typedef struct note_musique {
 
@@ -85,14 +86,15 @@ typedef struct cercle_fixe {
 
 void guitar_hero();
 char *listbox_getter(int index, int *list_size);
-t_note * charger_musique(char nom_musique[256], int * taille_tab);
+t_note * charger_musique(char nom_musique[256], int * taille_tab, int * tempo);
 void charger_interface(BITMAP * bmp, t_cercle_fixe tab_cercles_fixes[5]);
 long map(long x, long in_min, long in_max, long out_min, long out_max);
 void spawn_cercles(BITMAP * bmp, t_note * note_a_jouer);
 void actualiser_cercle(t_note * note_a_jouer);
 void actualiser_tab_cercles(BITMAP * bmp, t_note * tableau_notes, int taille_tab);
 int collision_cercles(t_cercle_fixe *a1, t_note *a2);
-
+t_note * organiser_portees(t_note * tab_notes, int taille_tab_notes, int * taille_portee, int portee);
+void update_millis(t_note * note_a_update, int tempo);
 
 
 

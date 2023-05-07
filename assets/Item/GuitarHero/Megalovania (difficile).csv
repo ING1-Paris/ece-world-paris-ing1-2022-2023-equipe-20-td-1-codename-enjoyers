@@ -1,8 +1,8 @@
 0, 0, Header, 1, 2, 480
 1, 0, Start_track
 1, 0, Time_signature, 4, 2, 24, 8
-1, 0, Key_signature, -1, "major"
-1, 0, Tempo, 500000
+"1, 0, Key_signature, -1, ""major"""
+1, 0, Tempo, 477000
 1, 0, Control_c, 0, 121, 0
 1, 0, Program_c, 0, 0
 1, 0, Control_c, 0, 7, 100
@@ -1488,7 +1488,7 @@
 1, 149753, Note_on_c, 0, 67, 0
 1, 149754, End_track
 2, 0, Start_track
-2, 0, Key_signature, -1, "major"
+"2, 0, Key_signature, -1, ""major"""
 2, 0, MIDI_port, 0
 2, 7680, Note_on_c, 0, 50, 96
 2, 7799, Note_on_c, 0, 50, 0
