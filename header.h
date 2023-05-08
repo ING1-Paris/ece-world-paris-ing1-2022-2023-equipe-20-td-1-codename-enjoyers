@@ -299,7 +299,7 @@ BITMAP * load_bitmap_check(char *nomImage);
 
 //JEU DE LA TAUPE
 
-#define NOMBRE_TAUPE 1
+#define NOMBRE_TAUPE 10
 void jeu_taupe(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps);
 
 
@@ -307,6 +307,7 @@ typedef struct taupe{
 
     int tx,ty;    // taille
     BITMAP *skin;
+    int affichage[1];
     int skin_utilise;
     int x,y;
     int vit;
