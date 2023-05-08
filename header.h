@@ -47,6 +47,7 @@ void deplacement_joueurs(BITMAP * bmp, t_joueur tableau_joueurs[NOMBRE_JOUEURS],
 int collision_joueur_hitbox(t_hitbox * hitbox, t_joueur * joueur_actuel);
 int activation_event(t_joueur tab_joueurs[NOMBRE_JOUEURS], t_hitbox tab_eventboxes[NOMBRE_EVENTBOXES]);
 int Recherche_event_le_plus_proche(t_joueur* Joueur);
+void Acceuil();
 
 
 

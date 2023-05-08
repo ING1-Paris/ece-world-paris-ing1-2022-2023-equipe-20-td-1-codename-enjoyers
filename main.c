@@ -43,6 +43,8 @@ int main() {
     // BITMAPS
     BITMAP * page; // BITMAP de la page (double buffer)
     BITMAP * map_menu; // BITMAP de la carte du menu
+    BITMAP * Shrek_Question;
+    BITMAP * fond_de_maison;
 
     // HITBOXES
     t_hitbox tableau_hitboxes[NOMBRE_HITBOXES] = {
@@ -127,7 +129,8 @@ int main() {
 
     // CHARGEMENT DE LA MAP DU MENU
     map_menu = load_bitmap("../assets/maps/menu.bmp", NULL);
-
+    Shrek_Question = load_bitmap("../assets/Item/Menu/Shrek_question.bmp",NULL);
+    fond_de_maison = load_bitmap("../assets/Item/Menu/Fond_de_maison.bmp",NULL);
 
     // -----------------------------
 
@@ -170,7 +173,9 @@ int main() {
     GUI_demarrage[9].dp = load_bitmap("../assets/personnages/Thomas/Thomas_12.bmp", NULL);
 
 
-    alert("Bienvenue sur SHREK MANIA WORLD !", NULL, NULL, "Suivant", NULL, 0, 0);
+    Acceuil();
+
+
 
 
 
@@ -186,7 +191,8 @@ int main() {
             }
         }
 
-        blit(map_menu, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+        blit(fond_de_maison,page,0,0,0,0,SCREEN_W, SCREEN_H);
+        masked_blit(Shrek_Question,page,0,0,0,450,400,533);
         blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
         if (i == 0) {
@@ -256,6 +262,7 @@ int main() {
         }
 
     }
+    PlaySound(0,0,0);
 
 
     while (!key[KEY_ESC]) {
@@ -265,9 +272,9 @@ int main() {
 
         blit(map_menu, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
-        charger_hitboxes(page, tableau_hitboxes, makecol(0, 0, 255));
+        //charger_hitboxes(page, tableau_hitboxes, makecol(0, 0, 255));
 
-        charger_hitboxes(page, tableau_eventboxes, makecol(0, 255, 0));
+        //charger_hitboxes(page, tableau_eventboxes, makecol(0, 255, 0));
 
         for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
             Innactivite[i]=1;
@@ -280,7 +287,6 @@ int main() {
         if (activation_event(tableau_joueurs, tableau_eventboxes) == 1){
             Choix_epreuve = Recherche_event_le_plus_proche(&tableau_joueurs[0]);
             printf("Event ! L'epreuve %d est selectionee\n",Choix_epreuve);
-            rest(20);
         }
         if (Choix_epreuve == 1){
             Snake(tableau_joueurs,&Temps_d_epreuve);
