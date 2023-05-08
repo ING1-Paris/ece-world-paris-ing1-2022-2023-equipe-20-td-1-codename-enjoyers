@@ -3,7 +3,7 @@
 //
 #include "../../header.h"
 
-#define NOMBRE_EVENT 6
+#define NOMBRE_EVENT 7
 
 int Recherche_event_le_plus_proche(t_joueur* Joueur){
     int event = 0;
@@ -14,7 +14,7 @@ int Recherche_event_le_plus_proche(t_joueur* Joueur){
 
     int min;
 
-    int event_c[NOMBRE_EVENT][2] ={{265,208},{647,208},{73,448},{313,443},{844,401},{570,510}};
+    int event_c[NOMBRE_EVENT][2] ={{265,208},{647,208},{73,448},{313,443},{844,401},{570,510},{840,623}};
 
     for (int i = 0; i < NOMBRE_EVENT; ++i) {
         if (Joueur->x>=event_c[i][0]){

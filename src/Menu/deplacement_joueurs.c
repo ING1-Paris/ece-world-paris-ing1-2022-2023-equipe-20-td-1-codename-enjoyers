@@ -14,7 +14,6 @@ void deplacement_joueurs(BITMAP * bmp, t_joueur tableau_joueurs[NOMBRE_JOUEURS],
         // Controle des bords de la fenetre
         if (tableau_joueurs[0].y < 0) {
 
-            // on bloque
 
         } else {
 
@@ -28,8 +27,6 @@ void deplacement_joueurs(BITMAP * bmp, t_joueur tableau_joueurs[NOMBRE_JOUEURS],
             if (collision_joueur_hitbox(&tab_hitboxes[i], &tableau_joueurs[0])) {
 
                 // on bloque
-
-                printf("Collision ! \n");
 
                 tableau_joueurs[0].y = tableau_joueurs[0].y + tableau_joueurs[0].dy;
 
@@ -46,7 +43,6 @@ void deplacement_joueurs(BITMAP * bmp, t_joueur tableau_joueurs[NOMBRE_JOUEURS],
 
         if (tableau_joueurs[0].y + tableau_joueurs[0].ty >= SCREEN_H) {
 
-            // on bloque
 
         } else {
 
@@ -60,8 +56,6 @@ void deplacement_joueurs(BITMAP * bmp, t_joueur tableau_joueurs[NOMBRE_JOUEURS],
             if (collision_joueur_hitbox(&tab_hitboxes[i], &tableau_joueurs[0])) {
 
                 // on bloque
-
-                printf("Collision ! \n");
 
                 tableau_joueurs[0].y = tableau_joueurs[0].y - tableau_joueurs[0].dy;
 
@@ -78,7 +72,6 @@ void deplacement_joueurs(BITMAP * bmp, t_joueur tableau_joueurs[NOMBRE_JOUEURS],
 
         if (tableau_joueurs[0].x + tableau_joueurs[0].tx >= SCREEN_W) {
 
-            // on bloque
 
         } else {
 
@@ -93,9 +86,6 @@ void deplacement_joueurs(BITMAP * bmp, t_joueur tableau_joueurs[NOMBRE_JOUEURS],
             if (collision_joueur_hitbox(&tab_hitboxes[i], &tableau_joueurs[0])) {
 
                 // on bloque
-
-                printf("Collision ! \n");
-
                 tableau_joueurs[0].x = tableau_joueurs[0].x - tableau_joueurs[0].dx;
 
             }
@@ -112,7 +102,6 @@ void deplacement_joueurs(BITMAP * bmp, t_joueur tableau_joueurs[NOMBRE_JOUEURS],
 
         if (tableau_joueurs[0].x < 0) {
 
-            // on bloque
 
         } else {
 
@@ -126,8 +115,6 @@ void deplacement_joueurs(BITMAP * bmp, t_joueur tableau_joueurs[NOMBRE_JOUEURS],
             if (collision_joueur_hitbox(&tab_hitboxes[i], &tableau_joueurs[0])) {
 
                 // on bloque
-
-                printf("Collision ! \n");
 
                 tableau_joueurs[0].x = tableau_joueurs[0].x + tableau_joueurs[0].dx;
 
@@ -158,7 +145,6 @@ void deplacement_joueurs(BITMAP * bmp, t_joueur tableau_joueurs[NOMBRE_JOUEURS],
         // Controle des bords de la fenetre
         if (tableau_joueurs[1].y < 0) {
 
-            // on bloque
 
         } else {
 
@@ -172,8 +158,6 @@ void deplacement_joueurs(BITMAP * bmp, t_joueur tableau_joueurs[NOMBRE_JOUEURS],
             if (collision_joueur_hitbox(&tab_hitboxes[i], &tableau_joueurs[1])) {
 
                 // on bloque
-
-                printf("Collision ! \n");
 
                 tableau_joueurs[1].y = tableau_joueurs[1].y + tableau_joueurs[1].dy;
 
@@ -190,7 +174,6 @@ void deplacement_joueurs(BITMAP * bmp, t_joueur tableau_joueurs[NOMBRE_JOUEURS],
 
         if (tableau_joueurs[1].y + tableau_joueurs[1].ty >= SCREEN_H) {
 
-            // on bloque
 
         } else {
 
@@ -205,8 +188,6 @@ void deplacement_joueurs(BITMAP * bmp, t_joueur tableau_joueurs[NOMBRE_JOUEURS],
             if (collision_joueur_hitbox(&tab_hitboxes[i], &tableau_joueurs[1])) {
 
                 // on bloque
-
-                printf("Collision ! \n");
 
                 tableau_joueurs[1].y = tableau_joueurs[1].y - tableau_joueurs[1].dy;
 
@@ -224,8 +205,6 @@ void deplacement_joueurs(BITMAP * bmp, t_joueur tableau_joueurs[NOMBRE_JOUEURS],
 
         if (tableau_joueurs[1].x + tableau_joueurs[1].tx >= SCREEN_W) {
 
-            // on bloque
-
         } else {
 
             tableau_joueurs[1].x = tableau_joueurs[1].x + tableau_joueurs[1].dx;
@@ -239,8 +218,6 @@ void deplacement_joueurs(BITMAP * bmp, t_joueur tableau_joueurs[NOMBRE_JOUEURS],
             if (collision_joueur_hitbox(&tab_hitboxes[i], &tableau_joueurs[1])) {
 
                 // on bloque
-
-                printf("Collision ! \n");
 
                 tableau_joueurs[1].x = tableau_joueurs[1].x - tableau_joueurs[1].dx;
 
@@ -256,8 +233,6 @@ void deplacement_joueurs(BITMAP * bmp, t_joueur tableau_joueurs[NOMBRE_JOUEURS],
 
         if (tableau_joueurs[1].x < 0) {
 
-            // on bloque
-
         } else {
 
             tableau_joueurs[1].x = tableau_joueurs[1].x - tableau_joueurs[1].dx;
@@ -270,8 +245,6 @@ void deplacement_joueurs(BITMAP * bmp, t_joueur tableau_joueurs[NOMBRE_JOUEURS],
             if (collision_joueur_hitbox(&tab_hitboxes[i], &tableau_joueurs[1])) {
 
                 // on bloque
-
-                printf("Collision ! \n");
 
                 tableau_joueurs[1].x = tableau_joueurs[1].x + tableau_joueurs[1].dx;
 

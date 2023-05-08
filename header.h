@@ -14,7 +14,7 @@
 #include <mmsystem.h>
 
 #define NOMBRE_JOUEURS 2
-#define NOMBRE_HITBOXES 12
+#define NOMBRE_HITBOXES 15
 #define NOMBRE_EVENTBOXES 7
 
 
