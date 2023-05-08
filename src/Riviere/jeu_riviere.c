@@ -13,9 +13,13 @@ void jeu_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps) {
     t_joueuur *joueur[NOMBRE_JOUEURS];
     BITMAP *page;        // BITMAP buffer d'affichage
     BITMAP *decor;
+    int couleurPixel;
+
+
+
 
     int inactivite[NOMBRE_JOUEURS] = {1,1};
-    int animation_perso_riv[NOMBRE_JOUEURS] = {1,1};
+    int animation_perso_riv[NOMBRE_JOUEURS] = {0,0};
 
     page = create_bitmap(SCREEN_W, SCREEN_H);
 
@@ -82,7 +86,6 @@ void jeu_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps) {
 
             //AfficherJoueur(joueur[j], page, animation_perso_riv[j]);
 
-
             textprintf_centre_ex(decor, font, 400, 570, makecol(255, 255, 255), 0, "%d", joueur[j]->y);
 
             for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
@@ -90,7 +93,6 @@ void jeu_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps) {
             }
 
             deplacement_joueurs_riv(page, &joueur[j], &inactivite[j],&mesRondins[j]);
-
 
             for (int i=0; i<NOMBRE_JOUEURS; i++) {
 
@@ -147,7 +149,7 @@ void jeu_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps) {
             textprintf_ex(page,font,SCREEN_W-250+5+55, 30, makecol(0,0,0),-1,"%s",joueur_riv[1].nom);
             textprintf_ex(page,font,SCREEN_W-250+5+55, 50, makecol(0,0,0),-1,"temps: %lu",joueur[1]->temps);
 
-            blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+            masked_blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
 
             rest(15);
@@ -161,15 +163,15 @@ void jeu_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps) {
 
     if(joueur[0]->temps < joueur[1]->temps)
 
-        //alert("%s, vous avez gagné un ticket ! "joueur_riv[0].nom, NULL, NULL, "go!", NULL, 0, 0);
+        alert("Joueur 1, vous avez gagné un ticket ! ", NULL, NULL, "go!", NULL, 0, 0);
 
-        allegro_message("%s, vous avez gagné un ticket !",joueur_riv[0].nom);
+        //allegro_message("%s, vous avez gagné un ticket !",joueur_riv[0].nom);
 
     else
-        //alert("%d, vous avez gagné un ticket ! ",joueur_riv[1].nom, NULL, NULL, "go !", NULL, 0, 0);
+        alert("Joueur 2, vous avez gagné un ticket ! ", NULL, NULL, "go !", NULL, 0, 0);
 
 
-        allegro_message("%s, vous avez gagné un ticket !",joueur_riv[1].nom);
+        //allegro_message("%s, vous avez gagné un ticket !",joueur_riv[1].nom);
 
    // allegro_message("Joueur 2, vous avez gagné un ticket !");
 
