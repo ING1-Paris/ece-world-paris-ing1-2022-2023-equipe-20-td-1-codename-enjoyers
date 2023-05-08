@@ -295,9 +295,11 @@ int main() {
             Choix_epreuve = 0;
         }
         if (Choix_epreuve == 3){
+            jeuballons();
             Choix_epreuve = 0;
         }
         if (Choix_epreuve == 4){
+            jeu_course();
             Choix_epreuve = 0;
         }
         if (Choix_epreuve == 5){

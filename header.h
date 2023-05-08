@@ -227,6 +227,8 @@ typedef struct ballon {
     BITMAP *img; // sprite (image chargée)
 } t_ballon;
 
+void jeuballons();
+
 // ----------------------------------------
 
 
@@ -324,7 +326,9 @@ typedef struct joueur_taupe
     BITMAP *skin_perso[13]; // image de l'acteur
 } t_joueur_taupe;
 
+//
 
+void jeu_course();
 
 
 
