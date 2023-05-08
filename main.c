@@ -48,18 +48,28 @@ int main() {
 
     // HITBOXES
     t_hitbox tableau_hitboxes[NOMBRE_HITBOXES] = {
-            {4*48, 1*48, 7*48, 4*48},
-            {12*48, 1*48, 15*48, 4*48},
-            {0*48, 6*48, 3*48, 9*48},
-            {5*48, 6*48, 8*48, 9*48},
-            {16*48, 5*48, 19*48, 8*48},
+            // Maison
+            {192, 74, 320, 189},
+            {592, 48, 710, 200},
+            {0, 288, 135, 430},
+            {255, 288, 412, 425},
+            {780, 240, 893, 379},
+
+            //Nord de la map
+            {0, 0, 960, 90},
             {0*48, 0*48, 3*48, 4*48},
-            {3*48, 0*48, 4*48, 1*48},
-            {17*48, 0*48, 20*48, 4*48},
-            {15*48, 0*48, 17*48, 2*48},
+            {17*48, 0*48, 20*48, 175},
+
+            //Paneaux
             {11*48, 10*48, 13*48, 12*48},
+
+            //Riviere
             {0*48, 12*48, 9*48, 13*48},
-            {11*48, 12*48, 20*48, 13*48}
+            {11*48, 12*48, 765, 13*48},
+            {910,12*48, 20*48, 13*48},
+            {400 ,600, 430, 720},
+            {525 ,600, 550, 720},
+            {770 ,635, 912, 643},
     };
 
     // EVENTBOXES
@@ -71,7 +81,7 @@ int main() {
             {6*48, 9*48, 7*48, 10*48},
             {17*48, 8*48, 18*48, 9*48},
             {10*48, 9*48, 14*48, 11*48},
-            {0, 0, 1, 1}
+            {780, 590, 900, 630}
     };
 
     // JOUEURS
@@ -142,9 +152,6 @@ int main() {
     // -----------------------------
 
     //guitar_hero();
-    //jeu_riviere(tableau_joueurs, &Temps_d_epreuve);
-
-    //printf("\n\n\n");
     //system("pause");
 
     // -----------------------------
@@ -271,9 +278,10 @@ int main() {
 
         blit(map_menu, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
+        //charger_hitboxes(page, tableau_eventboxes, makecol(0, 255, 0));
+
         //charger_hitboxes(page, tableau_hitboxes, makecol(0, 0, 255));
 
-        //charger_hitboxes(page, tableau_eventboxes, makecol(0, 255, 0));
 
         for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
             Innactivite[i]=1;
@@ -285,7 +293,6 @@ int main() {
         //Event
         if (activation_event(tableau_joueurs, tableau_eventboxes) == 1){
             Choix_epreuve = Recherche_event_le_plus_proche(&tableau_joueurs[0]);
-            printf("Event ! L'epreuve %d est selectionee\n",Choix_epreuve);
         }
         if (Choix_epreuve == 1){
             Snake(tableau_joueurs,&Temps_d_epreuve);
@@ -304,9 +311,14 @@ int main() {
             Choix_epreuve = 0;
         }
         if (Choix_epreuve == 5){
+            jeu_taupe(tableau_joueurs,&Temps_d_epreuve);
             Choix_epreuve = 0;
         }
         if (Choix_epreuve == 6){
+            Choix_epreuve = 0;
+        }
+        if (Choix_epreuve == 7){
+            jeu_riviere(tableau_joueurs,&Temps_d_epreuve);
             Choix_epreuve = 0;
         }
 
