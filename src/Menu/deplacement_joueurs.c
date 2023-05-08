@@ -6,7 +6,6 @@
 
 void deplacement_joueurs(BITMAP * bmp, t_joueur tableau_joueurs[NOMBRE_JOUEURS], t_hitbox tab_hitboxes[NOMBRE_HITBOXES],int innactivite[NOMBRE_JOUEURS]) {
 
-    int compteur = 0;
     int i;
 
     // DEPLACEMENTS DU JOUEUR 1

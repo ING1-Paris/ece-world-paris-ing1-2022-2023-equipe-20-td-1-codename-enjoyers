@@ -45,8 +45,9 @@ void charger_sprites(t_joueur * joueur_actuel, char nom_perso[256]);
 void charger_hitboxes(BITMAP * bmp, t_hitbox tab_hitboxes[NOMBRE_HITBOXES], int couleur);
 void deplacement_joueurs(BITMAP * bmp, t_joueur tableau_joueurs[NOMBRE_JOUEURS], t_hitbox tab_hitboxes[NOMBRE_HITBOXES],int innactivite[NOMBRE_JOUEURS]);
 int collision_joueur_hitbox(t_hitbox * hitbox, t_joueur * joueur_actuel);
-void activation_event(t_joueur tab_joueurs[NOMBRE_JOUEURS], t_hitbox tab_eventboxes[NOMBRE_EVENTBOXES]);
-
+int activation_event(t_joueur tab_joueurs[NOMBRE_JOUEURS], t_hitbox tab_eventboxes[NOMBRE_EVENTBOXES]);
+int Recherche_event_le_plus_proche(t_joueur* Joueur);
+void Acceuil();
 
 
 
@@ -57,6 +58,7 @@ void activation_event(t_joueur tab_joueurs[NOMBRE_JOUEURS], t_hitbox tab_eventbo
 
 // GUITAR HERO
 #define TAILLE_TAB_CHANSONS 2
+#define TEMPO_DE_BASE 480000
 
 typedef struct note_musique {
 
@@ -85,14 +87,15 @@ typedef struct cercle_fixe {
 
 void guitar_hero();
 char *listbox_getter(int index, int *list_size);
-t_note * charger_musique(char nom_musique[256], int * taille_tab);
+t_note * charger_musique(char nom_musique[256], int * taille_tab, int * tempo);
 void charger_interface(BITMAP * bmp, t_cercle_fixe tab_cercles_fixes[5]);
 long map(long x, long in_min, long in_max, long out_min, long out_max);
 void spawn_cercles(BITMAP * bmp, t_note * note_a_jouer);
 void actualiser_cercle(t_note * note_a_jouer);
 void actualiser_tab_cercles(BITMAP * bmp, t_note * tableau_notes, int taille_tab);
 int collision_cercles(t_cercle_fixe *a1, t_note *a2);
-
+t_note * organiser_portees(t_note * tab_notes, int taille_tab_notes, int * taille_portee, int portee);
+void update_millis(t_note * note_a_update, int tempo);
 
 
 
@@ -233,11 +236,9 @@ typedef struct ballon {
 
 //LA RIVIERE
 
-void jeu_riviere();
+void jeu_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps);
 
-#define NRONDIN 8
-#define TX 40 // Largeur
-#define TY 16 // Hauteur
+#define NRONDIN 19
 
 typedef struct rondin{
 
@@ -253,9 +254,11 @@ typedef struct rondin{
 typedef struct joueuur
 {
     int tx, ty;
+    unsigned long temps;
     int x, y; // coordonn�es (en pixels) des pieds de l'acteur
     int vit;
-    BITMAP *img;       // image de l'acteur
+    int skin_utilise;
+    BITMAP *skin_perso[13];    // image de l'acteur
 } t_joueuur;
 
 
@@ -268,12 +271,59 @@ void AfficherRondin(BITMAP *bmp,t_rondin *rondin_a_afficher);
 void AfficherTabRondin(BITMAP *bmp,t_rondin * tab[NRONDIN]);
 
 
-t_joueuur * creationJoueur(char *nomimage);
-void ActualiserJoueur(BITMAP *bmp, t_rondin **img, t_joueuur* joueur_a_actualiser, t_rondin* tabrondin[NRONDIN]);
-void AfficherJoueur(BITMAP *bmp,t_joueuur *joueur_a_afficher);
+t_joueuur * creationJoueur(BITMAP* tab_de_Skin[12]);
+void ActualiserJoueur(BITMAP *bmp, t_joueuur* joueur_a_actualiser, t_rondin* tabrondin[NRONDIN], int anim);
+void deplacement_joueurs_riv(BITMAP * bmp, t_joueuur *joueur_a_actualiser[NOMBRE_JOUEURS],int innactivite[NOMBRE_JOUEURS], t_rondin *rondin_riv[NRONDIN]);
+void AfficherJoueur(t_joueuur *joueur_a_afficher, BITMAP *bmp,int animation);
+
+int collision_joueur_buche(t_rondin * rondin, t_joueuur * joueur_actuel);
+int collision_riv(t_rondin * rondin, t_joueur * joueur_actuel);
 
 
 BITMAP * load_bitmap_check(char *nomImage);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//JEU DE LA TAUPE
+
+#define NOMBRE_TAUPE 1
+void jeu_taupe(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps);
+
+
+typedef struct taupe{
+
+    int tx,ty;    // taille
+    BITMAP *skin;
+    int skin_utilise;
+    int x,y;
+    int vit;
+
+}t_taupe;
+
+
+
+typedef struct joueur_taupe
+{
+    int tx, ty;
+    unsigned long temps;
+    int score;
+    //int x, y; // coordonn�es (en pixels) des pieds de l'acteur
+    int vit;
+    int skin_utilise;
+    BITMAP *skin_perso[13]; // image de l'acteur
+} t_joueur_taupe;
+
 
 
 
