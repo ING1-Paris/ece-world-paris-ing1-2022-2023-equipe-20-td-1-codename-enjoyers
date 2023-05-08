@@ -177,8 +177,6 @@ int main() {
 
 
 
-
-
     for (int i=0; i<NOMBRE_JOUEURS; i++) {
 
         strcpy(chaine_temp, "");

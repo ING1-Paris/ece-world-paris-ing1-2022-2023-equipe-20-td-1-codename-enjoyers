@@ -153,7 +153,6 @@ void guitar_hero() {
 
     }
 
-
     // Initialisation des deux portées
     portee_1 = organiser_portees(chanson_jouee, taille_tableau, &taille_portee_1, 1);
 

@@ -120,7 +120,7 @@ t_sequence tabSequences[NSEQUENCE] =
 /* initialisation puis boucle d'animation */
 /******************************************/
 
-int main()
+void jeu_course()
 {
     // Le tableau regroupant tous les lapins
     // c'est un tableau de pointeurs sur structures t_lapins
@@ -187,9 +187,9 @@ int main()
         rest(20);
     }
 
-    return 0;
+
 }
-END_OF_MAIN();
+
 
 
 
