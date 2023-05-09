@@ -332,7 +332,7 @@ typedef struct joueur_taupe
 
 //
 
-void jeu_course();
+int jeu_course();
 
 
 
