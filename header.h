@@ -231,6 +231,9 @@ typedef struct ballon {
 
 
 
+//COURSE DE LAPIN
+int jeu_course();
+
 
 
 

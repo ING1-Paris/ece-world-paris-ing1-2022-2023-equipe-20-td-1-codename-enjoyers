@@ -3,7 +3,7 @@
 // sur cet exemple Nombre d'lapins fixe :
 //    le tableau d'lapins sera d�clar� et utilis� en "automatique"
 //    t_lapin tab[Nlapin];
-// Pour modifier cette valeur il faut adapter remplirTablapins
+// Pour modifier cette valeur il faut adapter ablapins
 #define Nlapin 6
 
 // nombre total de s�quences d'animation du jeu
@@ -105,12 +105,12 @@ void chargerTabSequences();
 t_sequence tabSequences[NSEQUENCE] =
         {
                 //          nomSource           , nimg,  tx,  ty, ncol
-                { "sprites_lapins.bmp"    ,    8, 112,  140,    8 },
-                { "sprites_lapins.bmp"   ,    8,  112,  140,    8 },
-                { "sprites_lapins.bmp"   ,    8,  112,  140,    8 },
-                { "sprites_lapins.bmp"   ,    8,  112,  140,    8 },
-                { "sprites_lapins.bmp" ,    8,  112,  140,    8 },
-                { "sprites_lapins.bmp"   ,    8, 112,  140,    8 }
+                { "../assets/Item/sprites_lapins.bmp"    ,    8, 112,  140,    8 },
+                { "../assets/Item/sprites_lapins.bmp"   ,    8,  112,  140,    8 },
+                { "../assets/Item/sprites_lapins.bmp"   ,    8,  112,  140,    8 },
+                { "../assets/Item/sprites_lapins.bmp"   ,    8,  112,  140,    8 },
+                { "../assets/Item/sprites_lapins.bmp" ,    8,  112,  140,    8 },
+                { "../assets/Item/sprites_lapins.bmp"   ,    8, 112,  140,    8 }
         };
 
 
@@ -120,7 +120,7 @@ t_sequence tabSequences[NSEQUENCE] =
 /* initialisation puis boucle d'animation */
 /******************************************/
 
-int main()
+int jeu_course()
 {
     // Le tableau regroupant tous les lapins
     // c'est un tableau de pointeurs sur structures t_lapins
@@ -132,30 +132,15 @@ int main()
     // Image de fond
     BITMAP *decor;
 
-    // On va utiliser du hasard
-    srand(time(NULL));
-
-    // Lancer allegro et le mode graphique
-    allegro_init();
-    install_keyboard();
-
-    set_color_depth(desktop_color_depth());
-    if (set_gfx_mode(GFX_AUTODETECT_WINDOWED,1000,700,0,0)!=0)
-    {
-        allegro_message("prb gfx mode");
-        allegro_exit();
-        exit(EXIT_FAILURE);
-    }
-
     // Cr�ation du buffer d'affichage � la taille de l'�cran
     page=create_bitmap(SCREEN_W,SCREEN_H);
     clear_bitmap(page);
 
     // charger image de fond
-    decor=load_bitmap("map_chevaux.bmp",NULL);
+    decor=load_bitmap("../assets/maps/map_course.bmp",NULL);
     if (!decor)
     {
-        allegro_message("pas pu trouver map_chevaux.bmp");
+        allegro_message("pas pu trouver map_course.bmp");
         exit(EXIT_FAILURE);
     }
 
@@ -189,7 +174,6 @@ int main()
 
     return 0;
 }
-END_OF_MAIN();
 
 
 
