@@ -67,20 +67,20 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS],unsigned long* Temps){
     //Creation des Murs
     tab_hitboxes[0].x1 = 0;
     tab_hitboxes[0].y1 = 0;
-    tab_hitboxes[0].x2 = 60;
+    tab_hitboxes[0].x2 = 75;
     tab_hitboxes[0].y2 = SCREEN_H;
 
-    tab_hitboxes[1].x1 = 60;
+    tab_hitboxes[1].x1 = 75;
     tab_hitboxes[1].y1 = 0;
-    tab_hitboxes[1].x2 = 892;
-    tab_hitboxes[1].y2 = 65;
+    tab_hitboxes[1].x2 = 888;
+    tab_hitboxes[1].y2 = 75;
 
-    tab_hitboxes[2].x1 = 60;
-    tab_hitboxes[2].y1 = 689;
-    tab_hitboxes[2].x2 = 892;
+    tab_hitboxes[2].x1 = 75;
+    tab_hitboxes[2].y1 = 640;
+    tab_hitboxes[2].x2 = 888;
     tab_hitboxes[2].y2 = SCREEN_H;
 
-    tab_hitboxes[3].x1 = 900;
+    tab_hitboxes[3].x1 = 888;
     tab_hitboxes[3].y1 = 0;
     tab_hitboxes[3].x2 = SCREEN_W;
     tab_hitboxes[3].y2 = SCREEN_H;

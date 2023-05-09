@@ -126,7 +126,7 @@ int Collision_Acteur(t_corp_de_snake* head,t_corp_de_snake* corp){
 void generation_Pomme(t_Pomme* Pomme){
 
     Pomme->x = rand()%(700-100+1)+100;
-    Pomme->y = rand()%(600-100+1)+100;
+    Pomme->y = rand()%(570-100+1)+100;
 }
 
 int actualistation_Pomme(t_corp_de_snake* head,t_Pomme* Pomme){
