@@ -6,15 +6,16 @@
 
 void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS], unsigned long* Temps) {
 
-    //t_taupe *mesTaupes[NRONDIN];
-    t_taupe *mesTaupes;
-    t_joueur_taupe *monJoueur[NOMBRE_JOUEURS];
+    t_taupe mesTaupes[NOMBRE_TAUPE];
+    //t_taupe *mesTaupes;
+    t_joueur_taupe monJoueur[NOMBRE_JOUEURS];
     BITMAP *page;        // BITMAP buffer d'affichage
     BITMAP *decor;
     int ligne, colonne;
-    //int couleurPixel = ;
+    int couleurPixel;
     int marron = makecol(120, 102, 88);
     int rouge = makecol(255, 0, 0);
+    int noir = makecol(0, 0, 0);
     int score[NOMBRE_JOUEURS] = {0, 0};
 
     unsigned long temps[NOMBRE_JOUEURS];
@@ -26,18 +27,16 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS], unsigned long* Temps) {
     decor = load_bitmap_check("../assets/maps/MAP_TAUPE.bmp");
 
 
-    for (int j = 0; j < 4; j++) {
-
-
-        mesTaupes = (t_taupe *) malloc(sizeof(t_taupe));
+    for (int j = 0; j < NOMBRE_TAUPE; j++) {
 
         //mesTaupes[j]->skin_utilise = 6;
         // mesTaupes[j]->vit = 5;
-        mesTaupes->tx = 48;
-        mesTaupes->ty = 48;
-        mesTaupes->y = 400;
-        mesTaupes->x = 400;
-        mesTaupes->skin = load_bitmap_check("../assets/personnages/Taupe/taupe.bmp");
+        mesTaupes[j].tx = 48;
+        mesTaupes[j].ty = 48;
+        mesTaupes[j].y = rand()%(400-200)+200;
+        mesTaupes[j].x = rand()%((800-400)+400);
+        mesTaupes[j].skin = load_bitmap_check("../assets/personnages/Taupe/taupe.bmp");
+
 
     }
 
@@ -49,8 +48,9 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS], unsigned long* Temps) {
 
     for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
 
-        monJoueur[i]->temps = 0;
-        //monJoueur[i]->score = 0;
+        monJoueur[i].temps = 0;
+        monJoueur[i].score = 0;
+
     }
 
     blit(decor, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
@@ -62,11 +62,11 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS], unsigned long* Temps) {
     textprintf_ex(decor,font,4,6,makecol(255,0,0),makecol(0,255,0),"EXIT");
 
 
-    //time_t debut = time(NULL);
+    time_t debut = time(NULL);
 
     for (int k = 0; k< NOMBRE_JOUEURS; ++k) {
 
-        //monJoueur[j]->temps = debut;
+        monJoueur[k].temps = debut;
 
 
         while(!fin){
@@ -75,16 +75,16 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS], unsigned long* Temps) {
             blit(decor, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
 
-            for (int i = 0; i < 6; ++i) {
-                masked_blit(mesTaupes->skin,decor,0,0,mesTaupes->x,mesTaupes->y,mesTaupes->tx,mesTaupes->ty);
-                i++;
+            for (int i = 0; i < NOMBRE_TAUPE; ++i) {
+                masked_blit(mesTaupes[i].skin,decor,0,0,mesTaupes[i].x,mesTaupes[i].y,mesTaupes[i].tx,mesTaupes[i].ty);
             }
 
 
             if (mouse_b) {
 
                 rectfill(page, mouse_x, mouse_y, mouse_x + 20, mouse_y + 20, makecol(255, 0, 0));
-
+                rest(100);
+                monJoueur[k].score = monJoueur[k].score + 1;
             }
 
 
@@ -107,33 +107,22 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS], unsigned long* Temps) {
 
             else allegro_message("caca");*/
 
-            /*for (int i = 0; i < NOMBRE_TAUPE; ++i) {
                 // les clics
-                if (mouse_b){ // gauche : dessiner en rouge
-                    rectfill(page, mouse_x, mouse_y, mouse_x+20, mouse_y+20, makecol(255,0,0));
+            for (int j = 0; j < NOMBRE_TAUPE; ++j) {
+                for(ligne = 0; ligne <mesTaupes[j].skin->h; ligne ++) {
+                    for (colonne = 0; colonne < mesTaupes[j].skin->w; colonne++) {
+                        couleurPixel = getpixel(mesTaupes[j].skin, colonne, ligne);
 
-                    for (int j = 0; j < NOMBRE_TAUPE; ++j) {
-                        for(ligne = 0; ligne <mesTaupes[j]->skin->h; ligne ++) {
-                            for (colonne = 0; colonne < mesTaupes[j]->skin->w; colonne++) {
-                                couleurPixel = getpixel(mesTaupes[j]->skin, colonne, ligne);
-                                if(couleurPixel == marron){
-                                    putpixel(mesTaupes[j]->skin, colonne, ligne, rouge);
-                                    //rectfill(page, mouse_x, mouse_y, mouse_x+20, mouse_y+20, makecol(0,0,0));
-                                }
-                            }
-
-                        //masked_blit(joueur_a_actualiser[0]->skin_perso[4], rondin_riv[j]->img,0,0,rondin_riv[j]->posy, rondin_riv[j]->posy,rondin_riv[j]->tx, rondin_riv[j]->ty);
+                        if (mouse_b && couleurPixel==marron) {
+                            putpixel(mesTaupes[j].skin, ligne, colonne, rouge);
+                            ///rectfill(page, mouse_x, mouse_y, mouse_x+20, mouse_y+20, makecol(0,0,0));
+                        }
 
                     }
 
-                    //clear(mesTaupes[i]->skin);
-                    //clear_bitmap(mesTaupes[i]->skin);
-
-                    score[j]= score[j]+1;
-                    monJoueur[j]->score = score[j];
+                    //masked_blit(joueur_a_actualiser[0]->skin_perso[4], rondin_riv[j]->img,0,0,rondin_riv[j]->posy, rondin_riv[j]->posy,rondin_riv[j]->tx, rondin_riv[j]->ty);
                 }
-
-            }*/
+            }
 
 
             // clip sur EXIT :
@@ -141,11 +130,14 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS], unsigned long* Temps) {
                 fin=1;
 
 
-            //time_t end = time(NULL);
-            //monJoueur[j]->temps = (unsigned long) difftime(end, debut);
+            time_t end = time(NULL);
+            monJoueur[k].temps = (unsigned long) difftime(end, debut);
 
+            if (monJoueur[0].temps > 10) {
+                fin=1;
+            }
 
-            textprintf_ex(decor,font,60,280,makecol(0,0,0), makecol(255,255,255),"%lu",monJoueur[k]->temps);
+            textprintf_ex(decor,font,60,280,makecol(0,0,0), makecol(255,255,255),"%lu",monJoueur[0].temps);
             textprintf_ex(decor,font,60,300,makecol(0,0,0),-1,"%4d %4d",mouse_x,mouse_y);
 
 
@@ -156,7 +148,7 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS], unsigned long* Temps) {
             stretch_blit(joueur_taupe[0].sprites[12],page,0,0,225,225,15,15,50,50);
 
             textprintf_ex(page,font,70, 30, makecol(0,0,0),-1,"%s",joueur_taupe[0].nom);
-            textprintf_ex(page,font,70, 50, makecol(0,0,0),-1,"score: %d",monJoueur[0]->score);
+            textprintf_ex(page,font,70, 50, makecol(0,0,0),-1,"score: %d",monJoueur[0].score);
 
             //J2
             rectfill(page,SCREEN_W-250,10,SCREEN_W-10,70,makecol(255,255,255));
@@ -165,7 +157,7 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS], unsigned long* Temps) {
 
 
             textprintf_ex(page,font,SCREEN_W-250+5+55, 30, makecol(0,0,0),-1,"%s",joueur_taupe[1].nom);
-            textprintf_ex(page,font,SCREEN_W-250+5+55, 50, makecol(0,0,0),-1,"score: %d",monJoueur[1]->score);
+            textprintf_ex(page,font,SCREEN_W-250+5+55, 50, makecol(0,0,0),-1,"score: %d",monJoueur[1].score);
 
             blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
@@ -174,7 +166,7 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS], unsigned long* Temps) {
 
     }
 
-    if(monJoueur[0]->score < monJoueur[1]->score)
+    if(monJoueur[0].score < monJoueur[1].score)
 
         //alert("%s, vous avez gagné un ticket ! "joueur_riv[0].nom, NULL, NULL, "go!", NULL, 0, 0);
 
