@@ -7,7 +7,7 @@
 void actualiser_cercle(t_note * note_a_jouer) {
 
 
-    if (note_a_jouer->y_centre >= 675) {
+    if (note_a_jouer->y_centre >= 700) {
 
         note_a_jouer->affichage = 0;
 

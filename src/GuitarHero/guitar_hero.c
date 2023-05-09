@@ -23,11 +23,13 @@ void guitar_hero() {
     t_note * portee_1 = NULL;
     int index_portee_1;
     int taille_portee_1;
+    int index_note_jouee_1;
 
     //Variable Portee 2
     t_note * portee_2 = NULL;
     int index_portee_2;
     int taille_portee_2;
+    int index_note_jouee_2;
 
 
     //Variable de fin de partie
@@ -168,6 +170,9 @@ void guitar_hero() {
     index_portee_1 = 0;
     index_portee_2 = 0;
 
+    index_note_jouee_1 = index_portee_1;
+    index_note_jouee_2 = index_portee_2;
+
     printf("Affichage note 1 portee 1 \n");
 
     printf("Note : %d, Millis: %d, portee: %d, X: %d, Y: %d, Radius: %d, Dy: %f, Affichage: %d\n", portee_2[0].note, portee_2[0].millis, portee_2[0].portee, portee_2[0].x_centre, portee_2[0].y_centre, portee_2[0].radius, portee_2[0].dy, portee_2[0].affichage);
@@ -238,6 +243,12 @@ void guitar_hero() {
 
         }
 
+        detection_touches(portee_1, index_portee_1, &index_note_jouee_1, portee_2, index_portee_2, &index_note_jouee_2, tableau_cercles_fixes, &alive);
+
+
+
     }
+
+    PlaySound(NULL, 0, 0);
 
 }

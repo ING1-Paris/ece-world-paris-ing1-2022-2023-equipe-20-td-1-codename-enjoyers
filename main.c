@@ -141,7 +141,10 @@ int main() {
     /// ZONE DE TEST
     // -----------------------------
 
-    //guitar_hero();
+    while (1) {
+
+        guitar_hero();
+    }
     //jeu_riviere(tableau_joueurs, &Temps_d_epreuve);
 
     //printf("\n\n\n");
@@ -174,7 +177,6 @@ int main() {
 
 
     Acceuil();
-
 
 
     for (int i=0; i<NOMBRE_JOUEURS; i++) {
@@ -260,8 +262,8 @@ int main() {
         }
 
     }
-    PlaySound(0,0,0);
 
+    PlaySound(NULL, 0, 0);
 
     while (!key[KEY_ESC]) {
 
