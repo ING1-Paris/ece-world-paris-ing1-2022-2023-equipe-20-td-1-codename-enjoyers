@@ -20,7 +20,7 @@ void Acceuil(){
         blit(Affiche,page,0,0,0,0,SCREEN_W, SCREEN_H);
 
         if (compteur_temporel>=500){
-            textprintf_ex(page,font,400,700, makecol(255,0,0),-1,"Press Space to Start !");
+            textprintf_ex(page,font,400,700, makecol(255,255,255),-1,"Press Space to Start !");
 
         }
         if(compteur_temporel==1000){

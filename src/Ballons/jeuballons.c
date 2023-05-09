@@ -136,20 +136,6 @@ void jeuballons()
     t_ballon *ballon4;
     t_ballon *ballon5;
 
-    // Il y aura du hasard
-    srand(time(NULL));
-
-    // Lancer allegro et le mode graphique
-    allegro_init();
-    install_keyboard();
-
-    set_color_depth(desktop_color_depth());
-    if (set_gfx_mode(GFX_AUTODETECT_WINDOWED,1000,700,0,0)!=0)
-    {
-        allegro_message("prb gfx mode");
-        allegro_exit();
-        exit(EXIT_FAILURE);
-    }
 
     // buffer
     page=create_bitmap(SCREEN_W,SCREEN_H);
