@@ -45,6 +45,7 @@ int main() {
     BITMAP * map_menu; // BITMAP de la carte du menu
     BITMAP * Shrek_Question;
     BITMAP * fond_de_maison;
+    BITMAP * Couronne_de_jeu;
 
     // HITBOXES
     t_hitbox tableau_hitboxes[NOMBRE_HITBOXES] = {
@@ -89,6 +90,7 @@ int main() {
     unsigned long Temps_d_epreuve;
 
     // EVENT
+    int Personne_qui_choisi= 0;
     int Choix_epreuve = 0;
 
     // SPRITES
@@ -141,6 +143,7 @@ int main() {
     map_menu = load_bitmap("../assets/maps/menu.bmp", NULL);
     Shrek_Question = load_bitmap("../assets/Item/Menu/Shrek_question.bmp",NULL);
     fond_de_maison = load_bitmap("../assets/Item/Menu/Fond_de_maison.bmp",NULL);
+    Couronne_de_jeu= load_bitmap("../assets/Item/Menu/Couronne_de_Shrek.bmp",NULL);
 
     // -----------------------------
 
@@ -176,6 +179,7 @@ int main() {
 
 
     /// DEBUT DU JEU
+
     page = create_bitmap(SCREEN_W, SCREEN_H);
     clear_bitmap(page);
 
@@ -297,32 +301,49 @@ int main() {
 
         //Event
         if (activation_event(tableau_joueurs, tableau_eventboxes) == 1){
-            Choix_epreuve = Recherche_event_le_plus_proche(&tableau_joueurs[0]);
+
+            for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
+                tableau_joueurs[i].tickets = tableau_joueurs[i].tickets-1;
+            }
+
+            Choix_epreuve = Recherche_event_le_plus_proche(&tableau_joueurs[Personne_qui_choisi]);
+            Personne_qui_choisi ++;
+
+            if(Personne_qui_choisi == 2){
+                Personne_qui_choisi = 0;
+            }
         }
+
         if (Choix_epreuve == 1){
             Snake(tableau_joueurs,&Temps_d_epreuve);
             Choix_epreuve = 0;
         }
-        if (Choix_epreuve == 2){
+
+        else if (Choix_epreuve == 2){
             guitar_hero();
             Choix_epreuve = 0;
         }
-        if (Choix_epreuve == 3){
+
+        else if (Choix_epreuve == 3){
             jeuballons();
             Choix_epreuve = 0;
         }
-        if (Choix_epreuve == 4){
+
+        else if (Choix_epreuve == 4){
             jeu_course();
             Choix_epreuve = 0;
         }
-        if (Choix_epreuve == 5){
+
+        else if (Choix_epreuve == 5){
             jeu_taupe(tableau_joueurs,&Temps_d_epreuve);
             Choix_epreuve = 0;
         }
-        if (Choix_epreuve == 6){
+
+        else if (Choix_epreuve == 6){
             Choix_epreuve = 0;
         }
-        if (Choix_epreuve == 7){
+
+        else if (Choix_epreuve == 7){
             jeu_riviere(tableau_joueurs,&Temps_d_epreuve);
             Choix_epreuve = 0;
         }
@@ -355,6 +376,29 @@ int main() {
             if (Innactivite[i] == 1)
                 tableau_joueurs[i].Sprite_actif = tableau_joueurs[i].Sprite_actif -2;
         }
+        //Gestion de L'interface in game
+
+        //J1
+        rectfill(page,10,10,250,70,makecol(255,255,255));
+        rect(page,10,10,250,70,makecol(0,0,0));
+        stretch_blit(tableau_joueurs[0].sprites[12],page,0,0,225,225,15,15,50,50);
+
+        if(Personne_qui_choisi == 0)
+            masked_stretch_blit(Couronne_de_jeu,page,0,0,650,366,170,20,70,50);
+
+        textprintf_ex(page,font,70, 30, makecol(0,0,0),-1,"%s",tableau_joueurs[0].nom);
+        textprintf_ex(page,font,70, 50, makecol(0,0,0),-1,"Tickets: %d",tableau_joueurs[0].tickets);
+
+        //J2
+        rectfill(page,SCREEN_W-250,10,SCREEN_W-10,70,makecol(255,255,255));
+        rect(page,SCREEN_W-250,10,SCREEN_W-10,70,makecol(0,0,0));
+        stretch_blit(tableau_joueurs[1].sprites[12],page,0,0,225,225,SCREEN_W-250+5,15,50,50);
+
+        if(Personne_qui_choisi == 1)
+            masked_stretch_blit(Couronne_de_jeu,page,0,0,650,366,SCREEN_W-250+160,20,70,50);
+
+        textprintf_ex(page,font,SCREEN_W-250+5+55, 30, makecol(0,0,0),-1,"%s",tableau_joueurs[1].nom);
+        textprintf_ex(page,font,SCREEN_W-250+5+55, 50, makecol(0,0,0),-1,"Tickets: %d",tableau_joueurs[1].tickets);
 
 
         masked_blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);

@@ -3,9 +3,10 @@
 //
 #include "../../header.h"
 
-void Snake(t_joueur Joueur[NOMBRE_JOUEURS],unsigned long* Temps){
+void Snake(t_joueur * Joueur ,unsigned long* Temps){
 
     /// Initialisation \\\
+
 
     // Variable double buffer
     BITMAP* page ;
@@ -293,15 +294,18 @@ void Snake(t_joueur Joueur[NOMBRE_JOUEURS],unsigned long* Temps){
 
 
     //Information de fin de jeu
-
     masked_blit(Nom_du_jeu,page,0,0,SCREEN_W/2-200,50,400,178);
     rectfill(page,340,200,640,220,makecol(255,255,255));
     rect(page,340,200,640,220,makecol(0,0,0));
 
-    if (Joueur[0].score > Joueur[1].score)
+    if (Joueur[0].score > Joueur[1].score){
         textprintf_ex(page,font,350,210, makecol(0,0,0),-1,"Le Joueur %s gagne !",Joueur[0].nom);
-    else
+        Joueur[0].tickets = Joueur[0].tickets + 1;
+    }
+    else {
         textprintf_ex(page,font,350,210, makecol(0,0,0),-1,"Le Joueur %s gagne !",Joueur[1].nom);
+        Joueur[1].tickets = Joueur[1].tickets + 1;
+    }
 
     blit(page,screen,0,0,0,0,SCREEN_W, SCREEN_H);
 
