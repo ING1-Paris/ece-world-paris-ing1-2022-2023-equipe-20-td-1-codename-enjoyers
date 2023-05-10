@@ -57,7 +57,7 @@ void Acceuil();
 
 
 // GUITAR HERO
-#define TAILLE_TAB_CHANSONS 2
+#define TAILLE_TAB_CHANSONS 3
 #define TEMPO_DE_BASE 480000
 
 typedef struct note_musique {
@@ -96,7 +96,7 @@ void actualiser_tab_cercles(BITMAP * bmp, t_note * tableau_notes, int taille_tab
 int collision_cercles(t_cercle_fixe *a1, t_note *a2);
 t_note * organiser_portees(t_note * tab_notes, int taille_tab_notes, int * taille_portee, int portee);
 void update_millis(t_note * note_a_update, int tempo);
-void detection_touches(t_note * portee_1, int index_1, int * index_note_jouee_1, t_note * portee_2, int index_2, int * index_note_jouee_2, t_cercle_fixe * tab_cercles_fixes, int * alive);
+void detection_touches(t_note * portee_1, int index_1, int * index_note_jouee_1, t_note * portee_2, int index_2, int * index_note_jouee_2, t_cercle_fixe * tab_cercles_fixes, int * alive, int mono_portee);
 
 
 

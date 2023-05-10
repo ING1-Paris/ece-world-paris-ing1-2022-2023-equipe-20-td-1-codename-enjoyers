@@ -151,10 +151,10 @@ int main() {
     /// ZONE DE TEST
     // -----------------------------
 
-    /*while (1) {
+    while (1) {
 
         guitar_hero();
-    }*/
+    }
 
     //jeu_riviere(tableau_joueurs, &Temps_d_epreuve);
     //jeu_course();
