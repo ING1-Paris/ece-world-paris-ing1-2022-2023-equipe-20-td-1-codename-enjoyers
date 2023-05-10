@@ -160,7 +160,7 @@ int main() {
     }*/
 
     //jeu_riviere(tableau_joueurs, &Temps_d_epreuve);
-    //jeu_course();
+    jeu_course();
     //printf("\n\n\n");
     //system("pause");
 

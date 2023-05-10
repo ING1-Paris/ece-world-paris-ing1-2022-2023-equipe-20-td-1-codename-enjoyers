@@ -235,7 +235,7 @@ void jeuballons();
 
 
 //COURSE DE LAPIN
-int jeu_course();
+void jeu_course();
 
 
 
@@ -333,7 +333,7 @@ typedef struct joueur_taupe
 
 //
 
-int jeu_course();
+void jeu_course();
 
 
 
