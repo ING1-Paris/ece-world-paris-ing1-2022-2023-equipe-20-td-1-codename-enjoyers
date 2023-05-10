@@ -68,10 +68,10 @@ void remplirTablapins(t_lapin * tab[Nlapin]);
 
 
 // Actualiser un lapin (bouger ...)
-void actualiserlapin(t_lapin *lapin);
+void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page);
 
 // G�rer l'�volution de l'ensemble des lapins
-void actualiserTablapins(t_lapin * tab[Nlapin]);
+void actualiserTablapins(t_lapin * tab[Nlapin], int tabParis[2], int *alive, BITMAP *page);
 
 
 // Dessiner un lapin sur une bitmap bmp
@@ -88,7 +88,6 @@ void chargerSequence(t_sequence * seq);
 
 // Charger toutes les s�quences du tableau global tabSequence
 void chargerTabSequences();
-
 
 
 /***************************************************/
@@ -120,8 +119,51 @@ t_sequence tabSequences[NSEQUENCE] =
 /* initialisation puis boucle d'animation */
 /******************************************/
 
-int jeu_course()
+void jeu_course()
 {
+    int tab_paris[2] = {0, 0};
+
+    char pari_lapin_temp[256]="";
+
+    int alive = 1 ;
+
+    DIALOG GUI_paris[] =
+            {
+                    // (dialog proc)     (x)   (y)   (w)   (h) (fg)(bg) (key) (flags)     (d1) (d2)    (dp)                   (dp2) (dp3)
+                    { d_box_proc,           0, 0, 500, 200, 0, 0, 0,        0,          0,  0,       NULL,               NULL, NULL},
+                    { d_text_proc,         2,  10,    0,    0,   0,  0,    0,      0,       0,   0,    (void*)"Pariez sur un lapin (entre 1 et 5) :",  NULL, NULL  },
+                    { d_text_proc,         4,  25,    0,    0,   0,  0,    0,      0,       0,   0,    (void*)">>",  NULL, NULL  },
+                    { d_edit_proc,       28,  25,  160,    8,   0,  0,    0, D_EXIT,      64,   0,    (void*)pari_lapin_temp,      NULL, NULL  },
+
+
+                    { d_button_proc,     160,   190,  160,   16,   0,  0,    0, D_EXIT,       0,   0,    (void*)"OK",            NULL, NULL  },
+                    { d_yield_proc,        0,   0,    0,    0,   0,  0,    0,      0,       0,   0,    NULL,                   NULL, NULL  },
+                    { NULL,                0,   0,    0,    0,   0,  0,    0,      0,       0,   0,    NULL,                   NULL, NULL  },
+            };
+
+    gui_fg_color = makecol(0, 0, 0);
+    gui_mg_color = -1;
+    gui_bg_color = makecol(255, 255, 255);
+    set_dialog_color (GUI_paris, gui_fg_color, gui_bg_color);
+    centre_dialog(GUI_paris);
+
+
+    for (int i = 0; i < 2; ++i) {
+
+        do {
+
+            strcpy(pari_lapin_temp, "");
+
+            do_dialog(GUI_paris, 3);
+
+        } while ((strlen(pari_lapin_temp) < 1)||(strlen(pari_lapin_temp) > 1) && (atoi(pari_lapin_temp) >= 1 && atoi(pari_lapin_temp) <= 6));
+
+
+        tab_paris[i] = atoi(pari_lapin_temp) - 1 ;
+        printf("le lapin %d a été choisi \n",tab_paris[i]);
+    }
+
+
     // Le tableau regroupant tous les lapins
     // c'est un tableau de pointeurs sur structures t_lapins
     t_lapin * meslapins[Nlapin];
@@ -152,15 +194,16 @@ int jeu_course()
     // remplir le tableau avec des lapins allou�s et initialis�s
     remplirTablapins(meslapins);
 
+
     // Boucle d'animation (pas d'interaction)
-    while (!key[KEY_ESC])
+    while (alive)
     {
 
         // 1)  EFFACER BUFFER, en appliquant d�cor  (pas de clear_bitmap)
         blit(decor,page,0,0,0,0,SCREEN_W,SCREEN_H);
 
         // 2) DETERMINER NOUVELLEs POSITIONs
-        actualiserTablapins(meslapins);
+        actualiserTablapins(meslapins, tab_paris, &alive, &page);
 
         // 3) AFFICHAGE NOUVELLEs POSITIONs SUR LE BUFFER
         dessinerTablapins(page,meslapins);
@@ -172,7 +215,7 @@ int jeu_course()
         rest(20);
     }
 
-    return 0;
+
 }
 
 
@@ -217,13 +260,11 @@ t_lapin * creerlapin(int type, int x, int y, int dx, int tmpdx, int tmpimg)
 // Sur cet exemple on cr�e 6 lapins, chacun associ� � une s�quence
 void remplirTablapins(t_lapin * tab[Nlapin])
 {
-    // ( ici : 0 Dragon  1 Poisson  2 Crabe  3 Abeille  4 Moustique  5 Serpent )
-
     // Appeler Nlapin fois creerlapin avec les param�tres souhait�s :
     //                (type,   x,   y,  dx, tmpdx, tmpimg )
     tab[0]=creerlapin(   0, 2,   10,  4,     rand()%(6-1)+1,      4 );
     tab[1]=creerlapin(   1, 2, 100,   4,     rand()%(6-1)+1,      4 );
-    tab[2]=creerlapin(   2, 2, 200,   4,     rand()%(6-1)+1,     4 ); // + tmpdx est grand, moins l'lapin avance vite
+    tab[2]=creerlapin(   2, 2, 200,   4,     rand()%(6-1)+1,     4 ); // + tmpdx est grand, moins le lapin avance vite
     tab[3]=creerlapin(   3, 2, 300,  4,     rand()%(6-1)+1,      4 );
     tab[4]=creerlapin(   4, 2,  400,   4,     rand()%(6-1)+1,      4 );
     tab[5]=creerlapin(   5, 2, 500,  4,     rand()%(6-1)+1,      4 );
@@ -231,13 +272,38 @@ void remplirTablapins(t_lapin * tab[Nlapin])
 
 
 // Actualiser un lapin (bouger ...)
-void actualiserlapin(t_lapin *lapin)
+void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page)
 {
 
     // gestion des bords
     // sur cet exemple seulement sur l'axe x (car pas de dy)
-    if (lapin->x+lapin->tx/2 > SCREEN_W)
+
+    if (lapin->x+lapin->tx/2 > SCREEN_W){
         lapin->x=SCREEN_W-lapin->tx/2;
+        *alive = 0;
+
+        int gagnant = 0;
+
+    for (int i = 0; i < 2; ++i) {
+
+        if(lapin->type == tabParis[i]) {
+
+            gagnant = 1;
+        }
+    }
+
+    if (gagnant) {
+
+    //ticket
+
+    }
+    else {
+
+        textout_ex(page, font, "vous avez perdu", 150, 300, makecol(255, 255, 255), -1);
+
+    }
+        }
+
 
     // calculer nouvelle position
     // nouvelle position = position actuelle + deplacement seulement une fois sur tmpdx
@@ -259,15 +325,18 @@ void actualiserlapin(t_lapin *lapin)
         if ( lapin->imgcourante >= tabSequences[ lapin->type ].nimg )
             lapin->imgcourante=0;
     }
+
+    //changement de vitesse durant la course
+    lapin->dx = rand()%(8-1)+1;
 }
 
 // G�rer l'�volution de l'ensemble des lapins
-void actualiserTablapins(t_lapin * tab[Nlapin])
+void actualiserTablapins(t_lapin * tab[Nlapin], int tabParis[2], int *alive, BITMAP *page)
 {
     int i;
 
     for (i=0;i<Nlapin;i++)
-        actualiserlapin(tab[i]);
+        actualiserlapin(tab[i], tabParis, alive, page);
 }
 
 

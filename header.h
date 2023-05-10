@@ -128,7 +128,7 @@ typedef struct Pomme{
 
 }t_Pomme;
 
-void Snake(t_joueur Joueur[NOMBRE_JOUEURS],unsigned long* Temps);
+void Snake(t_joueur* Joueur,unsigned long* Temps);
 t_corp_de_snake* Creer_maillon(BITMAP* tab_de_Skin[12]);
 void Actualisation_Snake(t_corp_de_snake* head);
 void Deplacement_Snake_1(t_corp_de_snake * head);
@@ -235,7 +235,7 @@ void jeuballons();
 
 
 //COURSE DE LAPIN
-int jeu_course();
+void jeu_course();
 
 
 
@@ -311,7 +311,8 @@ typedef struct taupe{
 
     int tx,ty;    // taille
     BITMAP *skin;
-    int affichage[1];
+    int affichage;
+    int taille[48][48][2];
     int skin_utilise;
     int x,y;
     int vit;
@@ -331,9 +332,21 @@ typedef struct joueur_taupe
     BITMAP *skin_perso[13]; // image de l'acteur
 } t_joueur_taupe;
 
+
+
+void actualiser_taupe(t_taupe * taupe);
+void actualiser_tab_taupe(t_taupe * tableau_taupe);
+int verfication(t_taupe tab_taupe);
+
+
+
+
+
+
+
 //
 
-int jeu_course();
+void jeu_course();
 
 
 
