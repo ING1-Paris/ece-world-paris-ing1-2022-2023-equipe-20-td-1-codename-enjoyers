@@ -311,7 +311,8 @@ typedef struct taupe{
 
     int tx,ty;    // taille
     BITMAP *skin;
-    int affichage[1];
+    int affichage;
+    int taille[48][48][2];
     int skin_utilise;
     int x,y;
     int vit;
@@ -330,6 +331,18 @@ typedef struct joueur_taupe
     int skin_utilise;
     BITMAP *skin_perso[13]; // image de l'acteur
 } t_joueur_taupe;
+
+
+
+void actualiser_taupe(t_taupe * taupe);
+void actualiser_tab_taupe(t_taupe * tableau_taupe);
+int verfication(t_taupe tab_taupe);
+
+
+
+
+
+
 
 //
 
