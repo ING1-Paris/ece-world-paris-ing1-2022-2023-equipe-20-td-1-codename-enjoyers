@@ -33,10 +33,46 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS], unsigned long* Temps) {
         // mesTaupes[j]->vit = 5;
         mesTaupes[j].tx = 48;
         mesTaupes[j].ty = 48;
-        mesTaupes[j].y = rand()%(400-200)+200;
-        mesTaupes[j].x = rand()%((800-400)+400);
-        mesTaupes[j].skin = load_bitmap_check("../assets/personnages/Taupe/taupe.bmp");
 
+        mesTaupes[j].y = rand()%400;
+        mesTaupes[j].x = rand()%400;
+
+        /*if(mesTaupes[j].x == 0){
+            mesTaupes[j].y == 400;
+        }
+
+        if(mesTaupes[j].x == 1){
+            mesTaupes[j].y == 200;
+        }
+
+        if(mesTaupes[j].x == 2){
+            mesTaupes[j].y == 400;
+        }
+
+        if(mesTaupes[j].y == 0){
+            mesTaupes[j].y == 400;
+        }
+
+        if(mesTaupes[j].y == 1){
+            mesTaupes[j].y == 200;
+        }
+
+        if(mesTaupes[j].y == 2){
+            mesTaupes[j].y == 400;
+        }*/
+
+
+        mesTaupes[j].skin = load_bitmap_check("../assets/personnages/Taupe/taupe.bmp");
+        mesTaupes[j].affichage = 1;
+
+
+        for (int i = 0; i < 48; ++i) {
+            for (int k = 0; k < 48; ++k) {
+                mesTaupes[j].taille[i][k][0]=mesTaupes[j].x+i;
+                mesTaupes[j].taille[i][k][1]=mesTaupes[j].y+k;
+            }
+
+        }
 
     }
 
@@ -66,6 +102,8 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS], unsigned long* Temps) {
 
     for (int k = 0; k< NOMBRE_JOUEURS; ++k) {
 
+
+
         monJoueur[k].temps = debut;
 
 
@@ -75,54 +113,28 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS], unsigned long* Temps) {
             blit(decor, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
 
-            for (int i = 0; i < NOMBRE_TAUPE; ++i) {
-                masked_blit(mesTaupes[i].skin,decor,0,0,mesTaupes[i].x,mesTaupes[i].y,mesTaupes[i].tx,mesTaupes[i].ty);
-            }
 
+            for (int i=0; i<NOMBRE_TAUPE; i++) {
+                if (mouse_b && verfication(mesTaupes[i])==1) {
+                    printf("TAP !\n");
+                    mesTaupes[i].affichage = 0;
+                    rest(100);
+                    monJoueur[k].score = monJoueur[k].score + 1;
+                    //masked_blit(mesTaupes[i].skin, decor, 0, 0, mesTaupes[i].x, mesTaupes[i].y + 40, mesTaupes[i].tx,mesTaupes[i].ty);
 
-            if (mouse_b) {
-
-                rectfill(page, mouse_x, mouse_y, mouse_x + 20, mouse_y + 20, makecol(255, 0, 0));
-                rest(100);
-                monJoueur[k].score = monJoueur[k].score + 1;
-            }
-
-
-
-            if ( (mouse_b)&& (mouse_x<=mesTaupes->x) &&(mouse_y<=mesTaupes->y)) {
-
-                rectfill(page, mouse_x, mouse_y, mouse_x + 20, mouse_y + 20, makecol(0, 155, 0));
-                masked_blit(mesTaupes->skin, decor, 0, 0, mesTaupes->x, mesTaupes->y + 40, mesTaupes->tx,mesTaupes->ty);
+                }
 
             }
 
 
-            /*if(mouse_b && (couleurPixel==marron)){
+            for (int i=0; i<NOMBRE_TAUPE; i++) {
 
-                allegro_message("coucou");
-                 //putpixel(decor, SCREEN_W, SCREEN_H, rouge);
+                if (mesTaupes[i].affichage == 1) {
 
-            }
-
-
-            else allegro_message("caca");*/
-
-                // les clics
-            for (int j = 0; j < NOMBRE_TAUPE; ++j) {
-                for(ligne = 0; ligne <mesTaupes[j].skin->h; ligne ++) {
-                    for (colonne = 0; colonne < mesTaupes[j].skin->w; colonne++) {
-                        couleurPixel = getpixel(mesTaupes[j].skin, colonne, ligne);
-
-                        if (mouse_b && couleurPixel==marron) {
-                            putpixel(mesTaupes[j].skin, ligne, colonne, rouge);
-                            ///rectfill(page, mouse_x, mouse_y, mouse_x+20, mouse_y+20, makecol(0,0,0));
-                        }
-
-                    }
-
-                    //masked_blit(joueur_a_actualiser[0]->skin_perso[4], rondin_riv[j]->img,0,0,rondin_riv[j]->posy, rondin_riv[j]->posy,rondin_riv[j]->tx, rondin_riv[j]->ty);
+                    masked_blit(mesTaupes[i].skin,page,0,0,mesTaupes[i].x,mesTaupes[i].y,mesTaupes[i].tx,mesTaupes[i].ty);
                 }
             }
+
 
 
             // clip sur EXIT :
@@ -133,7 +145,7 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS], unsigned long* Temps) {
             time_t end = time(NULL);
             monJoueur[k].temps = (unsigned long) difftime(end, debut);
 
-            if (monJoueur[0].temps > 10) {
+            if (monJoueur[0].temps > 100) {
                 fin=1;
             }
 
@@ -165,6 +177,7 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS], unsigned long* Temps) {
         }
 
     }
+
 
     if(monJoueur[0].score < monJoueur[1].score)
 
