@@ -141,20 +141,20 @@ void jeuballons()
     page=create_bitmap(SCREEN_W,SCREEN_H);
 
     // charger image de fond
-    decor=load_bitmap("shrek.bmp",NULL);
+    decor=load_bitmap("../assets/maps/map_ballons.bmp",NULL);
     if (!decor)
     {
-        allegro_message("pas pu trouver shrek.bmp");
+        allegro_message("pas pu trouver map_ballons.bmp");
         exit(EXIT_FAILURE);
     }
 
     // créer le fusil et les ballons
-    fusil=creerJoueur("fusil.bmp");
-    ballon1=creerBallon_bleu("ballon_bleu.bmp");
-    ballon2=creerBallon_rose("ballon_rose.bmp");
-    ballon3=creerBallon_vert("ballon_vert.bmp");
-    ballon4=creerBallon_violet("ballon_violet.bmp");
-    ballon5=creerBallon_rouge("ballon_rouge.bmp");
+    fusil=creerJoueur("../assets/Item/TirBallons/fusil.bmp");
+    ballon1=creerBallon_bleu("../assets/Item/TirBallons/ballon_bleu.bmp");
+    ballon2=creerBallon_rose("../assets/Item/TirBallons/ballon_rose.bmp");
+    ballon3=creerBallon_vert("../assets/Item/TirBallons/ballon_vert.bmp");
+    ballon4=creerBallon_violet("../assets/Item/TirBallons/ballon_violet.bmp");
+    ballon5=creerBallon_rouge("../assets/Item/TirBallons/ballon_rouge.bmp");
 
     // préparer la liste des acteurs (100 maxi)
     // mais vide initialement

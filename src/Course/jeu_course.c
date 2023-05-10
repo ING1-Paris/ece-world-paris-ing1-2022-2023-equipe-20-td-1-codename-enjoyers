@@ -105,12 +105,12 @@ void chargerTabSequences();
 t_sequence tabSequences[NSEQUENCE] =
         {
                 //          nomSource           , nimg,  tx,  ty, ncol
-                { "../assets/Item/sprites_lapins.bmp"    ,    8, 112,  140,    8 },
-                { "../assets/Item/sprites_lapins.bmp"   ,    8,  112,  140,    8 },
-                { "../assets/Item/sprites_lapins.bmp"   ,    8,  112,  140,    8 },
-                { "../assets/Item/sprites_lapins.bmp"   ,    8,  112,  140,    8 },
-                { "../assets/Item/sprites_lapins.bmp" ,    8,  112,  140,    8 },
-                { "../assets/Item/sprites_lapins.bmp"   ,    8, 112,  140,    8 }
+                { "../assets/Item/Course/sprites_lapins.bmp"    ,    8, 112,  140,    8 },
+                { "../assets/Item/Course/sprites_lapins.bmp"   ,    8,  112,  140,    8 },
+                { "../assets/Item/Course/sprites_lapins.bmp"   ,    8,  112,  140,    8 },
+                { "../assets/Item/Course/sprites_lapins.bmp"   ,    8,  112,  140,    8 },
+                { "../assets/Item/Course/sprites_lapins.bmp" ,    8,  112,  140,    8 },
+                { "../assets/Item/Course/sprites_lapins.bmp"   ,    8, 112,  140,    8 }
         };
 
 
