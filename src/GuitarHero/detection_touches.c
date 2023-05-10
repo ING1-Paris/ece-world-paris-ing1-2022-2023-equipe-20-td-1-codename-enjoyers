@@ -60,7 +60,16 @@ void detection_touches(t_note * portee_1, int index_1, int * index_note_jouee_1,
 
             *index_note_jouee_1 = *index_note_jouee_1 + 1;
 
-        } /*else if (!collision_cercles(&tab_cercles_fixes[2], &portee_2[*index_note_jouee_1]) && (portee_2[*index_note_jouee_1].affichage) && (portee_2[*index_note_jouee_1].couleur == makecol(255, 255, 0))) {
+        } else if (collision_cercles(&tab_cercles_fixes[2], &portee_2[*index_note_jouee_2]) && (portee_2[*index_note_jouee_2].affichage) && (portee_2[*index_note_jouee_2].couleur == makecol(255, 255, 0))) {
+
+            portee_2[*index_note_jouee_2].affichage = 0;
+
+            *index_note_jouee_2 = *index_note_jouee_2 + 1;
+        }
+
+
+
+        /*else if (!collision_cercles(&tab_cercles_fixes[2], &portee_2[*index_note_jouee_1]) && (portee_2[*index_note_jouee_1].affichage) && (portee_2[*index_note_jouee_1].couleur == makecol(255, 255, 0))) {
 
             *alive = 0;
         }*/
