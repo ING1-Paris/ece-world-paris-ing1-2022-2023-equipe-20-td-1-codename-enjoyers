@@ -14,7 +14,7 @@ int Recherche_event_le_plus_proche(t_joueur* Joueur){
 
     int min;
 
-    int event_c[NOMBRE_EVENTBOXES][2] ={{265,208},{647,208},{73,448},{313,443},{844,401},{570,510},{840,623},{480,720}};
+    int event_c[NOMBRE_EVENTBOXES][2] ={{265,208},{647,208},{73,448},{313,443},{844,401},{840,623},{570,510},{480,720}};
 
     for (int i = 0; i < NOMBRE_EVENTBOXES; ++i) {
         if (Joueur->x>=event_c[i][0]){
