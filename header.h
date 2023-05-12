@@ -56,6 +56,26 @@ void Acceuil();
 
 
 
+// SAUVEGARDE
+
+typedef struct entree_sauvegarde {
+
+    int jeu;
+    int score;
+    int temps;
+    int date;
+    char map[128];
+    char nom[128];
+
+} t_entree_sauvegarde;
+
+
+
+
+
+
+
+
 // GUITAR HERO
 #define TAILLE_TAB_CHANSONS 3
 #define TEMPO_DE_BASE 480000

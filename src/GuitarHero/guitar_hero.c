@@ -295,4 +295,6 @@ void guitar_hero() {
 
     PlaySound(NULL, 0, 0);
 
+    destroy_bitmap(page);
+
 }
