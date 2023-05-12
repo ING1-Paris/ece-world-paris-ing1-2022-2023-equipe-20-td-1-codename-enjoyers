@@ -347,11 +347,12 @@ int main() {
         }
 
         else if (Choix_epreuve == 6){
+            jeu_riviere(tableau_joueurs,&Temps_d_epreuve);
             Choix_epreuve = 0;
         }
 
         else if (Choix_epreuve == 7){
-            jeu_riviere(tableau_joueurs,&Temps_d_epreuve);
+
             Choix_epreuve = 0;
         }
         else if(Choix_epreuve == 8){
