@@ -290,7 +290,7 @@ int main() {
     while (Fin != 1) {
 
 
-        traverser_riviere(tableau_joueurs);
+        //traverser_riviere(tableau_joueurs);
 
         //jeu_riviere(tableau_joueurs, &Temps_d_epreuve);
         //jeu_taupe(tableau_joueurs, &Temps_d_epreuve);
@@ -351,7 +351,8 @@ int main() {
         }
 
         else if (Choix_epreuve == 6){
-            jeu_riviere(tableau_joueurs,&Temps_d_epreuve);
+            //jeu_riviere(tableau_joueurs,&Temps_d_epreuve);
+            traverser_riviere(tableau_joueurs);
             Choix_epreuve = 0;
         }
 
