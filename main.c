@@ -160,6 +160,7 @@ int main() {
     /// ZONE DE TEST
     // -----------------------------
 
+
     /*while (1) {
 
         guitar_hero();
@@ -287,6 +288,9 @@ int main() {
     PlaySound(NULL, 0, 0);
 
     while (Fin != 1) {
+
+
+        traverser_riviere(tableau_joueurs);
 
         //jeu_riviere(tableau_joueurs, &Temps_d_epreuve);
         //jeu_taupe(tableau_joueurs, &Temps_d_epreuve);
