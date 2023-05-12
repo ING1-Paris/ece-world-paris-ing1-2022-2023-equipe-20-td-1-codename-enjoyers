@@ -15,7 +15,7 @@
 
 #define NOMBRE_JOUEURS 2
 #define NOMBRE_HITBOXES 15
-#define NOMBRE_EVENTBOXES 7
+#define NOMBRE_EVENTBOXES 8
 
 
 
@@ -48,6 +48,7 @@ int collision_joueur_hitbox(t_hitbox * hitbox, t_joueur * joueur_actuel);
 int activation_event(t_joueur tab_joueurs[NOMBRE_JOUEURS], t_hitbox tab_eventboxes[NOMBRE_EVENTBOXES]);
 int Recherche_event_le_plus_proche(t_joueur* Joueur);
 void Acceuil();
+void Fin_du_jeu(BITMAP * page,t_joueur tableau_joueurs[NOMBRE_JOUEURS]);
 
 
 
@@ -141,6 +142,7 @@ int actualistation_Pomme(t_corp_de_snake* head,t_Pomme* Pomme);
 void Interaction_Pomme(t_corp_de_snake* head,t_Pomme* Pomme,int *Longeur,BITMAP* tab_de_Skin[12]);
 void Mort_de_serpent(t_corp_de_snake * head);
 int Fin_de_partie(int serpent_en_vie[2]);
+
 
 
 
