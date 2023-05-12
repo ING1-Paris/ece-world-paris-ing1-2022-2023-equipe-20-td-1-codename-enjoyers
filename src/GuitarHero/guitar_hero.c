@@ -39,6 +39,7 @@ void guitar_hero() {
     //Variable de gestion des fichiers
     char nom_fichier_musique[256];
     int corde;
+    int mono_portee = 1;
 
     //Variable de l'affichage
     BITMAP * page = create_bitmap(SCREEN_W, SCREEN_H);
@@ -152,13 +153,32 @@ void guitar_hero() {
     for (int i = 0; i < taille_tableau; ++i) {
 
         update_millis(&chanson_jouee[i], tempo_musique);
+    }
 
+    // On vérifie s'il y a une ou deux portées
+    for (int i=0; i<taille_tableau; i++) {
+
+        if (chanson_jouee[i].portee == 2) {
+
+            mono_portee = 0;
+
+            break;
+        }
     }
 
     // Initialisation des deux portées
-    portee_1 = organiser_portees(chanson_jouee, taille_tableau, &taille_portee_1, 1);
+    if (!mono_portee) {
 
-    portee_2 = organiser_portees(chanson_jouee, taille_tableau, &taille_portee_2, 2);
+        portee_1 = organiser_portees(chanson_jouee, taille_tableau, &taille_portee_1, 1);
+
+        portee_2 = organiser_portees(chanson_jouee, taille_tableau, &taille_portee_2, 2);
+
+    } else {
+
+        portee_1 = chanson_jouee;
+
+        taille_portee_1 = taille_tableau;
+    }
 
     // On charge l'interface fixe
     charger_interface(page, tableau_cercles_fixes);
@@ -173,9 +193,9 @@ void guitar_hero() {
     index_note_jouee_1 = index_portee_1;
     index_note_jouee_2 = index_portee_2;
 
-    printf("Affichage note 1 portee 1 \n");
+    //printf("Affichage note 1 portee 1 \n");
 
-    printf("Note : %d, Millis: %d, portee: %d, X: %d, Y: %d, Radius: %d, Dy: %f, Affichage: %d\n", portee_2[0].note, portee_2[0].millis, portee_2[0].portee, portee_2[0].x_centre, portee_2[0].y_centre, portee_2[0].radius, portee_2[0].dy, portee_2[0].affichage);
+    //printf("Note : %d, Millis: %d, portee: %d, X: %d, Y: %d, Radius: %d, Dy: %f, Affichage: %d\n", portee_2[0].note, portee_2[0].millis, portee_2[0].portee, portee_2[0].x_centre, portee_2[0].y_centre, portee_2[0].radius, portee_2[0].dy, portee_2[0].affichage);
 
     // On démarre le chronomètre
     begin = clock();
@@ -200,17 +220,26 @@ void guitar_hero() {
         }
 
 
-        if ((millis >= portee_2[index_portee_2].millis)  && index_portee_2 < taille_portee_2) {
+        if (!mono_portee) {
 
-            spawn_cercles(page, &portee_2[index_portee_2]);
+            if ((millis >= portee_2[index_portee_2].millis)  && index_portee_2 < taille_portee_2) {
 
-            printf("La note %d de la portee %d est dessinee. Diff de temps: %d theorique, %lu reel \n", portee_2[index_portee_2].note, portee_2[index_portee_2].portee, portee_2[index_portee_2].millis, millis);
+                spawn_cercles(page, &portee_2[index_portee_2]);
 
-            index_portee_2 = index_portee_2 + 1;
+                printf("La note %d de la portee %d est dessinee. Diff de temps: %d theorique, %lu reel \n", portee_2[index_portee_2].note, portee_2[index_portee_2].portee, portee_2[index_portee_2].millis, millis);
+
+                index_portee_2 = index_portee_2 + 1;
+            }
         }
 
         actualiser_tab_cercles(page, portee_1, taille_portee_1);
-        actualiser_tab_cercles(page, portee_2, taille_portee_2);
+
+        if (!mono_portee) {
+
+            actualiser_tab_cercles(page, portee_2, taille_portee_2);
+        }
+
+
 
         charger_interface(page, tableau_cercles_fixes);
 
@@ -222,33 +251,50 @@ void guitar_hero() {
             }
         }
 
-        for (int i=0; i<taille_portee_2; i++) {
+        if (!mono_portee) {
 
-            if (portee_2[i].affichage == 1) {
+            for (int i=0; i<taille_portee_2; i++) {
 
-                circlefill(page, portee_2[i].x_centre, portee_2[i].y_centre, portee_2[i].radius, portee_2[i].couleur);
+                if (portee_2[i].affichage == 1) {
+
+                    circlefill(page, portee_2[i].x_centre, portee_2[i].y_centre, portee_2[i].radius, portee_2[i].couleur);
+                }
             }
         }
 
 
         blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
+        if (!mono_portee) {
 
-        if ((portee_1[0].y_centre == 625 || portee_2[0].y_centre == 625) && demarrage_musique) {
+            if ((portee_1[0].y_centre == 625 || portee_2[0].y_centre == 625) && demarrage_musique) {
 
-            // Lancer la chanson
-            PlaySound(TEXT(nom_fichier_musique), NULL, SND_ASYNC);
+                // Lancer la chanson
+                PlaySound(TEXT(nom_fichier_musique), NULL, SND_ASYNC);
 
-            demarrage_musique = 0;
+                demarrage_musique = 0;
 
+            }
+
+        } else {
+
+            if ((portee_1[0].y_centre == 625) && demarrage_musique) {
+
+                // Lancer la chanson
+                PlaySound(TEXT(nom_fichier_musique), NULL, SND_ASYNC);
+
+                demarrage_musique = 0;
+
+            }
         }
 
-        detection_touches(portee_1, index_portee_1, &index_note_jouee_1, portee_2, index_portee_2, &index_note_jouee_2, tableau_cercles_fixes, &alive);
 
-
+        detection_touches(portee_1, index_portee_1, &index_note_jouee_1, portee_2, index_portee_2, &index_note_jouee_2, tableau_cercles_fixes, &alive, mono_portee);
 
     }
 
     PlaySound(NULL, 0, 0);
+
+    destroy_bitmap(page);
 
 }

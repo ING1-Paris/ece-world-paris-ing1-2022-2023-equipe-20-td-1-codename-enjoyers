@@ -82,7 +82,8 @@ int main() {
             {6*48, 9*48, 7*48, 10*48},
             {17*48, 8*48, 18*48, 9*48},
             {10*48, 9*48, 14*48, 11*48},
-            {780, 590, 900, 630}
+            {780, 590, 900, 630},
+            {435,677,520,720}
     };
 
     // JOUEURS
@@ -96,6 +97,11 @@ int main() {
     // SPRITES
     int Innactivite[NOMBRE_JOUEURS]={1,1};
     int animation[NOMBRE_JOUEURS]={0,0};
+
+    //FIN DE PARTIE
+
+    int Fin = 0;
+    int Fin_de_partie = 0;
 
     // OUVERTURE DE LA BOITE DE DIALOGUE
     char chaine_temp[256] = "";
@@ -280,7 +286,7 @@ int main() {
 
     PlaySound(NULL, 0, 0);
 
-    while (!key[KEY_ESC]) {
+    while (Fin != 1) {
 
         //jeu_riviere(tableau_joueurs, &Temps_d_epreuve);
         //jeu_taupe(tableau_joueurs, &Temps_d_epreuve);
@@ -341,12 +347,25 @@ int main() {
         }
 
         else if (Choix_epreuve == 6){
+            jeu_riviere(tableau_joueurs,&Temps_d_epreuve);
             Choix_epreuve = 0;
         }
 
         else if (Choix_epreuve == 7){
-            jeu_riviere(tableau_joueurs,&Temps_d_epreuve);
+
             Choix_epreuve = 0;
+        }
+        else if(Choix_epreuve == 8){
+            alert("AU revoir !", NULL, NULL, "Close", NULL, 0, 0);
+            Fin = 1;
+        }
+
+        //Detection de Victoire
+        for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
+            if(tableau_joueurs[i].tickets == 0){
+                Fin_du_jeu(page,tableau_joueurs);
+                Fin = 1;
+            }
         }
 
 

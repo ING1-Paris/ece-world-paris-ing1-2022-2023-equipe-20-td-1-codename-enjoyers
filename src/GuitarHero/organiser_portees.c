@@ -13,7 +13,7 @@ t_note * organiser_portees(t_note * tab_notes, int taille_tab_notes, int * taill
     int i;
 
     //Comptage des differentes notes dans la portée 1
-    while (validation_de_decoupe != 1) {
+    while (validation_de_decoupe != 1 && compteur_de_notes < taille_tab_notes) {
 
         if (tab_notes[compteur_de_notes].portee == 2) {
 
@@ -24,6 +24,7 @@ t_note * organiser_portees(t_note * tab_notes, int taille_tab_notes, int * taill
             compteur_de_notes = compteur_de_notes + 1;
         }
     }
+
 
 
     //Remplissage des nouveaux tableaux pour chaque partition

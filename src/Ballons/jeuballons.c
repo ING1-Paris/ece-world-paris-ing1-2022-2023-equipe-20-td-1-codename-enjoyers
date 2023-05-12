@@ -25,7 +25,7 @@ int libreListeActeurs(t_listeActeurs *la);
 int cpt_ballons ;
 
 //temps performance joueur
-double temps_ecouleeee, tmpJ1;
+double performance_temps, tmpJ1;
 
 // Allouer et ajouter un acteur à la liste
 // et retourner l'adresse de ce nouveau acteur
@@ -165,7 +165,7 @@ void jeuballons()
         time_t temps_precedent = time(NULL);
         while (!key[KEY_ENTER]) {
             time_t temps_actuel = time(NULL);
-            temps_ecouleeee = difftime(temps_actuel, temps_precedent);
+            performance_temps = difftime(temps_actuel, temps_precedent);
 
             // effacer buffer en appliquant décor  (pas de clear_bitmap)
             blit(decor, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
@@ -203,11 +203,11 @@ void jeuballons()
             // petite temporisation
             rest(10);
         }
-        allegro_message("vous avez éclaté les 5 ballons en %.1f secondes", temps_ecouleeee);
+        allegro_message("vous avez éclaté les 5 ballons en %.1f secondes", performance_temps);
         if(j==0)
-            tmpJ1 = temps_ecouleeee;
+            tmpJ1 = performance_temps;
         else{
-            if(tmpJ1 < temps_ecouleeee)
+            if(tmpJ1 < performance_temps)
                 allegro_message("Joueur 1, vous avez gagné un ticket !");
             else
                 allegro_message("Joueur 2, vous avez gagné un ticket !");
@@ -627,8 +627,8 @@ void actualiserJoueur(t_joueur_ballons *joueur,t_listeActeurs *la){
 
     if (key[KEY_RIGHT]){
         joueur->x += joueur->vit;
-        if (joueur->x+joueur->tx > SCREEN_W/2)
-            joueur->x=SCREEN_W/2-joueur->tx;
+        if (joueur->x+joueur->tx > SCREEN_W)
+            joueur->x=SCREEN_W-joueur->tx;
     }
 
     // Gestion du tir...
