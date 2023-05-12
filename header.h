@@ -12,6 +12,7 @@
 #include <allegro.h>
 #include <winalleg.h>
 #include <mmsystem.h>
+#include <math.h>
 
 #define NOMBRE_JOUEURS 2
 #define NOMBRE_HITBOXES 15
@@ -244,7 +245,7 @@ int jeu_course();
 
 void jeu_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps);
 
-#define NRONDIN 19
+#define NRONDIN 15
 
 typedef struct rondin{
 
@@ -252,6 +253,9 @@ typedef struct rondin{
     BITMAP *img;
     int posx,posy;
     int depx;
+    int indice_ligne;
+    int taille[109][50][2];
+    int affichage;
 
 }t_rondin;
 
@@ -261,34 +265,91 @@ typedef struct joueuur
 {
     int tx, ty;
     unsigned long temps;
-    int x, y; // coordonn�es (en pixels) des pieds de l'acteur
+    int x, y;
     int vit;
     int skin_utilise;
-    BITMAP *skin_perso[13];    // image de l'acteur
+    BITMAP *skin_perso[13];
+    int affichage;
+
 } t_joueuur;
 
 
 
-t_rondin* creerRondin(char *nomimage);
-void actualiserRondin(t_rondin* rondin_a_actualiser);
-void actualiserTabRondin(t_rondin * tab[NRONDIN]);
-void remplirTabRondin(t_rondin* MesRondins[NRONDIN]);
-void AfficherRondin(BITMAP *bmp,t_rondin *rondin_a_afficher);
-void AfficherTabRondin(BITMAP *bmp,t_rondin * tab[NRONDIN]);
+typedef struct joueur_riv
+{
+    int tx, ty;
+    unsigned long temps;
+    int x, y;
+    int vit;
+    int skin_utilise;
+    BITMAP *skin_perso[13];
+    int affichage;
+
+} t_joueur_riv;
+
+
+
+void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS]);
+
+t_rondin * Creation_rondin(int nb);
+void Remplir_tab_rondin(t_rondin * tableau_de_rondin[NRONDIN]);
+void Afficher_rondin(BITMAP *bmp, t_rondin *rondin_a_afficher);
+void Afficher_tab_rondin(BITMAP *bmp, t_rondin *tab_rondin[NRONDIN]);
+void Deplacement_rondin(t_rondin *le_rondin);
+void Deplacement_tab_rondin(t_rondin *le_rondin[NRONDIN]);
+
+
+t_joueur_riv * Creation_joueur(t_joueur joueur[NOMBRE_JOUEURS]);
+void Afficher_joueur(BITMAP *bmp, t_joueur_riv *joueur_a_afficher[NOMBRE_JOUEURS]);
+
+int Collision_joueur_rondin(t_rondin *rondin, t_joueur_riv *joueur);
+void Deplacement_joueur(t_rondin rondin[NRONDIN], t_joueur_riv joueur[NOMBRE_JOUEURS], int innactivite[NOMBRE_JOUEURS]);
+
+
+//int Verification_collision(t_rondin *rondin, t_joueur_riv *joueur);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+t_rondin creerRondin(char *nomimage);
+void actualiserRondin(t_rondin rondin_a_actualiser);
+void actualiserTabRondin(t_rondin tab[NRONDIN]);
+void remplirTabRondin(t_rondin MesRondins[NRONDIN]);
+void AfficherRondin(BITMAP *bmp,t_rondin rondin_a_afficher);
+void AfficherTabRondin(BITMAP *bmp,t_rondin tab[NRONDIN]);
+
+
+int verfication_riv(t_rondin tab_rondin, t_joueuur tab_joueur);
+
 
 
 t_joueuur * creationJoueur(BITMAP* tab_de_Skin[12]);
-void ActualiserJoueur(BITMAP *bmp, t_joueuur* joueur_a_actualiser, t_rondin* tabrondin[NRONDIN], int anim);
-void deplacement_joueurs_riv(BITMAP * bmp, t_joueuur *joueur_a_actualiser[NOMBRE_JOUEURS],int innactivite[NOMBRE_JOUEURS], t_rondin *rondin_riv[NRONDIN]);
-void AfficherJoueur(t_joueuur *joueur_a_afficher, BITMAP *bmp,int animation);
+void ActualiserJoueur(BITMAP *bmp, t_joueuur joueur_a_actualiser, t_rondin tabrondin[NRONDIN], int anim);
+void deplacement_joueurs_riv(BITMAP * bmp, t_joueuur joueur_a_actualiser[NOMBRE_JOUEURS],int innactivite[NOMBRE_JOUEURS], t_rondin rondin_riv[NRONDIN]);
+void AfficherJoueur(t_joueuur joueur_a_afficher, BITMAP *bmp,int animation);
 
-int collision_joueur_buche(t_rondin * rondin, t_joueuur * joueur_actuel);
-int collision_riv(t_rondin * rondin, t_joueur * joueur_actuel);
+int collision_joueur_buche(t_rondin rondin, t_joueuur joueur_actuel);
 
+int collision_riv(t_rondin rondin, t_joueur joueur_actuel);
+
+void actualiser_tab_rondin_joueur(t_rondin * tableau_rondin, t_joueuur * tableau_joueur);
 
 BITMAP * load_bitmap_check(char *nomImage);
-
-
 
 
 

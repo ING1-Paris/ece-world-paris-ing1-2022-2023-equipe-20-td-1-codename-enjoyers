@@ -17,6 +17,7 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS], unsigned long* Temps) {
     int rouge = makecol(255, 0, 0);
     int noir = makecol(0, 0, 0);
     int score[NOMBRE_JOUEURS] = {0, 0};
+    unsigned long tps;
 
     unsigned long temps[NOMBRE_JOUEURS];
     int fin = 0;
@@ -34,8 +35,8 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS], unsigned long* Temps) {
         mesTaupes[j].tx = 48;
         mesTaupes[j].ty = 48;
 
-        mesTaupes[j].y = rand()%400;
-        mesTaupes[j].x = rand()%400;
+        mesTaupes[j].y = rand()%((500-200)+200);
+        mesTaupes[j].x = rand()%((800-200)+200);
 
         /*if(mesTaupes[j].x == 0){
             mesTaupes[j].y == 400;
@@ -76,11 +77,6 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS], unsigned long* Temps) {
 
     }
 
-    /*for (ligne = 0; ligne < decor->h; ligne++) {
-        for (colonne = 0; colonne < decor->w; colonne++) {
-            couleurPixel = getpixel(decor, colonne, ligne);
-        }
-    }*/
 
     for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
 
@@ -118,9 +114,11 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS], unsigned long* Temps) {
                 if (mouse_b && verfication(mesTaupes[i])==1) {
                     printf("TAP !\n");
                     mesTaupes[i].affichage = 0;
+                    mesTaupes[i].x = 100;
+                    mesTaupes[i].y = -100;
                     rest(100);
                     monJoueur[k].score = monJoueur[k].score + 1;
-                    //masked_blit(mesTaupes[i].skin, decor, 0, 0, mesTaupes[i].x, mesTaupes[i].y + 40, mesTaupes[i].tx,mesTaupes[i].ty);
+                    masked_blit(mesTaupes[i].skin, decor, 0, 0, mesTaupes[i].x, mesTaupes[i].y + 40, mesTaupes[i].tx,mesTaupes[i].ty);
 
                 }
 
@@ -132,6 +130,19 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS], unsigned long* Temps) {
                 if (mesTaupes[i].affichage == 1) {
 
                     masked_blit(mesTaupes[i].skin,page,0,0,mesTaupes[i].x,mesTaupes[i].y,mesTaupes[i].tx,mesTaupes[i].ty);
+                }
+
+                else
+                {
+
+
+                    time_t deb = time(NULL);
+                    if (deb == 1) {
+                        mesTaupes[i].y = rand() % ((500 - 200) + 200);
+                        mesTaupes[i].x = rand() % ((800 - 200) + 200);
+                        masked_blit(mesTaupes[i].skin,page,0,0,mesTaupes[i].x,mesTaupes[i].y,mesTaupes[i].tx,mesTaupes[i].ty);
+
+                    }
                 }
             }
 

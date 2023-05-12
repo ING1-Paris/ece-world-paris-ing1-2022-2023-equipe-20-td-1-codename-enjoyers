@@ -16,14 +16,14 @@ void actualiserTaupe(t_taupe* taupe_a_actualiser){
 }
 
 
-void actualiserTabTaupe(t_rondin * tab[NRONDIN]) {
+void actualiserTabTaupe(t_rondin tab[NRONDIN]) {
     int i;
     for (i = 0; i < NRONDIN; i++) {
         actualiserRondin(tab[i]);
     }
 }
 
-void remplirTabTaupe(t_rondin* MesRondins[NRONDIN]){
+void remplirTabTaupe(t_rondin MesRondins[NRONDIN]){
     for (int i = 0; i < NRONDIN; ++i) {
         MesRondins[i] = creerRondin("../assets/Item/Riviere/bois1.bmp");
     }
