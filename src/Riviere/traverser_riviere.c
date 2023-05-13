@@ -10,12 +10,21 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps
    //variable decor
     BITMAP *decor;
     BITMAP *page;
+    BITMAP *fond;
 
     page = create_bitmap(SCREEN_W, SCREEN_H);
 
     decor=load_bitmap("../assets/maps/MAP_RIVIERE.bmp",NULL);
 
     if (!decor)
+    {
+        allegro_message("decor introuvable");
+        exit(EXIT_FAILURE);
+    }
+
+    fond=load_bitmap("../assets/Item/Riviere/fond_riviere.bmp",NULL);
+
+    if (!fond)
     {
         allegro_message("decor introuvable");
         exit(EXIT_FAILURE);
@@ -45,8 +54,7 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps
     }
 
 
-
-    blit(decor, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+    blit(fond, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
     blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
     alert("Bienvenue sur le JEU DE LA RIVIERE !", NULL, NULL, "go !", NULL, 0, 0);
 

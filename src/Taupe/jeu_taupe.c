@@ -11,33 +11,33 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
     t_joueur_taupe monJoueur[NOMBRE_JOUEURS];
     BITMAP *page;        // BITMAP buffer d'affichage
     BITMAP *decor;
+    BITMAP *fond;
 
-
-    unsigned long temps[NOMBRE_JOUEURS];
-    int fin = 0;
 
 
     page = create_bitmap(SCREEN_W, SCREEN_H);
 
     decor = load_bitmap_check("../assets/maps/MAP_TAUPE.bmp");
+    fond  = load_bitmap_check("../assets/Item/Taupe/barbecue.bmp");
+
 
 
     for (int j = 0; j < NOMBRE_TAUPE; j++) {
 
-        mesTaupes[j].tx = 100;
+        mesTaupes[j].tx = 79;
         mesTaupes[j].ty = 100;
 
         while ((mesTaupes[j].y == mesTaupes[j+1].y)||(mesTaupes[j].x == mesTaupes[j+1].x)) {
-            mesTaupes[j].y = rand() % ((440 - 100 + 100) + 100);
-            mesTaupes[j].x = rand() % ((700 - 130 + 130) + 130);
+            mesTaupes[j].y = rand() % ((634 - 135 + 135) + 135);
+            mesTaupes[j].x = rand() % ((852 - 90 + 90) + 90);
         }
 
 
-        mesTaupes[j].skin = load_bitmap_check("../assets/personnages/Taupe/taupe.bmp");
+        mesTaupes[j].skin = load_bitmap_check("../assets/Item/Taupe/rat.bmp");
         mesTaupes[j].affichage = 1;
 
 
-        for (int i = 0; i < 100; ++i) {
+        for (int i = 0; i < 79; ++i) {
             for (int k = 0; k < 100; ++k) {
                 mesTaupes[j].taille[i][k][0]=mesTaupes[j].x+i;
                 mesTaupes[j].taille[i][k][1]=mesTaupes[j].y+k;
@@ -55,13 +55,10 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
 
     }
 
-    blit(decor, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
+    blit(fond, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
     blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-    alert("Bienvenue sur TAUPE-LA !", NULL, NULL, "go !", NULL, 0, 0);
-
-
-    rectfill(decor,0,0,40,20,makecol(0,128,0 ));
-    textprintf_ex(decor,font,4,6,makecol(255,0,0),makecol(0,255,0),"EXIT");
+    alert("Bienvenue sur le JEU TAUPE-LA !", NULL, NULL, "go !", NULL, 0, 0);
 
 
     time_t debut = time(NULL);
@@ -111,12 +108,12 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
 
 
             textprintf_ex(decor,font,60,280,makecol(0,0,0), makecol(255,255,255),"%lu",monJoueur[0].temps);
-            textprintf_ex(decor,font,60,300,makecol(0,0,0),-1,"%4d %4d",mouse_x,mouse_y);
+            textprintf_ex(decor,font,60,300,makecol(0,0,0),makecol(255,255,255),"%4d %4d",mouse_x,mouse_y);
 
 
 
             //J1
-            rectfill(page,10,10,250,70,makecol(255,255,255));
+            /*rectfill(page,10,10,250,70,makecol(255,255,255));
             rect(page,10,10,250,70,makecol(0,0,0));
             stretch_blit(joueur_taupe[0].sprites[12],page,0,0,225,225,15,15,50,50);
 
@@ -130,7 +127,7 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
 
 
             textprintf_ex(page,font,SCREEN_W-250+5+55, 30, makecol(0,0,0),-1,"%s",joueur_taupe[1].nom);
-            textprintf_ex(page,font,SCREEN_W-250+5+55, 50, makecol(0,0,0),-1,"score: %d",monJoueur[1].score);
+            textprintf_ex(page,font,SCREEN_W-250+5+55, 50, makecol(0,0,0),-1,"score: %d",monJoueur[1].score);*/
 
 
 

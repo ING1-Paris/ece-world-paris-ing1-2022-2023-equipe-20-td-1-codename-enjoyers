@@ -395,7 +395,7 @@ typedef struct taupe{
     int tx,ty;    // taille
     BITMAP *skin;
     int affichage;
-    int taille[100][100][2];
+    int taille[79][100][2];
     int skin_utilise;
     int x,y;
     int vit;
