@@ -18,7 +18,7 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps
 
     if (!decor)
     {
-        allegro_message("decor introuvable");
+        allegro_message("decor \"MAP_RIVIERE\"  introuvable");
         exit(EXIT_FAILURE);
     }
 
@@ -26,7 +26,7 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps
 
     if (!fond)
     {
-        allegro_message("decor introuvable");
+        allegro_message("decor \"fond_riviere\" introuvable");
         exit(EXIT_FAILURE);
     }
 
@@ -63,7 +63,8 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps
 
 
     for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
-    //Boucle de jeu
+
+        //Boucle de jeu
 
         joueur[i].temps = begin;
 

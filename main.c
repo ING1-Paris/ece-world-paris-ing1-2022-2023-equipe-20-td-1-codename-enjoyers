@@ -287,7 +287,7 @@ int main() {
 
     PlaySound(NULL, 0, 0);
 
-    while (Fin != 1) {
+    while (!Fin) {
 
 
         blit(map_menu, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
@@ -360,7 +360,9 @@ int main() {
 
         //Detection de Victoire
         for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
+
             if(tableau_joueurs[i].tickets == 0){
+
                 Fin_du_jeu(page,tableau_joueurs);
                 Fin = 1;
             }
