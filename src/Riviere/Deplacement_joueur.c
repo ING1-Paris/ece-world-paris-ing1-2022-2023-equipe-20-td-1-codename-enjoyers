@@ -44,29 +44,4 @@ void Deplacement_joueur(t_rondin * rondin, t_joueur_riv * joueur_en_train_de_jou
     }
 
 
-
-    /*if(Collision_joueur_rondin(rondin, &joueur[0])){
-
-        if (key[KEY_DOWN])
-        {
-            joueur[0].y = joueur[0].y + joueur[0].vit;
-            joueur[0].skin_utilise = 0;
-
-            //innactivite[0] = 0;
-            printf("sur un rondin\n");
-        }
-
-        joueur[0].x = rondin->posx;
-        joueur[0].y = rondin->posy;
-    }
-
-    else {
-
-        //dans l'eau = retour à la position initiale
-        joueur[0].y = 145;
-        joueur[0].x = 500;
-
-        printf("dans l'eau\n");
-    }*/
-
 }

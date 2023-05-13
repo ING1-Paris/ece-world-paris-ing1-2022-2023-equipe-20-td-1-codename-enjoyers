@@ -7,7 +7,6 @@
 void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
 
     t_taupe mesTaupes[NOMBRE_TAUPE];
-    //t_taupe *mesTaupes;
     t_joueur_taupe monJoueur[NOMBRE_JOUEURS];
     BITMAP *page;        // BITMAP buffer d'affichage
     BITMAP *decor;
@@ -16,7 +15,6 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
 
     page = create_bitmap(SCREEN_W, SCREEN_H);
 
-
     decor=load_bitmap("../assets/maps/MAP_TAUPE.bmp",NULL);
 
     if (!decor)
@@ -24,7 +22,6 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
         allegro_message("decor introuvable");
         exit(EXIT_FAILURE);
     }
-
 
 
     fond = load_bitmap("../assets/Item/Taupe/barbecue.bmp", NULL);
@@ -38,39 +35,7 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
 
 
 
-    for (int j = 0; j < NOMBRE_TAUPE; j++) {
-
-        mesTaupes[j].tx = 79;
-        mesTaupes[j].ty = 100;
-
-        while ((mesTaupes[j].y == mesTaupes[j + 1].y) || (mesTaupes[j].x == mesTaupes[j + 1].x)) {
-            mesTaupes[j].y = rand() % ((634 - 135 + 135) + 135);
-            mesTaupes[j].x = rand() % ((852 - 90 + 90) + 90);
-        }
-
-
-        mesTaupes[j].skin = load_bitmap("../assets/Item/Taupe/rat.bmp", NULL);
-
-        if (!mesTaupes[j].skin)
-        {
-            allegro_message("decor introuvable");
-            exit(EXIT_FAILURE);
-        }
-
-        mesTaupes[j].affichage = 1;
-
-
-        for (int i = 0; i < 79; ++i) {
-            for (int k = 0; k < 100; ++k) {
-                mesTaupes[j].taille[i][k][0] = mesTaupes[j].x + i;
-                mesTaupes[j].taille[i][k][1] = mesTaupes[j].y + k;
-            }
-
-        }
-
-    }
-
-
+    //Initialisation des joueurs
     for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
 
         monJoueur[i].temps = 0;
@@ -87,8 +52,45 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
 
     for (int k = 0; k < NOMBRE_JOUEURS; ++k) {
 
+
+        //Initialisation des taupes
+        for (int j = 0; j < NOMBRE_TAUPE; ++j) {
+
+            mesTaupes[j].skin = load_bitmap("../assets/Item/Taupe/rat.bmp", NULL);
+
+            if (!mesTaupes[j].skin)
+            {
+                allegro_message("decor introuvable");
+                exit(EXIT_FAILURE);
+            }
+
+            mesTaupes[j].tx = 79;
+            mesTaupes[j].ty = 100;
+
+            while ((mesTaupes[j].y == mesTaupes[j + 1].y) || (mesTaupes[j].x == mesTaupes[j + 1].x)) {
+                mesTaupes[j].y = rand() % ((600 - 135) + 135);
+                mesTaupes[j].x = rand() % ((800 - 100) + 100);
+            }
+
+            mesTaupes[j].affichage = 1;
+
+            for (int i = 0; i < 79; ++i) {
+                for (int m = 0; m < 100; ++m) {
+                    mesTaupes[j].taille[i][m][0] = mesTaupes[j].x + i;
+                    mesTaupes[j].taille[i][m][1] = mesTaupes[j].y + m;
+                }
+
+            }
+        }
+
+
+        alert("Tenez-vous prêt...", NULL, "Vous avez 5 secondes pour éliminer le plus de rat,", "C'est parti !", NULL, 0, 0);
+
+
         time_t debut = time(NULL);
 
+
+        // début du jeu
         while (monJoueur[k].temps != 5) {
 
             monJoueur[k].temps = 0;
@@ -99,6 +101,7 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
             blit(decor, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
 
+            //Condition d'affichage des taupes
             for (int i = 0; i < NOMBRE_TAUPE; i++) {
                 if (mouse_b && verfication(mesTaupes[i]) == 1) {
                     printf("TAP !\n");
@@ -110,45 +113,30 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
 
             }
 
-
             for (int i = 0; i < NOMBRE_TAUPE; i++) {
 
                 if (mesTaupes[i].affichage == 1) {
 
-                    masked_blit(mesTaupes[i].skin, page, 0, 0, mesTaupes[i].x, mesTaupes[i].y, mesTaupes[i].tx,
-                                mesTaupes[i].ty);
+                    masked_blit(mesTaupes[i].skin, page, 0, 0, mesTaupes[i].x, mesTaupes[i].y, mesTaupes[i].tx,mesTaupes[i].ty);
                 } else {
                     //la taupe ne s'affiche plus
                 }
             }
 
 
+            //Gestion chrono
             time_t end = time(NULL);
             monJoueur[k].temps = (unsigned long) difftime(end, debut);
 
 
-            textprintf_ex(decor, font, 60, 280, makecol(0, 0, 0), makecol(255, 255, 255), "%lu", monJoueur[k].temps);
+            //Affichage score et temps des joueurs
+            rectfill(page, 10, 10, 250, 90, makecol(255, 255, 255));
+            rect(page, 10, 10, 250, 90, makecol(0, 0, 0));
+            stretch_blit(joueur_taupe[k].sprites[12], page, 0, 0, 225, 225, 15, 15, 70, 70);
 
-            textprintf_ex(decor, font, 60, 300, makecol(0, 0, 0), makecol(255, 255, 255), "%4d %4d", mouse_x, mouse_y);
-
-
-
-            //J1
-            rectfill(page, 10, 10, 250, 70, makecol(255, 255, 255));
-            rect(page, 10, 10, 250, 70, makecol(0, 0, 0));
-            stretch_blit(joueur_taupe[0].sprites[12], page, 0, 0, 225, 225, 15, 15, 50, 50);
-
-            textprintf_ex(page, font, 70, 30, makecol(0, 0, 0), -1, "%s", joueur_taupe[0].nom);
-            textprintf_ex(page, font, 70, 50, makecol(0, 0, 0), -1, "score: %d", monJoueur[0].score);
-
-            //J2
-            rectfill(page, SCREEN_W - 250, 10, SCREEN_W - 10, 70, makecol(255, 255, 255));
-            rect(page, SCREEN_W - 250, 10, SCREEN_W - 10, 70, makecol(0, 0, 0));
-            stretch_blit(joueur_taupe[1].sprites[12], page, 0, 0, 225, 225, SCREEN_W - 250 + 5, 15, 50, 50);
-
-
-            textprintf_ex(page, font, SCREEN_W - 250 + 5 + 55, 30, makecol(0, 0, 0), -1, "%s", joueur_taupe[1].nom);
-            textprintf_ex(page, font, SCREEN_W - 250 + 5 + 55, 50, makecol(0, 0, 0), -1, "score: %d", monJoueur[1].score);
+            textprintf_ex(page, font, 90, 20, makecol(0, 0, 0), -1, "%s", joueur_taupe[k].nom);
+            textprintf_ex(page, font, 90, 50, makecol(0, 0, 0), -1, "score: %d", monJoueur[k].score);
+            textprintf_ex(page, font, 90, 70, makecol(0, 0, 0), -1, "temps écoulé: %lu", monJoueur[k].temps);
 
 
             blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
@@ -158,15 +146,20 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
     }
 
 
-    if (joueur_taupe[0].score > joueur_taupe[1].score) {
+    //Gestion des tickets
+    if (monJoueur[0].score > monJoueur[1].score) {
 
         alert("Joueur 1, vous avez gagné un ticket ! ", NULL, NULL, "go!", NULL, 0, 0);
         joueur_taupe[0].tickets = joueur_taupe[0].tickets + 1;
-    } else {
+
+    } else if (monJoueur[0].score < monJoueur[1].score) {
 
         alert("Joueur 2, vous avez gagné un ticket ! ", NULL, NULL, "go !", NULL, 0, 0);
-        joueur_taupe[0].tickets = joueur_taupe[0].tickets + 1;
+        joueur_taupe[1].tickets = joueur_taupe[1].tickets + 1;
 
+    } else {
+
+        alert("Egalité ! ", NULL, NULL, "go !", NULL, 0, 0);
     }
 
 }

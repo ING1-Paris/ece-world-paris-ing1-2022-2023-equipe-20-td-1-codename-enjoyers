@@ -24,7 +24,7 @@ t_joueur_riv Creation_joueur(t_joueur joueur[NOMBRE_JOUEURS]){
     mon_joueur.temps = 0;
 
     for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
-        mon_joueur.skin_perso[i] = joueur->sprites[i];
+        mon_joueur.skin_perso[i] = joueur[i].sprites[i];
     }
 
     return mon_joueur;
