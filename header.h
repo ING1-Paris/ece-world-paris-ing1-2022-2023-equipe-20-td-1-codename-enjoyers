@@ -249,7 +249,7 @@ typedef struct joueur_ballons {
 // Un élément à déplacement automatique aléatoire
 typedef struct ballon {
     int x,y;     // position
-    int dx;      // vecteur déplacement
+    int dx, dy;      // vecteur déplacement
     int tx,ty;   // taille
     BITMAP *img; // sprite (image chargée)
 } t_ballon;
