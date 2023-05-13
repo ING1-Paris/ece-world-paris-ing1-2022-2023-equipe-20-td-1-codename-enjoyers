@@ -16,12 +16,12 @@ void Fin_du_jeu(BITMAP * page,t_joueur tableau_joueurs[NOMBRE_JOUEURS]){
     rect(page,SCREEN_W / 2 - 150,75,SCREEN_W / 2 +150,150, makecol(0,0,0));
 
     if (tableau_joueurs[0].tickets == 0) {
-        stretch_blit(tableau_joueurs[0].sprites[12], page, 0, 0, 225, 225, SCREEN_W / 2 - 75, 200, 150, 150);
-        textprintf_ex(page,font,SCREEN_W / 2 - 140, 115, makecol(0,0,0),-1,"%s gagne le jeu, felicitations !",tableau_joueurs[0].nom);
-
-    } else {
         stretch_blit(tableau_joueurs[1].sprites[12], page, 0, 0, 225, 225, SCREEN_W / 2 - 75, 200, 150, 150);
         textprintf_ex(page,font,SCREEN_W / 2 - 140, 115, makecol(0,0,0),-1,"%s gagne le jeu, felicitations !",tableau_joueurs[1].nom);
+
+    } else {
+        stretch_blit(tableau_joueurs[0].sprites[12], page, 0, 0, 225, 225, SCREEN_W / 2 - 75, 200, 150, 150);
+        textprintf_ex(page,font,SCREEN_W / 2 - 140, 115, makecol(0,0,0),-1,"%s gagne le jeu, felicitations !",tableau_joueurs[0].nom);
     }
     rect(page, SCREEN_W / 2 - 75, 200, SCREEN_W / 2 - 75 + 150, 350, makecol(0, 0, 0));
 

@@ -270,8 +270,8 @@ int main() {
             charger_sprites(&tableau_joueurs[i], "Thomas");
         }
 
-        tableau_joueurs[i].x = 400 + (100 * i); // Valeurs à changer
-        tableau_joueurs[i].y = 200 + (100 * i); // Valeurs à changer
+        tableau_joueurs[0].x = 478;
+        tableau_joueurs[0].y = 610 + (i*48);
         tableau_joueurs[i].tx = tableau_joueurs[i].sprites[0]->w;
         tableau_joueurs[i].ty = tableau_joueurs[i].sprites[0]->h;
 

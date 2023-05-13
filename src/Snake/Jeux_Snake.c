@@ -311,3 +311,11 @@ void Snake(t_joueur * Joueur ,unsigned long* Temps){
 
     alert("Fin du jeu !", NULL, NULL, "Retour au menu", NULL, 0, 0);
 }
+
+int Fin_de_partie(int serpent_en_vie[2]){
+    if (serpent_en_vie[0] == 0 && serpent_en_vie[1] == 0){
+        return 1;
+    }
+
+    return 0;
+}
