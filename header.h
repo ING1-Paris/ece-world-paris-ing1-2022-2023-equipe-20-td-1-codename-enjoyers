@@ -62,7 +62,7 @@ void Fin_du_jeu(BITMAP * page,t_joueur tableau_joueurs[NOMBRE_JOUEURS]);
 
 typedef struct entree_sauvegarde {
 
-    int jeu;
+    int jeu; //SNAKE/GUITAR HERO/TIR-BALLON/COURSE/TAUPE/RIVIERE  (1 à 6)
     int score;
     int temps;
     int date;
@@ -70,6 +70,9 @@ typedef struct entree_sauvegarde {
     char nom[128];
 
 } t_entree_sauvegarde;
+
+int consulter(t_entree_sauvegarde * tab_de_sauvegarde, int * taille_tab);
+void triInsertion(t_entree_sauvegarde * tableau, int taille_tab);
 
 
 

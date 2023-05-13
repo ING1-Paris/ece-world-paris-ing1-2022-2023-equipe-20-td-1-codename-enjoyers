@@ -34,9 +34,16 @@ int consulter(t_entree_sauvegarde * tab_de_sauvegarde, int * taille_tab) {
             compteur_entrees = compteur_entrees + 1;
         }
 
+        if (compteur_entrees == 0) {
+
+            return 0;
+        }
+
         *taille_tab = compteur_entrees;
 
         rewind(pf);
+
+        tab_de_sauvegarde = (t_entree_sauvegarde*) malloc(compteur_entrees * sizeof (t_entree_sauvegarde));
 
         i = 0;
 
@@ -63,7 +70,7 @@ int consulter(t_entree_sauvegarde * tab_de_sauvegarde, int * taille_tab) {
 
                 } else if (j == 3) { //Date
 
-                    tab_de_sauvegarde[i].temps = atoi(strToken);
+                    tab_de_sauvegarde[i].date = atoi(strToken);
 
                 } else if (j == 4) { //Map (pas d'info ? var = '!')
 
@@ -82,8 +89,6 @@ int consulter(t_entree_sauvegarde * tab_de_sauvegarde, int * taille_tab) {
 
             i = i + 1;
         }
-
-
 
 
         return 1;
