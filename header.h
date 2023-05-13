@@ -311,7 +311,7 @@ typedef struct joueur_riv
 
 
 
-void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS]);
+void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps);
 
 t_rondin * Creation_rondin(int nb);
 void Remplir_tab_rondin(t_rondin * tableau_de_rondin[NRONDIN]);
@@ -321,14 +321,14 @@ void Deplacement_rondin(t_rondin *le_rondin);
 void Deplacement_tab_rondin(t_rondin *le_rondin[NRONDIN]);
 
 
-t_joueur_riv * Creation_joueur(t_joueur joueur[NOMBRE_JOUEURS]);
-void Afficher_joueur(BITMAP *bmp, t_joueur_riv *joueur_a_afficher[NOMBRE_JOUEURS]);
+t_joueur_riv Creation_joueur(t_joueur joueur[NOMBRE_JOUEURS]);
+void Afficher_joueur(BITMAP *bmp, t_joueur_riv joueur_a_afficher[NOMBRE_JOUEURS]);
 
 int Collision_joueur_rondin(t_rondin *rondin, t_joueur_riv *joueur);
 void Deplacement_joueur(t_rondin rondin[NRONDIN], t_joueur_riv joueur[NOMBRE_JOUEURS], int innactivite[NOMBRE_JOUEURS]);
 
 
-//int Verification_collision(t_rondin *rondin, t_joueur_riv *joueur);
+int Fin_partie_riv(t_joueur_riv joueur[NOMBRE_JOUEURS]);
 
 
 
@@ -387,7 +387,7 @@ BITMAP * load_bitmap_check(char *nomImage);
 //JEU DE LA TAUPE
 
 #define NOMBRE_TAUPE 10
-void jeu_taupe(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps);
+void jeu_taupe(t_joueur joueur_riv[NOMBRE_JOUEURS]);
 
 
 typedef struct taupe{
@@ -395,7 +395,7 @@ typedef struct taupe{
     int tx,ty;    // taille
     BITMAP *skin;
     int affichage;
-    int taille[48][48][2];
+    int taille[100][100][2];
     int skin_utilise;
     int x,y;
     int vit;
@@ -420,6 +420,7 @@ typedef struct joueur_taupe
 void actualiser_taupe(t_taupe * taupe);
 void actualiser_tab_taupe(t_taupe * tableau_taupe);
 int verfication(t_taupe tab_taupe);
+int Fin_partie_taupe(t_joueur_taupe joueur[NOMBRE_JOUEURS]);
 
 
 

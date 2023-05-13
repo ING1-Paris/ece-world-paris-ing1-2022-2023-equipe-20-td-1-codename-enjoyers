@@ -290,12 +290,6 @@ int main() {
     while (Fin != 1) {
 
 
-        //traverser_riviere(tableau_joueurs);
-
-        //jeu_riviere(tableau_joueurs, &Temps_d_epreuve);
-        //jeu_taupe(tableau_joueurs, &Temps_d_epreuve);
-
-
         blit(map_menu, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
         //charger_hitboxes(page, tableau_eventboxes, makecol(0, 255, 0));
@@ -346,13 +340,12 @@ int main() {
         }
 
         else if (Choix_epreuve == 5){
-            jeu_taupe(tableau_joueurs,&Temps_d_epreuve);
+            jeu_taupe(tableau_joueurs);
             Choix_epreuve = 0;
         }
 
         else if (Choix_epreuve == 6){
-            //jeu_riviere(tableau_joueurs,&Temps_d_epreuve);
-            traverser_riviere(tableau_joueurs);
+            traverser_riviere(tableau_joueurs, &Temps_d_epreuve);
             Choix_epreuve = 0;
         }
 

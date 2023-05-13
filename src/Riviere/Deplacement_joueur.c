@@ -12,30 +12,28 @@ void Deplacement_joueur(t_rondin rondin[NRONDIN], t_joueur_riv joueur[NOMBRE_JOU
     else printf("stop\n");
 
 
-    if (key[KEY_DOWN]){
+    if(Collision_joueur_rondin(rondin, &joueur[0])){
 
+        if (key[KEY_DOWN])
+        {
+        joueur[0].y = joueur[0].y + joueur[0].vit;
+        joueur[0].skin_utilise = 0;
 
-        if(Collision_joueur_rondin(rondin, &joueur[0])){
-
-
-            joueur[0].y = joueur[0].y + joueur[0].vit;
-            joueur[0].skin_utilise = 0;
-            //innactivite[0] = 0;
-            printf("c'est bon\n");
-
+        //innactivite[0] = 0;
+        printf("sur un rondin\n");
         }
 
-        else {
+        joueur[0].x=rondin->posx;
+        joueur[0].y = rondin->posy;
+    }
 
-            //dans l'eau = retour à la position initiale
-            joueur[0].y = 145;
-            joueur[0].x = 500;
-            //joueur[0].y = joueur[0].y + joueur[0].vit;
-            printf("c'est pas bon\n");
-        }
+    else {
 
+        //dans l'eau = retour à la position initiale
+        joueur[0].y = 145;
+        joueur[0].x = 500;
 
-
+        printf("dans l'eau\n");
     }
 
 }

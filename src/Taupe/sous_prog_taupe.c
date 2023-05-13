@@ -69,8 +69,8 @@ void actualiser_tab_taupe(t_taupe * tableau_taupe) {
 
 
 int verfication(t_taupe tab_taupe){
-    for (int i = 0; i < 48; ++i) {
-        for (int j = 0; j < 48; ++j) {
+    for (int i = 0; i < 100; ++i) {
+        for (int j = 0; j < 100; ++j) {
             if (mouse_x == tab_taupe.taille[i][j][0])
                 if (mouse_y == tab_taupe.taille[i][j][1])
                     return 1;
