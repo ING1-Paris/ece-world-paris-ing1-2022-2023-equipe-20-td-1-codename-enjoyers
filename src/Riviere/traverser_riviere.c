@@ -10,12 +10,21 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps
    //variable decor
     BITMAP *decor;
     BITMAP *page;
+    BITMAP *fond;
 
     page = create_bitmap(SCREEN_W, SCREEN_H);
 
     decor=load_bitmap("../assets/maps/MAP_RIVIERE.bmp",NULL);
 
     if (!decor)
+    {
+        allegro_message("decor introuvable");
+        exit(EXIT_FAILURE);
+    }
+
+    fond=load_bitmap("../assets/Item/Riviere/fond_riviere.bmp",NULL);
+
+    if (!fond)
     {
         allegro_message("decor introuvable");
         exit(EXIT_FAILURE);
@@ -45,8 +54,7 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps
     }
 
 
-
-    blit(decor, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+    blit(fond, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
     blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
     alert("Bienvenue sur le JEU DE LA RIVIERE !", NULL, NULL, "go !", NULL, 0, 0);
 
@@ -72,16 +80,17 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps
             Deplacement_joueur(*tabl_rondin, joueur, &innactivite[NOMBRE_JOUEURS]);
 
 
+            //arrêt du chrono pour le joueur qui est arrivé à la fin
             if(joueur[i].y == 690){
                 joueur_mort[i] = time(NULL);
             }
 
 
+            //Repère de temps pour le joueur
             time_t temps_actuel = time(NULL);
-
-            joueur[i].temps = difftime(temps_actuel, begin);
-
+            joueur[i].temps = (unsigned long) difftime(temps_actuel, begin);
             textprintf_centre_ex(decor, font, 400, 570, makecol(255, 255, 255), 0, "%lu", joueur[i].temps);
+
 
             masked_blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
@@ -93,15 +102,21 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps
 
     for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
         *Temps = (unsigned long) difftime(joueur_mort[i],begin);
-        printf("Le joueur %d est reste en vie pendant %lus\n",i+1,*Temps);
+        printf("Le joueur %d a traveré la rivière t %lus\n",i+1,*Temps);
     }
 
 
-    if (joueur[0].temps < joueur[1].temps)
+    if (joueur[0].temps < joueur[1].temps) {
 
-        alert("Joueur 1, vous avez gagné un ticket ! ", NULL, NULL, "go!", NULL, 0, 0);
+        alert("Joueur 1, vous avez gagné un ticket ! ", NULL, NULL, "ok!", NULL, 0, 0);
+        joueur_riv[0].tickets = joueur_riv[0].tickets + 1;
+    }
 
-    else
+    else {
 
-        alert("Joueur 2, vous avez gagné un ticket ! ", NULL, NULL, "go !", NULL, 0, 0);
+        alert("Joueur 2, vous avez gagné un ticket ! ", NULL, NULL, "ok !", NULL, 0, 0);
+        joueur_riv[1].tickets = joueur_riv[1].tickets + 1;
+
+    }
+
 }
