@@ -4,70 +4,41 @@
 
 #include "../../header.h"
 
-void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS], unsigned long* Temps) {
+void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
 
     t_taupe mesTaupes[NOMBRE_TAUPE];
     //t_taupe *mesTaupes;
     t_joueur_taupe monJoueur[NOMBRE_JOUEURS];
     BITMAP *page;        // BITMAP buffer d'affichage
     BITMAP *decor;
-    int ligne, colonne;
-    int couleurPixel;
-    int marron = makecol(120, 102, 88);
-    int rouge = makecol(255, 0, 0);
-    int noir = makecol(0, 0, 0);
-    int score[NOMBRE_JOUEURS] = {0, 0};
+    BITMAP *fond;
 
-    unsigned long temps[NOMBRE_JOUEURS];
-    int fin = 0;
 
 
     page = create_bitmap(SCREEN_W, SCREEN_H);
 
     decor = load_bitmap_check("../assets/maps/MAP_TAUPE.bmp");
+    fond  = load_bitmap_check("../assets/Item/Taupe/barbecue.bmp");
+
 
 
     for (int j = 0; j < NOMBRE_TAUPE; j++) {
 
-        //mesTaupes[j]->skin_utilise = 6;
-        // mesTaupes[j]->vit = 5;
-        mesTaupes[j].tx = 48;
-        mesTaupes[j].ty = 48;
+        mesTaupes[j].tx = 79;
+        mesTaupes[j].ty = 100;
 
-        mesTaupes[j].y = rand()%400;
-        mesTaupes[j].x = rand()%400;
-
-        /*if(mesTaupes[j].x == 0){
-            mesTaupes[j].y == 400;
+        while ((mesTaupes[j].y == mesTaupes[j+1].y)||(mesTaupes[j].x == mesTaupes[j+1].x)) {
+            mesTaupes[j].y = rand() % ((634 - 135 + 135) + 135);
+            mesTaupes[j].x = rand() % ((852 - 90 + 90) + 90);
         }
 
-        if(mesTaupes[j].x == 1){
-            mesTaupes[j].y == 200;
-        }
 
-        if(mesTaupes[j].x == 2){
-            mesTaupes[j].y == 400;
-        }
-
-        if(mesTaupes[j].y == 0){
-            mesTaupes[j].y == 400;
-        }
-
-        if(mesTaupes[j].y == 1){
-            mesTaupes[j].y == 200;
-        }
-
-        if(mesTaupes[j].y == 2){
-            mesTaupes[j].y == 400;
-        }*/
-
-
-        mesTaupes[j].skin = load_bitmap_check("../assets/personnages/Taupe/taupe.bmp");
+        mesTaupes[j].skin = load_bitmap_check("../assets/Item/Taupe/rat.bmp");
         mesTaupes[j].affichage = 1;
 
 
-        for (int i = 0; i < 48; ++i) {
-            for (int k = 0; k < 48; ++k) {
+        for (int i = 0; i < 79; ++i) {
+            for (int k = 0; k < 100; ++k) {
                 mesTaupes[j].taille[i][k][0]=mesTaupes[j].x+i;
                 mesTaupes[j].taille[i][k][1]=mesTaupes[j].y+k;
             }
@@ -76,11 +47,6 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS], unsigned long* Temps) {
 
     }
 
-    /*for (ligne = 0; ligne < decor->h; ligne++) {
-        for (colonne = 0; colonne < decor->w; colonne++) {
-            couleurPixel = getpixel(decor, colonne, ligne);
-        }
-    }*/
 
     for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
 
@@ -89,25 +55,20 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS], unsigned long* Temps) {
 
     }
 
-    blit(decor, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
+    blit(fond, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
     blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-    alert("Bienvenue sur TAUPE-LA !", NULL, NULL, "go !", NULL, 0, 0);
-
-
-    rectfill(decor,0,0,40,20,makecol(0,128,0 ));
-    textprintf_ex(decor,font,4,6,makecol(255,0,0),makecol(0,255,0),"EXIT");
+    alert("Bienvenue sur le JEU TAUPE-LA !", NULL, NULL, "go !", NULL, 0, 0);
 
 
     time_t debut = time(NULL);
 
     for (int k = 0; k< NOMBRE_JOUEURS; ++k) {
 
-
-
         monJoueur[k].temps = debut;
 
 
-        while(!fin){
+        while(Fin_partie_taupe(monJoueur) != 1){
 
 
             blit(decor, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
@@ -118,9 +79,8 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS], unsigned long* Temps) {
                 if (mouse_b && verfication(mesTaupes[i])==1) {
                     printf("TAP !\n");
                     mesTaupes[i].affichage = 0;
-                    rest(100);
+                    rest(200);
                     monJoueur[k].score = monJoueur[k].score + 1;
-                    //masked_blit(mesTaupes[i].skin, decor, 0, 0, mesTaupes[i].x, mesTaupes[i].y + 40, mesTaupes[i].tx,mesTaupes[i].ty);
 
                 }
 
@@ -133,29 +93,27 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS], unsigned long* Temps) {
 
                     masked_blit(mesTaupes[i].skin,page,0,0,mesTaupes[i].x,mesTaupes[i].y,mesTaupes[i].tx,mesTaupes[i].ty);
                 }
+
+                else
+                {
+
+                }
             }
 
-
-
-            // clip sur EXIT :
-            if ( mouse_b&1 && mouse_x<=40 && mouse_y<=20)
-                fin=1;
 
 
             time_t end = time(NULL);
             monJoueur[k].temps = (unsigned long) difftime(end, debut);
 
-            if (monJoueur[0].temps > 100) {
-                fin=1;
-            }
+
 
             textprintf_ex(decor,font,60,280,makecol(0,0,0), makecol(255,255,255),"%lu",monJoueur[0].temps);
-            textprintf_ex(decor,font,60,300,makecol(0,0,0),-1,"%4d %4d",mouse_x,mouse_y);
+            textprintf_ex(decor,font,60,300,makecol(0,0,0),makecol(255,255,255),"%4d %4d",mouse_x,mouse_y);
 
 
 
             //J1
-            rectfill(page,10,10,250,70,makecol(255,255,255));
+            /*rectfill(page,10,10,250,70,makecol(255,255,255));
             rect(page,10,10,250,70,makecol(0,0,0));
             stretch_blit(joueur_taupe[0].sprites[12],page,0,0,225,225,15,15,50,50);
 
@@ -169,29 +127,24 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS], unsigned long* Temps) {
 
 
             textprintf_ex(page,font,SCREEN_W-250+5+55, 30, makecol(0,0,0),-1,"%s",joueur_taupe[1].nom);
-            textprintf_ex(page,font,SCREEN_W-250+5+55, 50, makecol(0,0,0),-1,"score: %d",monJoueur[1].score);
+            textprintf_ex(page,font,SCREEN_W-250+5+55, 50, makecol(0,0,0),-1,"score: %d",monJoueur[1].score);*/
+
+
 
             blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-
 
         }
 
     }
 
 
-    if(monJoueur[0].score < monJoueur[1].score)
+    if (joueur_taupe[0].score > joueur_taupe[1].score)
 
-        //alert("%s, vous avez gagné un ticket ! "joueur_riv[0].nom, NULL, NULL, "go!", NULL, 0, 0);
-
-        allegro_message("%s, vous avez gagné un ticket !",joueur_taupe[0].nom);
+        alert("Joueur 1, vous avez gagné un ticket ! ", NULL, NULL, "go!", NULL, 0, 0);
 
     else
-        //alert("%d, vous avez gagné un ticket ! ",joueur_riv[1].nom, NULL, NULL, "go !", NULL, 0, 0);
 
-
-        allegro_message("%s, vous avez gagné un ticket !",joueur_taupe[1].nom);
-
-    // allegro_message("Joueur 2, vous avez gagné un ticket !");
-
-
+        alert("Joueur 2, vous avez gagné un ticket ! ", NULL, NULL, "go !", NULL, 0, 0);
 }
+
+

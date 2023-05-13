@@ -160,6 +160,7 @@ int main() {
     /// ZONE DE TEST
     // -----------------------------
 
+
     /*while (1) {
 
         guitar_hero();
@@ -288,9 +289,6 @@ int main() {
 
     while (Fin != 1) {
 
-        //jeu_riviere(tableau_joueurs, &Temps_d_epreuve);
-        //jeu_taupe(tableau_joueurs, &Temps_d_epreuve);
-
 
         blit(map_menu, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
@@ -342,12 +340,12 @@ int main() {
         }
 
         else if (Choix_epreuve == 5){
-            jeu_taupe(tableau_joueurs,&Temps_d_epreuve);
+            jeu_taupe(tableau_joueurs);
             Choix_epreuve = 0;
         }
 
         else if (Choix_epreuve == 6){
-            jeu_riviere(tableau_joueurs,&Temps_d_epreuve);
+            traverser_riviere(tableau_joueurs, &Temps_d_epreuve);
             Choix_epreuve = 0;
         }
 
