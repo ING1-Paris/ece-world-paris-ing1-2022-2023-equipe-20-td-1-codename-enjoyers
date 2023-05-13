@@ -73,16 +73,16 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps
             blit(decor, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
 
-
-            Afficher_tab_rondin(page, tabl_rondin);
             Deplacement_tab_rondin(tabl_rondin);
-
-            Afficher_joueur(page, joueur);
             Deplacement_joueur(*tabl_rondin, joueur, &innactivite[NOMBRE_JOUEURS]);
 
 
+            Afficher_joueur(page, joueur);
+            Afficher_tab_rondin(page, tabl_rondin);
+
+
             //arrêt du chrono pour le joueur qui est arrivé à la fin
-            if(joueur[i].y == 690){
+            if(joueur[i].y >= 690){
                 joueur_mort[i] = time(NULL);
             }
 
@@ -95,7 +95,7 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps
 
             masked_blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
-            rest(15);
+            //rest(15);
 
 
         }
