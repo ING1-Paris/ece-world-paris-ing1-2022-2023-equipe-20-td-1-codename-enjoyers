@@ -71,6 +71,9 @@ typedef struct entree_sauvegarde {
 
 } t_entree_sauvegarde;
 
+int consulter(t_entree_sauvegarde * tab_de_sauvegarde, int * taille_tab);
+void triInsertion(t_entree_sauvegarde * tableau, int taille_tab);
+
 
 
 
