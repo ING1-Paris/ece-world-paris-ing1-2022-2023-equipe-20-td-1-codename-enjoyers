@@ -289,7 +289,7 @@ typedef struct joueur_riv
     int tx, ty;
     unsigned long temps;
     int x, y;
-    int vit;
+    int dx,dy;
     int skin_utilise;
     BITMAP *skin_perso[13];
     int affichage;
@@ -312,7 +312,7 @@ t_joueur_riv Creation_joueur(t_joueur joueur[NOMBRE_JOUEURS]);
 void Afficher_joueur(BITMAP *bmp, t_joueur_riv joueur_a_afficher[NOMBRE_JOUEURS]);
 
 int Collision_joueur_rondin(t_rondin *rondin, t_joueur_riv *joueur);
-void Deplacement_joueur(t_rondin rondin[NRONDIN], t_joueur_riv joueur[NOMBRE_JOUEURS], int innactivite[NOMBRE_JOUEURS]);
+void Deplacement_joueur(t_rondin rondin[NRONDIN], t_joueur_riv * joueur_en_train_de_jouer, int innactivite[NOMBRE_JOUEURS]);
 
 
 int Fin_partie_riv(t_joueur_riv joueur[NOMBRE_JOUEURS]);

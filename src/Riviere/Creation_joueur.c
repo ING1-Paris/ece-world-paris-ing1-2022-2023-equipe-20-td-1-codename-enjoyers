@@ -16,7 +16,8 @@ t_joueur_riv Creation_joueur(t_joueur joueur[NOMBRE_JOUEURS]){
     mon_joueur.tx = 48;
     mon_joueur.ty= 48;
 
-    mon_joueur.vit = 1;
+    mon_joueur.dx = 10;
+    mon_joueur.dy = 10;
 
     mon_joueur.skin_utilise = 1;
 

@@ -4,7 +4,7 @@
 
 #include "../../header.h"
 
-void Deplacement_joueur(t_rondin rondin[NRONDIN], t_joueur_riv joueur[NOMBRE_JOUEURS], int innactivite[NOMBRE_JOUEURS]){
+void Deplacement_joueur(t_rondin * rondin, t_joueur_riv * joueur_en_train_de_jouer, int innactivite[NOMBRE_JOUEURS]){
 
 
     if (key[KEY_UP]) {
@@ -45,7 +45,7 @@ void Deplacement_joueur(t_rondin rondin[NRONDIN], t_joueur_riv joueur[NOMBRE_JOU
 
 
 
-    if(Collision_joueur_rondin(rondin, &joueur[0])){
+    /*if(Collision_joueur_rondin(rondin, &joueur[0])){
 
         if (key[KEY_DOWN])
         {
@@ -67,6 +67,6 @@ void Deplacement_joueur(t_rondin rondin[NRONDIN], t_joueur_riv joueur[NOMBRE_JOU
         joueur[0].x = 500;
 
         printf("dans l'eau\n");
-    }
+    }*/
 
 }
