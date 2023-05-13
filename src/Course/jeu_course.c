@@ -68,10 +68,10 @@ void remplirTablapins(t_lapin * tab[Nlapin]);
 
 
 // Actualiser un lapin (bouger ...)
-void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page);
+void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page, t_joueur tableau_joueurs[NOMBRE_JOUEURS]);
 
 // G�rer l'�volution de l'ensemble des lapins
-void actualiserTablapins(t_lapin * tab[Nlapin], int tabParis[2], int *alive, BITMAP *page);
+void actualiserTablapins(t_lapin * tab[Nlapin], int tabParis[2], int *alive, BITMAP *page, t_joueur tableau_joueurs[NOMBRE_JOUEURS]);
 
 
 // Dessiner un lapin sur une bitmap bmp
@@ -122,6 +122,7 @@ t_sequence tabSequences[NSEQUENCE] =
 void jeu_course()
 {
     int tab_paris[2] = {0, 0};
+    int tab_joueurs[NOMBRE_JOUEURS];
 
     char pari_lapin_temp[256]="";
 
@@ -156,7 +157,7 @@ void jeu_course()
 
             do_dialog(GUI_paris, 3);
 
-        } while ((strlen(pari_lapin_temp) < 1)||(strlen(pari_lapin_temp) > 1) && (atoi(pari_lapin_temp) >= 1 && atoi(pari_lapin_temp) <= 6));
+        } while ((strlen(pari_lapin_temp) < 1)||(strlen(pari_lapin_temp) > 1) || (atoi(pari_lapin_temp) < 1 || atoi(pari_lapin_temp) > 6));
 
 
         tab_paris[i] = atoi(pari_lapin_temp) - 1 ;
@@ -203,7 +204,7 @@ void jeu_course()
         blit(decor,page,0,0,0,0,SCREEN_W,SCREEN_H);
 
         // 2) DETERMINER NOUVELLEs POSITIONs
-        actualiserTablapins(meslapins, tab_paris, &alive, &page);
+        actualiserTablapins(meslapins, tab_paris, &alive, &page, tab_joueurs);
 
         // 3) AFFICHAGE NOUVELLEs POSITIONs SUR LE BUFFER
         dessinerTablapins(page,meslapins);
@@ -272,7 +273,7 @@ void remplirTablapins(t_lapin * tab[Nlapin])
 
 
 // Actualiser un lapin (bouger ...)
-void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page)
+void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page, t_joueur tableau_joueurs[NOMBRE_JOUEURS])
 {
 
     // gestion des bords
@@ -294,12 +295,21 @@ void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page)
 
     if (gagnant) {
 
-    //ticket
+        if(lapin->type == tabParis[0]) {
+            tableau_joueurs[0].tickets = tableau_joueurs[0].tickets+1 ;
+            allegro_message("joueur 1, vous avez gagné un ticket !");
+        }
+        else {
+            tableau_joueurs[1].tickets = tableau_joueurs[1].tickets+1;
+            allegro_message("joueur 2, vous avez gagné un ticket !");
+        }
 
     }
     else {
 
-        textout_ex(page, font, "vous avez perdu", 150, 300, makecol(255, 255, 255), -1);
+        //textout_ex(page, font, "vous avez perdu", 150, 300, makecol(255, 255, 255), -1);
+        //textprintf_ex(page,font,150, 300, makecol(255,255,255), -1,"vous avez perdu");
+        allegro_message("vous avez perdu");
 
     }
         }
@@ -331,12 +341,12 @@ void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page)
 }
 
 // G�rer l'�volution de l'ensemble des lapins
-void actualiserTablapins(t_lapin * tab[Nlapin], int tabParis[2], int *alive, BITMAP *page)
+void actualiserTablapins(t_lapin * tab[Nlapin], int tabParis[2], int *alive, BITMAP *page, t_joueur tableau_joueurs[NOMBRE_JOUEURS])
 {
     int i;
 
     for (i=0;i<Nlapin;i++)
-        actualiserlapin(tab[i], tabParis, alive, page);
+        actualiserlapin(tab[i], tabParis, alive, page, tableau_joueurs);
 }
 
 
