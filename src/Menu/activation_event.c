@@ -9,7 +9,7 @@ int activation_event(t_joueur tab_joueurs[NOMBRE_JOUEURS], t_hitbox tab_eventbox
     int i;
     int j;
 
-    if (key[KEY_ENTER]) {
+    if (key[KEY_E]) {
 
         for (i=0; i<NOMBRE_JOUEURS; i++) {
 

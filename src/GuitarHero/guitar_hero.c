@@ -4,7 +4,10 @@
 
 #include "../../header.h"
 
-void guitar_hero() {
+void guitar_hero(t_joueur * tab_joueurs) {
+
+    // On nettoie la mémoire du clavier
+    fflush(stdin);
 
     // INITIALISATION - DECLARATION DES VARIABLES
 
@@ -31,7 +34,6 @@ void guitar_hero() {
     int taille_portee_2;
     int index_note_jouee_2;
 
-
     //Variable de fin de partie
     int alive = 1;
     int demarrage_musique = 1;
@@ -43,6 +45,18 @@ void guitar_hero() {
 
     //Variable de l'affichage
     BITMAP * page = create_bitmap(SCREEN_W, SCREEN_H);
+
+    //Creation du fond du jeu
+    BITMAP * decor;
+
+    decor = load_bitmap("../assets/maps/map_guitar_hero.bmp", NULL);
+
+    if (!decor) {
+
+        allegro_message("Impossible de retrouver la bitmap du decor de guitar hero :/");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
 
     t_cercle_fixe tableau_cercles_fixes[5] = {
 
@@ -64,6 +78,7 @@ void guitar_hero() {
 
 
                     { d_button_proc,     160,   190,  160,   16,   0,  0,    0, D_EXIT,       0,   0,    (void*)"Suivant",            NULL, NULL  },
+                    { d_text_proc, 4, 40, 0, 0, 0, 0, 0, 0, 0, 0, (void*) "Controles: D F   J K L", NULL, NULL},
                     { d_yield_proc,        0,   0,    0,    0,   0,  0,    0,      0,       0,   0,    NULL,                   NULL, NULL  },
                     { NULL,                0,   0,    0,    0,   0,  0,    0,      0,       0,   0,    NULL,                   NULL, NULL  },
             };
@@ -180,120 +195,180 @@ void guitar_hero() {
         taille_portee_1 = taille_tableau;
     }
 
-    // On charge l'interface fixe
-    charger_interface(page, tableau_cercles_fixes);
-
-    // On affiche le tout
-    blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-
-    // On initialise les index
-    index_portee_1 = 0;
-    index_portee_2 = 0;
-
-    index_note_jouee_1 = index_portee_1;
-    index_note_jouee_2 = index_portee_2;
 
     //printf("Affichage note 1 portee 1 \n");
 
     //printf("Note : %d, Millis: %d, portee: %d, X: %d, Y: %d, Radius: %d, Dy: %f, Affichage: %d\n", portee_2[0].note, portee_2[0].millis, portee_2[0].portee, portee_2[0].x_centre, portee_2[0].y_centre, portee_2[0].radius, portee_2[0].dy, portee_2[0].affichage);
 
-    // On démarre le chronomètre
-    begin = clock();
+    for (int k = 0; k < NOMBRE_JOUEURS; ++k) {
+
+        // On initialise les index
+        index_portee_1 = 0;
+        index_portee_2 = 0;
+
+        index_note_jouee_1 = index_portee_1;
+        index_note_jouee_2 = index_portee_2;
+
+        // On reinitialise les variables de jeu
+        demarrage_musique = 1;
+        millis = 0;
+
+        // On charge l'interface fixe
+        charger_interface(page, tableau_cercles_fixes, tab_joueurs);
 
 
-    // On lance la boucle de jeu
-    while (alive) {
+        // Demarrage de la boucle de jeu
+        alive = 1;
 
-        end = clock();
+        // On démarre le chronomètre
+        begin = clock();
 
-        millis = (end - begin) * 1000 / CLOCKS_PER_SEC;
+        // On lance la boucle de jeu
+        while (alive) {
 
-        //printf("%lu \n", millis);
+            end = clock();
 
-        if ((millis >= portee_1[index_portee_1].millis)  && index_portee_1 < taille_portee_1) {
+            millis = (end - begin) * 1000 / CLOCKS_PER_SEC;
 
-            spawn_cercles(page, &portee_1[index_portee_1]);
+            //printf("%lu \n", millis);
 
-            printf("La note %d de la portee %d est dessinee. Diff de temps: %d theorique, %lu reel \n", portee_1[index_portee_1].note, portee_1[index_portee_1].portee, portee_1[index_portee_1].millis, millis);
+            if ((millis >= portee_1[index_portee_1].millis)  && index_portee_1 < taille_portee_1) {
 
-            index_portee_1 = index_portee_1 + 1;
-        }
+                spawn_cercles(page, &portee_1[index_portee_1]);
 
+                printf("La note %d de la portee %d est dessinee. Diff de temps: %d theorique, %lu reel \n", portee_1[index_portee_1].note, portee_1[index_portee_1].portee, portee_1[index_portee_1].millis, millis);
 
-        if (!mono_portee) {
-
-            if ((millis >= portee_2[index_portee_2].millis)  && index_portee_2 < taille_portee_2) {
-
-                spawn_cercles(page, &portee_2[index_portee_2]);
-
-                printf("La note %d de la portee %d est dessinee. Diff de temps: %d theorique, %lu reel \n", portee_2[index_portee_2].note, portee_2[index_portee_2].portee, portee_2[index_portee_2].millis, millis);
-
-                index_portee_2 = index_portee_2 + 1;
+                index_portee_1 = index_portee_1 + 1;
             }
-        }
-
-        actualiser_tab_cercles(page, portee_1, taille_portee_1);
-
-        if (!mono_portee) {
-
-            actualiser_tab_cercles(page, portee_2, taille_portee_2);
-        }
 
 
+            if (!mono_portee) {
 
-        charger_interface(page, tableau_cercles_fixes);
+                if ((millis >= portee_2[index_portee_2].millis)  && index_portee_2 < taille_portee_2) {
 
-        for (int i=0; i<taille_portee_1; i++) {
+                    spawn_cercles(page, &portee_2[index_portee_2]);
 
-            if (portee_1[i].affichage == 1) {
+                    printf("La note %d de la portee %d est dessinee. Diff de temps: %d theorique, %lu reel \n", portee_2[index_portee_2].note, portee_2[index_portee_2].portee, portee_2[index_portee_2].millis, millis);
 
-                circlefill(page, portee_1[i].x_centre, portee_1[i].y_centre, portee_1[i].radius, portee_1[i].couleur);
-            }
-        }
-
-        if (!mono_portee) {
-
-            for (int i=0; i<taille_portee_2; i++) {
-
-                if (portee_2[i].affichage == 1) {
-
-                    circlefill(page, portee_2[i].x_centre, portee_2[i].y_centre, portee_2[i].radius, portee_2[i].couleur);
+                    index_portee_2 = index_portee_2 + 1;
                 }
             }
+
+            // Attention => dans ce programme il y a un clear(bmp)
+            actualiser_tab_cercles(page, portee_1, taille_portee_1);
+
+            // On affiche en premier le décor
+            blit(decor, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
+            if (!mono_portee) {
+
+                actualiser_tab_cercles(page, portee_2, taille_portee_2);
+            }
+
+            charger_interface(page, tableau_cercles_fixes, tab_joueurs);
+
+
+            for (int i=0; i<taille_portee_1; i++) {
+
+                if (portee_1[i].affichage == 1) {
+
+                    circlefill(page, portee_1[i].x_centre, portee_1[i].y_centre, portee_1[i].radius, portee_1[i].couleur);
+                }
+            }
+
+            if (!mono_portee) {
+
+                for (int i=0; i<taille_portee_2; i++) {
+
+                    if (portee_2[i].affichage == 1) {
+
+                        circlefill(page, portee_2[i].x_centre, portee_2[i].y_centre, portee_2[i].radius, portee_2[i].couleur);
+                    }
+                }
+            }
+
+            if (!mono_portee) {
+
+                if ((portee_1[0].y_centre == 625 || portee_2[0].y_centre == 625) && demarrage_musique) {
+
+                    // Lancer la chanson
+                    PlaySound(TEXT(nom_fichier_musique), NULL, SND_ASYNC);
+
+                    demarrage_musique = 0;
+
+                }
+
+            } else {
+
+                if ((portee_1[0].y_centre == 625) && demarrage_musique) {
+
+                    // Lancer la chanson
+                    PlaySound(TEXT(nom_fichier_musique), NULL, SND_ASYNC);
+
+                    demarrage_musique = 0;
+
+                }
+            }
+
+            blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
+            detection_touches(portee_1, index_portee_1, &index_note_jouee_1, portee_2, index_portee_2, &index_note_jouee_2, tableau_cercles_fixes, &alive, mono_portee, &tab_joueurs[k]);
+
+        }
+
+        if (k == 0) {
+
+            alert("Au tour du joueur 2 !", NULL, NULL, "C'est parti !", NULL, 0, 0);
+
+            // Reinitialisation de l'affichage des notes
+            for (int i = 0; i < taille_portee_1; ++i) {
+
+                portee_1[i].affichage = 0;
+
+                portee_1[i].y_centre = 0;
+            }
+
+            if (!mono_portee) {
+
+                for (int i = 0; i < taille_portee_2; ++i) {
+
+                    portee_2[i].affichage = 0;
+
+                    portee_2[i].y_centre = 0;
+                }
+            }
+
+
+            // Nettoyage de la bitmap
+            clear_bitmap(page);
+
+            blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
         }
 
 
-        blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-
-        if (!mono_portee) {
-
-            if ((portee_1[0].y_centre == 625 || portee_2[0].y_centre == 625) && demarrage_musique) {
-
-                // Lancer la chanson
-                PlaySound(TEXT(nom_fichier_musique), NULL, SND_ASYNC);
-
-                demarrage_musique = 0;
-
-            }
-
-        } else {
-
-            if ((portee_1[0].y_centre == 625) && demarrage_musique) {
-
-                // Lancer la chanson
-                PlaySound(TEXT(nom_fichier_musique), NULL, SND_ASYNC);
-
-                demarrage_musique = 0;
-
-            }
-        }
-
-
-        detection_touches(portee_1, index_portee_1, &index_note_jouee_1, portee_2, index_portee_2, &index_note_jouee_2, tableau_cercles_fixes, &alive, mono_portee);
+        PlaySound(NULL, 0, 0);
 
     }
 
-    PlaySound(NULL, 0, 0);
+    clear_bitmap(page);
+
+    if (tab_joueurs[0].score > tab_joueurs[1].score) {
+
+        alert("Le joueur 1 a gagné !", NULL, NULL, "Retour au menu", NULL, 0, 0);
+
+        tab_joueurs[0].tickets = tab_joueurs[0].tickets + 1;
+
+    } else if (tab_joueurs[0].score == tab_joueurs[1].score) {
+
+        alert("Ex-aequo ! Personne ne gagne de ticket !", NULL, NULL, "Retour au menu", NULL, 0, 0);
+
+
+    } else {
+
+        alert("Le joueur 2 a gagné !", NULL, NULL, "Retour au menu", NULL, 0, 0);
+
+        tab_joueurs[1].tickets = tab_joueurs[1].tickets + 1;
+    }
 
     destroy_bitmap(page);
 

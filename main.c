@@ -326,7 +326,7 @@ int main() {
         }
 
         else if (Choix_epreuve == 2){
-            guitar_hero();
+            guitar_hero(tableau_joueurs);
             Choix_epreuve = 0;
         }
 

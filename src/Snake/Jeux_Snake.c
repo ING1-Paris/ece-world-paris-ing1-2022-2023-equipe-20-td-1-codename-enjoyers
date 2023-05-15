@@ -3,7 +3,7 @@
 //
 #include "../../header.h"
 
-void Snake(t_joueur * Joueur ,unsigned long* Temps){
+void Snake(t_joueur * Joueur, unsigned long * Temps) {
 
     /// Initialisation \\\
 
@@ -236,6 +236,8 @@ void Snake(t_joueur * Joueur ,unsigned long* Temps){
 
 
         }
+
+
         //Gestion de l'animation
         if (attente == 4){
             if (Animation == 1){
