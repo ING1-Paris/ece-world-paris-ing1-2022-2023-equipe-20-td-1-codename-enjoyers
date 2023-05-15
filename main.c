@@ -338,13 +338,18 @@ int main() {
 
 
         //Event
-        if (activation_event(tableau_joueurs, tableau_eventboxes,Personne_qui_choisi) == 1){
-
-            for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
-                tableau_joueurs[i].tickets = tableau_joueurs[i].tickets-1;
-            }
+        if (activation_event(tableau_joueurs, tableau_eventboxes,Personne_qui_choisi) == 1) {
 
             Choix_epreuve = Recherche_event_le_plus_proche(&tableau_joueurs[Personne_qui_choisi]);
+
+            if (Choix_epreuve < 7) {
+
+                for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
+
+                    tableau_joueurs[i].tickets = tableau_joueurs[i].tickets - 1;
+                }
+            }
+
             Personne_qui_choisi ++;
 
             if(Personne_qui_choisi == 2){

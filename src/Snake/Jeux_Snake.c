@@ -310,12 +310,24 @@ void Snake(t_joueur * Joueur ,unsigned long* Temps){
     blit(page,screen,0,0,0,0,SCREEN_W, SCREEN_H);
 
     alert("Fin du jeu !", NULL, NULL, "Retour au menu", NULL, 0, 0);
-}
 
-int Fin_de_partie(int serpent_en_vie[2]){
-    if (serpent_en_vie[0] == 0 && serpent_en_vie[1] == 0){
-        return 1;
+    //destruction des bitmaps du snake et liberation de la liste chainée
+    destroy_bitmap(page);
+    destroy_bitmap(decor);
+    destroy_bitmap(Nom_du_jeu);
+    for (int i = 0; i < 2; ++i) {
+        destroy_bitmap(Pomme[i].Skin);
     }
 
-    return 0;
+    for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
+        while (head[i] != NULL) {
+
+            head_tmp[0] = head[i]->next_corp;
+            free(head[i]);
+            head[i] = head_tmp[0];
+        }
+    }
+    for (int i = 0; i < 12; ++i) {
+        destroy_bitmap(SNAKE1[i]);
+    }
 }
