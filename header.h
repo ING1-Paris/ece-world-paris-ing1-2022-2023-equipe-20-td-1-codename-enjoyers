@@ -63,8 +63,8 @@ void Fin_du_jeu(BITMAP * page,t_joueur tableau_joueurs[NOMBRE_JOUEURS]);
 typedef struct entree_sauvegarde {
 
     int jeu; //SNAKE/GUITAR HERO/TIR-BALLON/COURSE/TAUPE/RIVIERE  (1 à 6)
-    int score;
-    int temps;
+    int score; //SNAKE / GUITAR HERO / COURSE /TAUPE
+    int temps;//TIR BALLON / RIVIERE
     int date;
     char map[128];
     char nom[128];
