@@ -15,7 +15,6 @@ t_acteur * creerActeur(int x,int y,int type){
     // ici ce qui est commun aux acteurs
     nouv->x=x;
     nouv->y=y;
-    nouv->type=type;
     nouv->comportement=0;
     nouv->cptexplo=0; // pas encore explosé mais on initialise par sécurité
     nouv->vivant=1;

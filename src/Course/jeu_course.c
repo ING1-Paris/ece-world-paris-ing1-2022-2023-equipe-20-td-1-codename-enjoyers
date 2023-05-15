@@ -1,105 +1,11 @@
 #include "../../header.h"
 
-// sur cet exemple Nombre d'lapins fixe :
-//    le tableau d'lapins sera d�clar� et utilis� en "automatique"
-//    t_lapin tab[Nlapin];
-// Pour modifier cette valeur il faut adapter ablapins
-#define Nlapin 6
-
-// nombre total de s�quences d'animation du jeu
-// ( le nombre d'lapins peut �tre sup�rieur si plusieurs lapins utilisent les m�me graphismes )
-// Pour modifier cette valeur il faut modifier le tableau initialis� tabSequences
-#define NSEQUENCE 6
-
-
-/*****************************/
-/*       STRUCTURES          */
-/*  devront aller dans un .h */
-/*****************************/
-
-// donn�es pour chaque s�quence d'animation charg�e initialement
-//  ( � ne faire qu'une seule fois au d�but du jeu )
-typedef struct sequence
-{
-    char *nomSource; // nom du fichier image contenant la s�quence
-    int nimg;        // nombre d'images dans la s�quence
-    int tx,ty;       // largeur et hauteur des images de la s�quence
-    int ncol;        // nbr images cotes � cotes horizontalement dans le fichier image
-    BITMAP **img;    // tableau de pointeurs pour indiquer les images
-} t_sequence;
-
-// donn�es personnelles de chaque lapin qui se d�place
-// sur cet exemple on ne g�re que des d�placements horizontaux (pas de dy...)
-typedef struct lapin
-{
-    // g�om�trie et d�placements
-
-    int x,y;         // position du coin sup. gauche
-    int dx;          // deplacement
-    int tmpdx;       // ralentir d�placements en x (1 pour ne pas ralentir)
-    int cptdx;       // compteur pour ralentir d�placement
-    int tx,ty;       // largeur hauteur
-
-    // s�quence d'images de l'animation
-
-    int imgcourante; // indice de l'image courante
-    int tmpimg;      // ralentir s�quence (image suivante 1 fois sur tmpimg)
-    int cptimg;      // compteur pour ralentir s�quence
-
-    // type = num�ro de la sequence � utiliser dans tabSequences
-    // ( ici : 0 Dragon  1 Poisson  2 Crabe  3 Abeille  4 Moustique  5 Serpent )
-
-    int type;
-
-} t_lapin;
-
-
-/*****************************/
-/*       PROTOTYPES          */
-/*  devront aller dans un .h */
-/*****************************/
-
-// Allouer et initialiser un lapin
-t_lapin * creerlapin(int type, int x, int y, int dx, int tmpdx, int tmpimg);
-
-// Pour remplir un tableau avec des lapins cr��s
-// Sur cet exemple on cr�e 6 lapins, chacun associ� � une s�quence
-void remplirTablapins(t_lapin * tab[Nlapin]);
-
-
-// Actualiser un lapin (bouger ...)
-void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page, t_joueur tableau_joueurs[NOMBRE_JOUEURS]);
-
-// G�rer l'�volution de l'ensemble des lapins
-void actualiserTablapins(t_lapin * tab[Nlapin], int tabParis[2], int *alive, BITMAP *page, t_joueur tableau_joueurs[NOMBRE_JOUEURS]);
-
-
-// Dessiner un lapin sur une bitmap bmp
-void dessinerlapin(BITMAP *bmp, t_lapin *lapin);
-
-// Dessiner l'ensemble des lapins sur une bitmap bmp
-void dessinerTablapins(BITMAP *bmp,t_lapin * tab[Nlapin]);
-
-
-// Charger les images d'une s�quence d'animation
-// D�coupe une image source en plusieurs vignettes
-// (doivent �tre rang�es de gauche � droite et de haut en bas)
-void chargerSequence(t_sequence * seq);
-
-// Charger toutes les s�quences du tableau global tabSequence
-void chargerTabSequences();
-
-
 /***************************************************/
 /*              VARIABLES GLOBALES                 */
-/*  les d�clarations devront aller dans un .h      */
-/*  les d�finitions devront aller dans un .c       */
 /***************************************************/
 
-
-// tableau global de toutes les s�quences anim�es du jeu
-// on s'autorise � utiliser un tableau global car ces donn�es
-// n'existent qu'en un seul exemplaire � l'�chelle du programme
+// tableau global de toutes les séquences animées du jeu
+// on s'autorise à utiliser un tableau global car ces données n'existent qu'en un seul exemplaire é l'échelle du programme
 
 t_sequence tabSequences[NSEQUENCE] =
         {
@@ -115,12 +21,12 @@ t_sequence tabSequences[NSEQUENCE] =
 
 
 /******************************************/
-/* PROGRAMME PRINCIPAL                    */
-/* initialisation puis boucle d'animation */
+/*           PROGRAMME PRINCIPAL          */
 /******************************************/
 
 void jeu_course()
 {
+    fflush(stdin);
     int tab_paris[2] = {0, 0};
     int tab_joueurs[NOMBRE_JOUEURS];
 
@@ -149,7 +55,7 @@ void jeu_course()
     centre_dialog(GUI_paris);
 
 
-    for (int i = 0; i < 2; ++i) {
+    for (int i = 0; i < 2; ++i) { // afin que les joueurs puissent parier sur leur lapin
 
         do {
 
@@ -159,9 +65,7 @@ void jeu_course()
 
         } while ((strlen(pari_lapin_temp) < 1)||(strlen(pari_lapin_temp) > 1) || (atoi(pari_lapin_temp) < 1 || atoi(pari_lapin_temp) > 6));
 
-
-        tab_paris[i] = atoi(pari_lapin_temp) - 1 ;
-        printf("le lapin %d a été choisi \n",tab_paris[i]);
+        tab_paris[i] = atoi(pari_lapin_temp) - 1 ; //pour la comparaison avec le type (qui lui est de 0 à 5)
     }
 
 
@@ -219,11 +123,8 @@ void jeu_course()
 
 }
 
-
-
 /************************************************/
 /*     DEFINITIONS DES SOUS-PROGRAMMES          */
-/*  devront aller dans un autre .c : lapins.c  */
 /************************************************/
 
 

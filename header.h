@@ -187,56 +187,29 @@ int Fin_de_partie(int serpent_en_vie[2]);
 // ----------------------------------------
 typedef struct acteur
 {
+    int x,y; // position du coin supérieur gauche
+    int dx,dy; // vecteur déplacement
+    int tx,ty; // largeur hauteur de l'image
 
-    // position du coin sup. gauche
-    int x,y;
-
-    // vecteur deplacement
-    int dx,dy;
-
-    // largeur hauteur
-    int tx,ty;
-
-    // couleur (ne sera plus pertinent avec des sprites importés...)
     int couleur;
 
-    // type (ici 2 types mais on peut en mettre plus):
-    //   0 laser
-    //   1 missile (accélération horizontale)
-    int type;
-
-    // comportement :
-    //   0 normal déplacement
-    //   1 explosion
-    int comportement;
+    int comportement; // comportement : 0 normal et 1 explosion
     int cptexplo; // temps depuis l'explosion
 
-    // vivant :
-    //   0 mort (doit disparaitre de la liste)
-    //   1 vivant
-    int vivant;
+    int vivant; // vivant : 0 mort (doit disparaitre de la liste) et 1 vivant
 
 } t_acteur;
 
 // Une collection de acteurs
 typedef struct listeActeurs
 {
-    // nombre maxi d'éléments
-    // =taille du tableau de pointeurs
-    int max;
-
-    // nombre effectif de pointeurs utilisés
-    // (les autres sont à NULL)
-    int n;
-
-    // le tableau de pointeurs (alloué dynamiquement)
-    t_acteur **tab;
+    int max; // nombre maxi d'éléments =taille du tableau de pointeurs
+    int n; // nombre effectif de pointeurs utilisés
+    t_acteur **tab; // le tableau de pointeurs (alloué dynamiquement)
 
 } t_listeActeurs;
 
 
-// Spécifique à cet exemple : un fusil et un ballon
-// Un élément à déplacement interactif
 typedef struct joueur_ballons {
     int x,y;     // position
     int tx,ty;   // taille
@@ -246,7 +219,6 @@ typedef struct joueur_ballons {
     BITMAP *img; // sprite (image chargée)
 } t_joueur_ballons;
 
-// Un élément à déplacement automatique aléatoire
 typedef struct ballon {
     int x,y;     // position
     int dx, dy;      // vecteur déplacement
@@ -312,6 +284,44 @@ void dessinerBallon_rouge(BITMAP *bmp,t_ballon *ballon_rouge);
 
 //COURSE DE LAPIN
 void jeu_course();
+
+
+typedef struct sequence
+{
+    char *nomSource; // nom du fichier image contenant la séquence
+    int nimg;        // nombre d'images dans la séquence
+    int tx,ty;       // largeur et hauteur des images de la séquence
+    int ncol;        // nbr images cotes à cotés horizontalement dans le fichier image
+    BITMAP **img;    // tableau de pointeurs pour indiquer les images
+} t_sequence;
+
+typedef struct lapin
+{
+    int x,y;         // position du coin supérieur gauche
+    int dx;          // déplacement
+    int tmpdx;       // ralentir déplacements en x (1 pour ne pas ralentir)
+    int cptdx;       // compteur pour ralentir déplacement
+    int tx,ty;       // largeur hauteur
+
+
+    int imgcourante; // indice de l'image courante
+    int tmpimg;      // ralentir séquence (image suivante 1 fois sur tmpimg)
+    int cptimg;      // compteur pour ralentir séquence
+
+    int type; //numéro du lapin (de 0 à 5)
+
+} t_lapin;
+
+#define Nlapin 6
+#define NSEQUENCE 6
+t_lapin * creerlapin(int type, int x, int y, int dx, int tmpdx, int tmpimg);
+void remplirTablapins(t_lapin * tab[Nlapin]);
+void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page, t_joueur tableau_joueurs[NOMBRE_JOUEURS]);
+void actualiserTablapins(t_lapin * tab[Nlapin], int tabParis[2], int *alive, BITMAP *page, t_joueur tableau_joueurs[NOMBRE_JOUEURS]);
+void dessinerlapin(BITMAP *bmp, t_lapin *lapin);
+void dessinerTablapins(BITMAP *bmp,t_lapin * tab[Nlapin]);
+void chargerSequence(t_sequence * seq);
+void chargerTabSequences();
 
 
 
