@@ -41,3 +41,13 @@ void Interaction_Pomme(t_corp_de_snake* head,t_Pomme* Pomme,int *Longeur,BITMAP*
         generation_Pomme(Pomme);
     }
 }
+
+
+int Fin_de_partie(int serpent_en_vie[2]){
+    if (serpent_en_vie[0] == 0 && serpent_en_vie[1] == 0){
+        return 1;
+    }
+
+    return 0;
+}
+

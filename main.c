@@ -46,6 +46,10 @@ int main() {
     BITMAP * Shrek_Question;
     BITMAP * fond_de_maison;
     BITMAP * Couronne_de_jeu;
+    BITMAP * Control_J1;
+    BITMAP * Interaction_J1;
+    BITMAP * Control_J2;
+    BITMAP * Interaction_J2;
 
     // HITBOXES
     t_hitbox tableau_hitboxes[NOMBRE_HITBOXES] = {
@@ -147,9 +151,16 @@ int main() {
 
     // CHARGEMENT DE LA MAP DU MENU
     map_menu = load_bitmap("../assets/maps/menu.bmp", NULL);
+
+    // CHARGEMENT DES SPRITES DU MENU
     Shrek_Question = load_bitmap("../assets/Item/Menu/Shrek_question.bmp",NULL);
     fond_de_maison = load_bitmap("../assets/Item/Menu/Fond_de_maison.bmp",NULL);
     Couronne_de_jeu= load_bitmap("../assets/Item/Menu/Couronne_de_Shrek.bmp",NULL);
+    Control_J1 = load_bitmap("../assets/Item/Menu/hgbd.bmp",NULL);
+    Interaction_J1 = load_bitmap("../assets/Item/Menu/L.bmp",NULL);
+    Control_J2 = load_bitmap("../assets/Item/Menu/zqsd.bmp",NULL);
+    Interaction_J2 = load_bitmap("../assets/Item/Menu/f.bmp",NULL);
+
 
     // -----------------------------
 
@@ -173,13 +184,6 @@ int main() {
     //system("pause");
 
     // -----------------------------
-
-
-
-
-
-
-
 
 
 
@@ -216,6 +220,8 @@ int main() {
 
         blit(fond_de_maison,page,0,0,0,0,SCREEN_W, SCREEN_H);
         masked_blit(Shrek_Question,page,0,0,0,450,400,533);
+
+
         blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
         if (i == 0) {
@@ -288,10 +294,36 @@ int main() {
 
     PlaySound(NULL, 0, 0);
 
+    blit(map_menu, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
+    alert("Pendant le jeu, appuyez sur 'h' pour ouvrir le menu d'aide!", NULL, NULL, "Compris, merci Shrek my love !", NULL, 0, 0);
+
     while (!Fin) {
 
 
         blit(map_menu, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
+        if (key[KEY_H]) {
+
+            //AIDE J1
+            rectfill(page,545,600,750,710, makecol(255,255,255));
+            rect(page,545,600,750,710, makecol(0,0,0));
+
+            textprintf_ex(page,font,640,610, makecol(0,0,0),-1,"J1:");
+
+            masked_blit(Control_J1,page,0,0,550,625,133,84);
+            masked_blit(Interaction_J1,page,0,0,700,630,45,43);
+
+            //AIDE J2
+            rectfill(page,195,600,400,710, makecol(255,255,255));
+            rect(page,195,600,400,710, makecol(0,0,0));
+
+            textprintf_ex(page,font,290,610, makecol(0,0,0),-1,"J2:");
+
+            masked_blit(Control_J2,page,0,0,200,625,133,84);
+            masked_blit(Interaction_J2,page,0,0,350,630,45,43);
+        }
+
 
         //charger_hitboxes(page, tableau_eventboxes, makecol(0, 255, 0));
 
@@ -306,13 +338,18 @@ int main() {
 
 
         //Event
-        if (activation_event(tableau_joueurs, tableau_eventboxes) == 1){
-
-            for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
-                tableau_joueurs[i].tickets = tableau_joueurs[i].tickets-1;
-            }
+        if (activation_event(tableau_joueurs, tableau_eventboxes,Personne_qui_choisi) == 1) {
 
             Choix_epreuve = Recherche_event_le_plus_proche(&tableau_joueurs[Personne_qui_choisi]);
+
+            if (Choix_epreuve < 7) {
+
+                for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
+
+                    tableau_joueurs[i].tickets = tableau_joueurs[i].tickets - 1;
+                }
+            }
+
             Personne_qui_choisi ++;
 
             if(Personne_qui_choisi == 2){
