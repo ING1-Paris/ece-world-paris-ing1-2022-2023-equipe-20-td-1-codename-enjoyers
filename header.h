@@ -366,18 +366,21 @@ t_rondin * Creation_rondin(int nb);
 void Remplir_tab_rondin(t_rondin * tableau_de_rondin[NRONDIN]);
 void Afficher_rondin(BITMAP *bmp, t_rondin *rondin_a_afficher);
 void Afficher_tab_rondin(BITMAP *bmp, t_rondin *tab_rondin[NRONDIN]);
+
 void Deplacement_rondin(t_rondin *le_rondin);
 void Deplacement_tab_rondin(t_rondin *le_rondin[NRONDIN]);
 
 
-t_joueur_riv Creation_joueur(t_joueur joueur[NOMBRE_JOUEURS]);
-void Afficher_joueur(BITMAP *bmp, t_joueur_riv joueur_a_afficher[NOMBRE_JOUEURS]);
+t_joueur_riv * Creation_joueur(t_joueur *joueur);
+void Remplir_tab_joueur(t_joueur_riv *tab_joueur[NOMBRE_JOUEURS], t_joueur *joueur_riv[NOMBRE_JOUEURS]);
+void Afficher_joueur(BITMAP *bmp, t_joueur_riv *joueur_a_afficher);
+void Afficher_tab_joueur(BITMAP *bmp, t_joueur_riv *tab_joueur[NOMBRE_JOUEURS]);
+
+void Deplacement_joueur(t_rondin * rondin[NRONDIN], t_joueur_riv * joueur_en_train_de_jouer);
+void Deplacement_tab_joueur(t_rondin * tab_rondin, t_joueur *tab_joueur[NOMBRE_JOUEURS]);
+
 
 int Collision_joueur_rondin(t_rondin *rondin, t_joueur_riv *joueur);
-void Deplacement_joueur(t_rondin rondin[NRONDIN], t_joueur_riv * joueur_en_train_de_jouer, int innactivite[NOMBRE_JOUEURS]);
-
-
-int Fin_partie_riv(t_joueur_riv joueur[NOMBRE_JOUEURS]);
 
 
 

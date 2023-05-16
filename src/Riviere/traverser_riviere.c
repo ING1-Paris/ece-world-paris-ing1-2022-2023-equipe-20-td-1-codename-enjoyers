@@ -32,8 +32,8 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], int tab_temps[NOMBRE
 
 
     //variable acteur
-    t_joueur_riv joueur[NOMBRE_JOUEURS];
-    t_rondin *tabl_rondin[NRONDIN];
+    t_joueur_riv * joueur[NOMBRE_JOUEURS];
+    t_rondin * tabl_rondin[NRONDIN];
 
 
     // SPRITES
@@ -46,11 +46,7 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], int tab_temps[NOMBRE
 
     //Création rondin et joueur
     Remplir_tab_rondin(tabl_rondin);
-
-
-    for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
-        joueur[i] = Creation_joueur(joueur_riv);
-    }
+    Remplir_tab_joueur(joueur, &joueur_riv);
 
 
 
@@ -69,34 +65,39 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], int tab_temps[NOMBRE
 
         alert("Tenez-vous prêt...", NULL, "Vous devez traverser la riviere pour rejoindre Dragonne,", "c'est parti !", NULL, 0, 0);
 
-        joueur[i].temps = 0;
-        joueur[i].temps = begin;
+        joueur[i]->temps = 0;
+        joueur[i]->temps = begin;
 
 
         //Début du jeu
-        while (joueur[i].y < 640){
+        while (joueur[i]->y < 640){
 
             blit(decor, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
 
 
-            Afficher_joueur(page, &joueur[i]);
-
             Afficher_tab_rondin(page, tabl_rondin);
+
+            Afficher_joueur(page,joueur[i]);
+
+            //Afficher_tab_joueur(page, joueur);
+            //Deplacement_tab_joueur(tabl_rondin, joueur);
 
             Deplacement_tab_rondin(tabl_rondin);
 
-            Deplacement_joueur(*tabl_rondin, &joueur[i], &innactivite[NOMBRE_JOUEURS]);
+            Deplacement_joueur(tabl_rondin, joueur[i]);
+
+
 
 
             //arrêt du chrono pour le joueur qui est arrivé à la fin
-            if(joueur[i].y < 640) {
+            if(joueur[i]->y < 640) {
                 joueur_tps_parcours[i] = time(NULL);
             }
 
 
             time_t tps_actuel = time(NULL);
-            joueur[i].temps = (unsigned long) difftime(tps_actuel, begin);
+            joueur[i]->temps = (unsigned long) difftime(tps_actuel, begin);
 
 
             //Affichage score
@@ -105,8 +106,8 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], int tab_temps[NOMBRE
             stretch_blit(joueur_riv[i].sprites[12], page, 0, 0, 225, 225, 15, 15, 70, 70);
 
             textprintf_ex(page, font, 90, 20, makecol(0, 0, 0), -1, "%s", joueur_riv[i].nom);
-            textprintf_ex(page, font, 90, 50, makecol(0, 0, 0), -1, "position: %d", joueur[i].y);
-            textprintf_ex(page, font, 90, 70, makecol(0, 0, 0), -1, "temps écoulé: %lu", joueur[i].temps);
+            textprintf_ex(page, font, 90, 50, makecol(0, 0, 0), -1, "position: %d", joueur[i]->y);
+            textprintf_ex(page, font, 90, 70, makecol(0, 0, 0), -1, "temps écoulé: %lu", joueur[i]->temps);
             masked_blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
             rest(15);
@@ -122,7 +123,7 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], int tab_temps[NOMBRE
 
 
 
-    if (joueur[0].temps < joueur[1].temps) {
+    if (joueur[0]->temps < joueur[1]->temps) {
 
         alert("Joueur 1, vous avez gagné un ticket ! ", NULL, NULL, "ok!", NULL, 0, 0);
         joueur_riv[0].tickets = joueur_riv[0].tickets + 1;

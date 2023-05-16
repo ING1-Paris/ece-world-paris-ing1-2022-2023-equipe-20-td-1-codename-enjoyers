@@ -15,7 +15,7 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
 
     page = create_bitmap(SCREEN_W, SCREEN_H);
 
-    decor=load_bitmap("../assets/maps/MAP_TAUPE.bmp",NULL);
+    decor = load_bitmap("../assets/maps/MAP_TAUPE.bmp",NULL);
 
     if (!decor)
     {
@@ -61,16 +61,20 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
             if (!mesTaupes[j].skin)
             {
                 allegro_message("decor introuvable");
+                allegro_exit();
                 exit(EXIT_FAILURE);
             }
 
-            mesTaupes[j].tx = 79;
-            mesTaupes[j].ty = 100;
+            mesTaupes[j].tx = mesTaupes[j].skin->w;
+            mesTaupes[j].ty = mesTaupes[j].skin->h;
 
-            while ((mesTaupes[j].y == mesTaupes[j + 1].y) || (mesTaupes[j].x == mesTaupes[j + 1].x)) {
-                mesTaupes[j].y = rand() % ((600 - 135) + 135);
-                mesTaupes[j].x = rand() % ((800 - 100) + 100);
-            }
+
+            //mesTaupes[j].y = rand() % (((500 - mesTaupes[j].ty) - 200 + 1) + 200);
+            //mesTaupes[j].x = rand() % (((800 - mesTaupes[j].tx) - 200 + 1) + 200);
+
+
+            mesTaupes[j].y = 200 + 8*j;
+            mesTaupes[j].x = 300 + 8*j;
 
             mesTaupes[j].affichage = 1;
 

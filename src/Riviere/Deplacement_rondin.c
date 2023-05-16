@@ -12,8 +12,6 @@ void Deplacement_rondin(t_rondin *le_rondin){
         le_rondin->depx = -le_rondin->depx;
         //le_rondin->posx = le_rondin->posx + le_rondin->depx;
 
-
-
     }
 
     le_rondin->posx = le_rondin->posx + le_rondin->depx;
