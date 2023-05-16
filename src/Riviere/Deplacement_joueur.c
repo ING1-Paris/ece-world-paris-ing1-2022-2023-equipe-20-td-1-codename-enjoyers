@@ -4,7 +4,7 @@
 
 #include "../../header.h"
 
-void Deplacement_joueur(t_rondin * rondin, t_joueur_riv * joueur_en_train_de_jouer, int innactivite[NOMBRE_JOUEURS]){
+void Deplacement_joueur(t_rondin *rondin[NRONDIN], t_joueur_riv * joueur_en_train_de_jouer){
 
 
     if (key[KEY_UP]) {
@@ -34,13 +34,21 @@ void Deplacement_joueur(t_rondin * rondin, t_joueur_riv * joueur_en_train_de_jou
 
     for (int i=0; i<NRONDIN; i++) {
 
-        if (Collision_joueur_rondin(&rondin[i], joueur_en_train_de_jouer)) {
+        if (Collision_joueur_rondin(rondin[i], joueur_en_train_de_jouer)) {
 
-            joueur_en_train_de_jouer->x = rondin[i].posx + (rondin[i].tx / 2);
 
-            joueur_en_train_de_jouer->dx = 10 + rondin[i].depx;
+            joueur_en_train_de_jouer->x = rondin[i]->posx + (rondin[i]->tx / 2);
+            joueur_en_train_de_jouer->dx = 5 + rondin[i]->depx;
+
 
         }
+
+        /*else if ((joueur_en_train_de_jouer->y>200)||(joueur_en_train_de_jouer->x>SCREEN_W)||(joueur_en_train_de_jouer->x==0)){
+
+            joueur_en_train_de_jouer->x = 500;
+            joueur_en_train_de_jouer->y = 70;
+
+        }*/
     }
 
 
