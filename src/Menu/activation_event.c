@@ -4,12 +4,12 @@
 
 #include "../../header.h"
 
-int activation_event(t_joueur tab_joueurs[NOMBRE_JOUEURS], t_hitbox tab_eventboxes[NOMBRE_EVENTBOXES]) {
+int activation_event(t_joueur tab_joueurs[NOMBRE_JOUEURS], t_hitbox tab_eventboxes[NOMBRE_EVENTBOXES],int joueur_leader) {
 
     int i;
     int j;
 
-    if (key[KEY_ENTER]) {
+    if (joueur_leader==0 && key[KEY_L] || joueur_leader ==1 && key[KEY_F]) {
 
         for (i=0; i<NOMBRE_JOUEURS; i++) {
 
