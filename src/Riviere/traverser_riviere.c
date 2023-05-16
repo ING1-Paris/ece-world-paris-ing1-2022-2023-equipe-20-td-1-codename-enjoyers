@@ -76,9 +76,9 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps
 
 
 
-            Afficher_joueur(page,joueur[i]);
-
             Afficher_tab_rondin(page, tabl_rondin);
+
+            Afficher_joueur(page,joueur[i]);
 
             //Afficher_tab_joueur(page, joueur);
             //Deplacement_tab_joueur(tabl_rondin, joueur);

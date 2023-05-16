@@ -36,19 +36,22 @@ void Deplacement_joueur(t_rondin *rondin[NRONDIN], t_joueur_riv * joueur_en_trai
 
         if (Collision_joueur_rondin(rondin[i], joueur_en_train_de_jouer)) {
 
+            rondin[i]->indice_ligne = 0;
 
             joueur_en_train_de_jouer->x = rondin[i]->posx + (rondin[i]->tx / 2);
             joueur_en_train_de_jouer->dx = 5 + rondin[i]->depx;
 
+            rondin[i]->indice_ligne++;
+
 
         }
 
-        /*else if ((joueur_en_train_de_jouer->y>200)||(joueur_en_train_de_jouer->x>SCREEN_W)||(joueur_en_train_de_jouer->x==0)){
+        else if ((joueur_en_train_de_jouer->x>SCREEN_W)||(joueur_en_train_de_jouer->x==0)){
 
             joueur_en_train_de_jouer->x = 500;
             joueur_en_train_de_jouer->y = 70;
 
-        }*/
+        }
     }
 
 

@@ -12,8 +12,8 @@ int Collision_joueur_rondin(t_rondin * rondin, t_joueur_riv * joueur){
 
     m[0] = rondin->posx + rondin->tx - joueur->x; // 0: à droite
     m[1] = rondin->posx + rondin->tx - joueur->x; // 1: à gauche
-    m[2] = joueur->y + joueur->ty - rondin->posy; //- rondin.posy; // 2: en bas
-    m[3] = rondin->posy + rondin->ty - joueur->y; // 3: en haut
+    m[2] = joueur->y + joueur->ty - rondin->posy; // 2: en bas
+    m[3] = rondin->posy + rondin->ty - (joueur->y+joueur->ty); // 3: en haut
 
     // Chercher l'indice de la plus petite marge
     imin=0;
