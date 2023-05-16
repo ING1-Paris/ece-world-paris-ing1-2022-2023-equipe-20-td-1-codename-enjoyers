@@ -155,7 +155,7 @@ typedef struct Pomme{
 
 }t_Pomme;
 
-void Snake(t_joueur* Joueur,unsigned long* Temps);
+void Snake(t_joueur* Joueur, int tab_temps[NOMBRE_JOUEURS]);
 t_corp_de_snake* Creer_maillon(BITMAP* tab_de_Skin[12]);
 void Actualisation_Snake(t_corp_de_snake* head);
 void Deplacement_Snake_1(t_corp_de_snake * head);
@@ -360,7 +360,7 @@ typedef struct joueur_riv
 
 
 
-void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps);
+void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], int tab_temps[NOMBRE_JOUEURS]);
 
 t_rondin * Creation_rondin(int nb);
 void Remplir_tab_rondin(t_rondin * tableau_de_rondin[NRONDIN]);

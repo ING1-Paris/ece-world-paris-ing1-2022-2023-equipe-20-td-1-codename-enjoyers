@@ -53,7 +53,7 @@ int main() {
 
     // HITBOXES
     t_hitbox tableau_hitboxes[NOMBRE_HITBOXES] = {
-            // Maison
+            // Maisons
             {192, 74, 320, 189},
             {592, 48, 710, 200},
             {0, 288, 135, 430},
@@ -392,6 +392,16 @@ int main() {
             Choix_epreuve = 0;
             alert("AU revoir !", NULL, NULL, "Close", NULL, 0, 0);
             Fin = 1;
+
+        }
+
+        if (Choix_epreuve > 0 && Choix_epreuve < 7) {
+
+            remplir_tab_sauvegardes(tableau_donnees_a_sauvegarder, tableau_joueurs, tab_temps_epreuves, Choix_epreuve);
+
+            sauvegarder(tableau_donnees_a_sauvegarder);
+
+            Choix_epreuve = 0;
         }
 
         //Detection de Victoire
