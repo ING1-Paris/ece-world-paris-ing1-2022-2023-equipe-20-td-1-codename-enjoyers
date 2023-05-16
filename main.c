@@ -92,18 +92,20 @@ int main() {
 
     // JOUEURS
     t_joueur tableau_joueurs[NOMBRE_JOUEURS];
-    unsigned long Temps_d_epreuve;
+    int tab_temps_epreuves[NOMBRE_JOUEURS];
 
     // EVENT
-    int Personne_qui_choisi= 0;
+    int Personne_qui_choisi = 0;
     int Choix_epreuve = 0;
 
     // SPRITES
     int Innactivite[NOMBRE_JOUEURS]={1,1};
     int animation[NOMBRE_JOUEURS]={0,0};
 
-    //FIN DE PARTIE
+    // TABLEAU D'ENTREES DE SAUVEGARDES
+    t_entree_sauvegarde tableau_donnees_a_sauvegarder[NOMBRE_JOUEURS];
 
+    // FIN DE PARTIE
     int Fin = 0;
     int Fin_de_partie = 0;
 
@@ -357,41 +359,37 @@ int main() {
             }
         }
 
-        if (Choix_epreuve == 1){
-            Snake(tableau_joueurs,&Temps_d_epreuve);
-            Choix_epreuve = 0;
-        }
+        if (Choix_epreuve == 1) {
 
-        else if (Choix_epreuve == 2){
-            guitar_hero(tableau_joueurs);
-            Choix_epreuve = 0;
-        }
+            Snake(tableau_joueurs,tab_temps_epreuves);
 
-        else if (Choix_epreuve == 3){
+        } else if (Choix_epreuve == 2) {
+
+            guitar_hero(tableau_joueurs, tableau_donnees_a_sauvegarder);
+
+        } else if (Choix_epreuve == 3) {
+
             jeuballons();
-            Choix_epreuve = 0;
-        }
 
-        else if (Choix_epreuve == 4){
+        } else if (Choix_epreuve == 4) {
+
             jeu_course();
-            Choix_epreuve = 0;
-        }
 
-        else if (Choix_epreuve == 5){
+        } else if (Choix_epreuve == 5){
+
             jeu_taupe(tableau_joueurs);
-            Choix_epreuve = 0;
-        }
 
-        else if (Choix_epreuve == 6){
-            traverser_riviere(tableau_joueurs, &Temps_d_epreuve);
-            Choix_epreuve = 0;
-        }
+        } else if (Choix_epreuve == 6){
 
-        else if (Choix_epreuve == 7){
+           // traverser_riviere(tableau_joueurs, &Temps_d_epreuve);
+
+        } else if (Choix_epreuve == 7){
 
             Choix_epreuve = 0;
-        }
-        else if(Choix_epreuve == 8){
+
+        } else if(Choix_epreuve == 8){
+
+            Choix_epreuve = 0;
             alert("AU revoir !", NULL, NULL, "Close", NULL, 0, 0);
             Fin = 1;
         }

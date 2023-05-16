@@ -3,7 +3,7 @@
 //
 #include "../../header.h"
 
-void Snake(t_joueur * Joueur, unsigned long * Temps) {
+void Snake(t_joueur * Joueur, int tab_temps[NOMBRE_JOUEURS]) {
 
     /// Initialisation \\\
 

@@ -5,7 +5,7 @@
 
 #include "../../header.h"
 
-void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps){
+void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], int tab_temps[NOMBRE_JOUEURS]){
 
    //variable decor
     BITMAP *decor;
@@ -115,8 +115,8 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps
 
         }
 
-        *Temps = (unsigned long) difftime(joueur_tps_parcours[i],begin);
-        printf("Le joueur %d a traverse la riviere en %lus\n",i+1,*Temps);
+        //*Temps = (unsigned long) difftime(joueur_tps_parcours[i],begin);
+        //printf("Le joueur %d a traverse la riviere en %lus\n",i+1,*Temps);
     }
 
 

@@ -4,7 +4,7 @@
 
 #include "../../header.h"
 
-void guitar_hero(t_joueur * tab_joueurs) {
+void guitar_hero(t_joueur * tab_joueurs, t_entree_sauvegarde tab_donnees[NOMBRE_JOUEURS]) {
 
     // On nettoie la mémoire du clavier
     fflush(stdin);
@@ -95,6 +95,13 @@ void guitar_hero(t_joueur * tab_joueurs) {
     // On remplit le tableau de note avec la chanson selectionnee
     printf("Index du string: %d \n", GUI_guitar_hero[2].d1);
     printf("String en question: %s \n", listbox_getter(GUI_guitar_hero[2].d1, (int *) TAILLE_TAB_CHANSONS));
+
+    // On renseigne la map en question dans les données à enregistrer dans le fichier de sauvegarde
+    for (int i=0; i<NOMBRE_JOUEURS; i++) {
+
+        strcpy(tab_donnees[i].map, listbox_getter(GUI_guitar_hero[2].d1, (int *) TAILLE_TAB_CHANSONS));
+    }
+
 
     // Chargement du csv de la musique
     t_note * chanson_jouee = charger_musique(listbox_getter(GUI_guitar_hero[2].d1, (int*) TAILLE_TAB_CHANSONS), &taille_tableau, &tempo_musique);

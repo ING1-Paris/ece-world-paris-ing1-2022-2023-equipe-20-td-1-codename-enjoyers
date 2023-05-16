@@ -59,20 +59,22 @@ void Fin_du_jeu(BITMAP * page,t_joueur tableau_joueurs[NOMBRE_JOUEURS]);
 
 
 // SAUVEGARDE
-
 typedef struct entree_sauvegarde {
 
     int jeu; //SNAKE/GUITAR HERO/TIR-BALLON/COURSE/TAUPE/RIVIERE  (1 à 6)
     int score; //SNAKE / GUITAR HERO / COURSE /TAUPE
     int temps;//TIR BALLON / RIVIERE
-    int date;
+    time_t date;
     char map[128];
     char nom[128];
 
 } t_entree_sauvegarde;
 
-int consulter(t_entree_sauvegarde * tab_de_sauvegarde, int * taille_tab);
+void sauvegarder(t_entree_sauvegarde tab_sauvegardes_session[NOMBRE_JOUEURS]);
+int consulter(t_entree_sauvegarde * tab_de_sauvegarde, int taille_tab);
 void triInsertion(t_entree_sauvegarde * tableau, int taille_tab);
+void remplir_tab_sauvegardes(t_entree_sauvegarde tab_donnees[NOMBRE_JOUEURS], t_joueur tab_joueurs[NOMBRE_JOUEURS], int tab_temps[NOMBRE_JOUEURS], int choix_jeu);
+int compter_lignes_fichier();
 
 
 
@@ -110,7 +112,7 @@ typedef struct cercle_fixe {
 } t_cercle_fixe;
 
 
-void guitar_hero(t_joueur * tab_joueurs);
+void guitar_hero(t_joueur * tab_joueurs, t_entree_sauvegarde tab_donnees[NOMBRE_JOUEURS]);
 char *listbox_getter(int index, int *list_size);
 t_note * charger_musique(char nom_musique[256], int * taille_tab, int * tempo);
 void charger_interface(BITMAP * bmp, t_cercle_fixe tab_cercles_fixes[5], t_joueur * tab_joueurs);
