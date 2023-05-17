@@ -70,17 +70,17 @@ void guitar_hero(t_joueur * tab_joueurs, t_entree_sauvegarde tab_donnees[NOMBRE_
     DIALOG GUI_guitar_hero[] =
 
             {
-                    // (dialog proc)     (x)   (y)   (w)   (h) (fg)(bg) (key) (flags)     (d1) (d2)    (dp)                   (dp2) (dp3)
-                    { d_box_proc,           0, 0, 500, 200, 0, 0, 0,        0,          0,  0,       NULL,               NULL, NULL},
-                    { d_text_proc,         4,  10,    0,    0,   0,  0,    0,      0,       0,   0,    (void*)"Selectionner la musique a jouer (pour les deux joueurs):",  NULL, NULL  },
+                    // (dialog proc)    (x)  (y)  (w)  (h) (fg)  (bg) (key)(flags) (d1) (d2) (dp)                                                               (dp2) (dp3)
+                    {       d_box_proc,  0,   0,  500, 200,   0,  0,    0,      0,  0,   0, NULL                                                             ,  NULL , NULL  },
+                    {      d_text_proc,  4,  10,    0,   0,   0,  0,    0,      0,  0,   0, (void*)"Selectionner la musique a jouer (pour les deux joueurs):",  NULL , NULL  },
 
-                    { d_text_list_proc,          4, 30, 280, 100, 0, 0, 0, 0, 0, 0, (void *) listbox_getter, NULL, NULL},
+                    { d_text_list_proc,  4,  30,  280, 100,   0,  0,    0,      0,  0,   0, (void *) listbox_getter                                          ,  NULL , NULL  },
 
 
-                    { d_button_proc,     160,   190,  160,   16,   0,  0,    0, D_EXIT,       0,   0,    (void*)"Suivant",            NULL, NULL  },
-                    { d_text_proc, 4, 40, 0, 0, 0, 0, 0, 0, 0, 0, (void*) "Controles: D F   J K L", NULL, NULL},
-                    { d_yield_proc,        0,   0,    0,    0,   0,  0,    0,      0,       0,   0,    NULL,                   NULL, NULL  },
-                    { NULL,                0,   0,    0,    0,   0,  0,    0,      0,       0,   0,    NULL,                   NULL, NULL  },
+                    {    d_button_proc,160, 190,  160,  16,   0,  0,    0, D_EXIT,  0,   0, (void*)"Suivant"                                                 ,  NULL , NULL  },
+                    {      d_text_proc,  4,  40,    0,   0,   0,  0,    0,      0,  0,   0, (void*) "Controles: D F   J K L"                                 ,  NULL , NULL  },
+                    {     d_yield_proc,  0,   0,    0,   0,   0,  0,    0,      0,  0,   0, NULL                                                             ,  NULL , NULL  },
+                    {             NULL,  0,   0,    0,   0,   0,  0,    0,      0,  0,   0, NULL                                                             ,  NULL , NULL  },
             };
 
     gui_fg_color = makecol(0, 0, 0);

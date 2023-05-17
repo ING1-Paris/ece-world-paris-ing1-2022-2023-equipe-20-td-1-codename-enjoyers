@@ -52,6 +52,11 @@ void Acceuil();
 void Fin_du_jeu(BITMAP * page,t_joueur tableau_joueurs[NOMBRE_JOUEURS]);
 
 
+//STATISTIQUE
+void statistique();
+int menu_callback();
+
+
 
 
 

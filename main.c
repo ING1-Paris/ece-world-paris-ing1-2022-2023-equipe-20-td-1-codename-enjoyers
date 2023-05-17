@@ -107,28 +107,29 @@ int main() {
     int Fin = 0;
     int Fin_de_partie = 0;
 
+
     // OUVERTURE DE LA BOITE DE DIALOGUE
     char chaine_temp[256] = "";
 
     DIALOG GUI_demarrage[] =
         {
-                    // (dialog proc)     (x)   (y)   (w)   (h) (fg)(bg) (key) (flags)     (d1) (d2)    (dp)                   (dp2) (dp3)
-            { d_box_proc,           0, 0, 500, 200, 0, 0, 0,        0,          0,  0,       NULL,               NULL, NULL},
-            { d_text_proc,         2,  10,    0,    0,   0,  0,    0,      0,       0,   0,    (void*)"Saisir le pseudo du joueur:",  NULL, NULL  },
-            { d_text_proc,         4,  25,    0,    0,   0,  0,    0,      0,       0,   0,    (void*)">>",  NULL, NULL  },
-            { d_edit_proc,       28,  25,  160,    8,   0,  0,    0, D_EXIT,      64,   0,    (void*)chaine_temp,      NULL, NULL  },
-            { d_text_proc,         2,  65,    0,    0,   0,  0,    0,      0,       0,   0,    (void*)"Choisir le personnage:",  NULL, NULL  },
+            //(dialog proc)     (x)   (y)  (w)   (h)  (fg)(bg) (key) (flags)     (d1) (d2)    (dp)                                    (dp2)  (dp3)
+            { d_box_proc,         0,   0,  500,  200,   0,  0,    0,      0,       0,   0,     NULL                                 ,  NULL, NULL },
+            { d_text_proc,        2,  10,    0,    0,   0,  0,    0,      0,       0,   0,    (void*)"Saisir le pseudo du joueur:"  ,  NULL, NULL  },
+            { d_text_proc,        4,  25,    0,    0,   0,  0,    0,      0,       0,   0,    (void*)">>"                           ,  NULL, NULL  },
+            { d_edit_proc,       28,  25,  160,    8,   0,  0,    0, D_EXIT,      64,   0,    (void*)chaine_temp                    ,  NULL, NULL  },
+            { d_text_proc,        2,  65,    0,    0,   0,  0,    0,      0,       0,   0,    (void*)"Choisir le personnage:"       ,  NULL, NULL  },
 
-            { d_icon_proc,       4,  80,   50,   50,   0,  0,    0,      0,       6,   0,    NULL,                   NULL, NULL  },
-            { d_icon_proc,       64,  80,   50,   50,   0,  0,    0,      0,       6,   0,    NULL,                   NULL, NULL  },
-            { d_icon_proc,       124,  80,   50,   50,   0,  0,    0,      0,       6,   0,    NULL,                   NULL, NULL  },
-            { d_icon_proc,       184,  80,   50,   50,   0,  0,    0,      0,       6,   0,    NULL,                   NULL, NULL  },
-            { d_icon_proc,       244,  80,   50,   50,   0,  0,    0,      0,       6,   0,    NULL,                   NULL, NULL  },
+            { d_icon_proc,        4,  80,   50,   50,   0,  0,    0,      0,       6,   0,    NULL                                  ,  NULL, NULL  },
+            { d_icon_proc,       64,  80,   50,   50,   0,  0,    0,      0,       6,   0,    NULL                                  ,  NULL, NULL  },
+            { d_icon_proc,      124,  80,   50,   50,   0,  0,    0,      0,       6,   0,    NULL                                  ,  NULL, NULL  },
+            { d_icon_proc,      184,  80,   50,   50,   0,  0,    0,      0,       6,   0,    NULL                                  ,  NULL, NULL  },
+            { d_icon_proc,      244,  80,   50,   50,   0,  0,    0,      0,       6,   0,    NULL                                  ,  NULL, NULL  },
 
 
-            { d_button_proc,     160,   190,  160,   16,   0,  0,    0, D_EXIT,       0,   0,    (void*)"OK",            NULL, NULL  },
-            { d_yield_proc,        0,   0,    0,    0,   0,  0,    0,      0,       0,   0,    NULL,                   NULL, NULL  },
-            { NULL,                0,   0,    0,    0,   0,  0,    0,      0,       0,   0,    NULL,                   NULL, NULL  },
+            { d_button_proc,    160, 190,  160,   16,   0,  0,    0, D_EXIT,       0,   0,    (void*)"OK"                           ,  NULL, NULL  },
+            { d_yield_proc,       0,   0,    0,    0,   0,  0,    0,      0,       0,   0,    NULL                                  ,  NULL, NULL  },
+            { NULL,               0,   0,    0,    0,   0,  0,    0,      0,       0,   0,    NULL                                  ,  NULL, NULL  },
         };
 
     gui_fg_color = makecol(0, 0, 0);
@@ -347,10 +348,11 @@ int main() {
                 for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
 
                     tableau_joueurs[i].tickets = tableau_joueurs[i].tickets - 1;
+                    Personne_qui_choisi ++;
                 }
             }
 
-            Personne_qui_choisi ++;
+
 
             if(Personne_qui_choisi == 2){
                 Personne_qui_choisi = 0;
@@ -382,7 +384,7 @@ int main() {
            // traverser_riviere(tableau_joueurs, &Temps_d_epreuve);
 
         } else if (Choix_epreuve == 7){
-
+            statistique();
             Choix_epreuve = 0;
 
         } else if(Choix_epreuve == 8){
