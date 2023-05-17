@@ -218,13 +218,18 @@ void Snake(t_joueur * Joueur, int tab_temps[NOMBRE_JOUEURS]) {
 
 
                 if (head[j] == head_tmp[k])
+
                     head_tmp[k] = head[k]->next_corp->next_corp->next_corp->next_corp;
+
                 else
                     head_tmp[k] = head[k]->next_corp;
 
                 while (head_tmp[k] != NULL){
+
                     if (Collision_Acteur(head[j],head_tmp[k])){
+
                         Serpent_en_vie[j] = 0;
+
                         Mort_de_serpent(head[j]);
 
                     }
@@ -315,7 +320,9 @@ void Snake(t_joueur * Joueur, int tab_temps[NOMBRE_JOUEURS]) {
 
     //destruction des bitmaps du snake et liberation de la liste chainée
     destroy_bitmap(page);
+
     destroy_bitmap(decor);
+
     destroy_bitmap(Nom_du_jeu);
     for (int i = 0; i < 2; ++i) {
         destroy_bitmap(Pomme[i].Skin);
