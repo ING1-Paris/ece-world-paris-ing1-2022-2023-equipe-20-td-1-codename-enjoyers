@@ -13,6 +13,11 @@ int compter_lignes_fichier() {
 
     pf = fopen("../saves/hscores.txt", "r");
 
+    if (pf == NULL) {
+
+        return 0;
+    }
+
     // On compte le nombre d'entrées de sauvegarde dans le fichier
     while (fgets(ligne, 999, pf)) {
 

@@ -85,6 +85,8 @@ int consulter(t_entree_sauvegarde * tab_de_sauvegarde, int taille_tab) {
             printf("%d %d %d %d %s %s \n", tab_de_sauvegarde[i].jeu, tab_de_sauvegarde[i].score, tab_de_sauvegarde[i].temps, tab_de_sauvegarde[i].date, tab_de_sauvegarde[i].map, tab_de_sauvegarde[i].nom);
         }
 
+        fclose(pf);
+
 
         return 1;
     }

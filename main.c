@@ -173,6 +173,8 @@ int main() {
     // -----------------------------
 
 
+    statistique();
+
     /*while (1) {
 
         guitar_hero();
