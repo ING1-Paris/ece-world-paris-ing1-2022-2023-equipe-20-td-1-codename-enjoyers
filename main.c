@@ -15,8 +15,6 @@ int main() {
 
 
 
-
-
     /// CREATION DU MODE GRAPHIQUE
     // -----------------------------
     set_color_depth(desktop_color_depth());
