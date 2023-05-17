@@ -10,11 +10,11 @@ int menu_callback() {
     char jeu_selectionne[256];
     char affichage_scores[256000];
     char chaine_temp[256000];
-    char chaine_temp2[256000];
     int save_trouvee = 0;
 
     int taille_tableau_sauvegardes;
     t_entree_sauvegarde * tableau_sauvegardes = NULL;
+
 
     // On stocke le jeu selectionne
     ustrzcpy(str, sizeof str, active_menu->text);
@@ -58,7 +58,6 @@ int menu_callback() {
 
                     //PROBLEME
                     sprintf(chaine_temp, "%8s\t\t%8d pts\t\t%8d s\t\t%8s \n",tableau_sauvegardes[i].nom,tableau_sauvegardes[i].score,tableau_sauvegardes[i].temps, ctime(&tableau_sauvegardes[i].date));
-
 
                     printf("%s",chaine_temp);
 

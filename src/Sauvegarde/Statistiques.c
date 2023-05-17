@@ -3,13 +3,25 @@
 //
 #include "../../header.h"
 
+int bouton_retour(int msg, DIALOG *d, int c)
+{
+    int ret = d_button_proc(msg, d, c);
+    if (ret == D_EXIT && d->dp3)
+        return ((int (*)(void))d->dp3)();
+    return ret;
+}
+
+int quitter() {
+
+    return D_CLOSE;
+}
 
 
 
 void statistique() {
 
     /* for the d_text_box_proc object */
-    char affichage_scores[] =
+    char affichage_scores[256000] =
             "Selectionnez un jeu ou une categorie pour en voir les meilleurs scores !";
 
 
@@ -46,7 +58,7 @@ void statistique() {
                            {d_menu_proc,    55, 330, 842,  10,   0, 0,   0,          0,    0, 0, the_menu,                   NULL, NULL},
                            {d_yield_proc,    0,   0,   0,   0,   0, 0,   0,          0,    0, 0, NULL,                       NULL, NULL},
                            {d_textbox_proc, 55, 350, 842, 200,   0, 0,   0,          0,    0, 0, (void*) affichage_scores ,  NULL, NULL},
-                           {d_button_proc, 410, 550, 130, 12 ,   0, 0,   0,          D_EXIT,    0, 0, (void* ) "Retour" ,         NULL, NULL},
+                           {bouton_retour, 410, 550, 130, 12 ,   0, 0,   0,          D_EXIT,    0, 0, "Retour" ,         NULL, quitter},
                            {NULL,            0,   0,   0,   0,   0, 0,   0,          0,    0, 0, NULL,                       NULL, NULL}
     };
 
@@ -55,13 +67,14 @@ void statistique() {
 
     position_dialog(Menu_score, 2, 2);
 
+    do_dialog(Menu_score, 1);
+
+
     int alive = 1;
 
-    BITMAP * test = create_bitmap(SCREEN_W, SCREEN_H);
 
-    clear_to_color(test, makecol(255, 0, 0));
 
-    while (alive) {
+    /*while (alive) {
 
         do_dialog(Menu_score, 3);
 
@@ -71,7 +84,7 @@ void statistique() {
             exit(0);
         }
 
-    }
+    }*/
 
 
 
