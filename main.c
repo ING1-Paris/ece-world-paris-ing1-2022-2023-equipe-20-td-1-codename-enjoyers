@@ -173,7 +173,7 @@ int main() {
     // -----------------------------
 
 
-    statistique();
+    //statistique();
 
     /*while (1) {
 
@@ -347,10 +347,12 @@ int main() {
 
             if (Choix_epreuve < 7) {
 
+                Personne_qui_choisi ++;
+
                 for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
 
                     tableau_joueurs[i].tickets = tableau_joueurs[i].tickets - 1;
-                    Personne_qui_choisi ++;
+
                 }
             }
 
