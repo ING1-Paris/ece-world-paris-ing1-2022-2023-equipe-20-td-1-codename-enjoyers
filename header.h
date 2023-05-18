@@ -233,6 +233,12 @@ typedef struct ballon {
     BITMAP *img; // sprite (image chargée)
 } t_ballon;
 
+typedef struct joueur_tir_aux_ballons
+{
+    unsigned long temps;
+    int score;
+} t_joueur_tir_aux_ballons;
+
 void jeuballons();
 
 t_acteur * creerActeur(int x,int y,int type);
