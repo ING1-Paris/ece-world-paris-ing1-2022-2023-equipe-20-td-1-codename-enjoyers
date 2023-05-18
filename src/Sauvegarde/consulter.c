@@ -4,7 +4,7 @@
 
 #include "../../header.h"
 
-int consulter(t_entree_sauvegarde * tab_de_sauvegarde, int * taille_tab) {
+int consulter(t_entree_sauvegarde * tab_de_sauvegarde, int taille_tab) {
 
     // Initialisation des séparateurs
     char * strToken;
@@ -28,27 +28,15 @@ int consulter(t_entree_sauvegarde * tab_de_sauvegarde, int * taille_tab) {
 
     } else {
 
-        // On compte le nombre d'entrées de sauvegarde dans le fichier
-        while (fgets(ligne, 999, pf)) {
-
-            compteur_entrees = compteur_entrees + 1;
-        }
-
-        if (compteur_entrees == 0) {
+        if (taille_tab == 0) {
 
             return 0;
         }
 
-        *taille_tab = compteur_entrees;
-
-        rewind(pf);
-
-        tab_de_sauvegarde = (t_entree_sauvegarde*) malloc(compteur_entrees * sizeof (t_entree_sauvegarde));
-
         i = 0;
 
         // Lecture des données et remplissage du tableau
-        while (fgets(ligne, 999, pf) && i < *taille_tab) {
+        while (fgets(ligne, 999, pf) && i < taille_tab) {
 
             j = 0;
 
@@ -78,6 +66,8 @@ int consulter(t_entree_sauvegarde * tab_de_sauvegarde, int * taille_tab) {
 
                 } else if (j == 5){ //Nom
 
+                    strToken[strcspn(strToken, "\n")] = 0;
+
                     strcpy(tab_de_sauvegarde[i].nom, strToken);
 
                 }
@@ -89,6 +79,13 @@ int consulter(t_entree_sauvegarde * tab_de_sauvegarde, int * taille_tab) {
 
             i = i + 1;
         }
+
+        for (i=0; i<taille_tab; i++) {
+
+            printf("%d %d %d %d %s %s \n", tab_de_sauvegarde[i].jeu, tab_de_sauvegarde[i].score, tab_de_sauvegarde[i].temps, tab_de_sauvegarde[i].date, tab_de_sauvegarde[i].map, tab_de_sauvegarde[i].nom);
+        }
+
+        fclose(pf);
 
 
         return 1;

@@ -3,7 +3,7 @@
 //
 #include "../../header.h"
 
-void Snake(t_joueur * Joueur, unsigned long * Temps) {
+void Snake(t_joueur * Joueur, int tab_temps[NOMBRE_JOUEURS]) {
 
     /// Initialisation \\\
 
@@ -218,13 +218,18 @@ void Snake(t_joueur * Joueur, unsigned long * Temps) {
 
 
                 if (head[j] == head_tmp[k])
+
                     head_tmp[k] = head[k]->next_corp->next_corp->next_corp->next_corp;
+
                 else
                     head_tmp[k] = head[k]->next_corp;
 
                 while (head_tmp[k] != NULL){
+
                     if (Collision_Acteur(head[j],head_tmp[k])){
+
                         Serpent_en_vie[j] = 0;
+
                         Mort_de_serpent(head[j]);
 
                     }
@@ -290,8 +295,8 @@ void Snake(t_joueur * Joueur, unsigned long * Temps) {
 
     //gestion du temps en fin de partie
     for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
-        *Temps = (unsigned long) difftime(Mort_du_seprent[i],begin);
-        printf("Le joueur %d est reste en vie pendant %lus\n",i+1,*Temps);
+        tab_temps[i] = (int) difftime(Mort_du_seprent[i], begin);
+        printf("Le joueur %d est reste en vie pendant %d\n", i+1, tab_temps[i]);
     }
 
 
@@ -315,7 +320,9 @@ void Snake(t_joueur * Joueur, unsigned long * Temps) {
 
     //destruction des bitmaps du snake et liberation de la liste chainée
     destroy_bitmap(page);
+
     destroy_bitmap(decor);
+
     destroy_bitmap(Nom_du_jeu);
     for (int i = 0; i < 2; ++i) {
         destroy_bitmap(Pomme[i].Skin);

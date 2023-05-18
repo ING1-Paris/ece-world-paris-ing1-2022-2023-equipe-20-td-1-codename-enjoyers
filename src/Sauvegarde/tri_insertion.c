@@ -13,9 +13,10 @@ void triInsertion(t_entree_sauvegarde * tableau, int taille_tab) {
 
     // On commence par trier par jeu
     for (i=1 ; i <= taille_tab-1; i++) {
+
         j = i;
 
-        while (j > 0 && tableau[j-1].jeu > tableau[j].jeu) {
+        while (j > 0 && tableau[j-1].jeu < tableau[j].jeu) {
 
             tmp = tableau[j];
             tableau[j] = tableau[j-1];
@@ -27,10 +28,11 @@ void triInsertion(t_entree_sauvegarde * tableau, int taille_tab) {
 
     // Puis on trie temps, scores en fonction du jeu en question
     for (i=1 ; i <= taille_tab-1; i++) {
+
         j = i;
 
         // Snake
-        while (j > 0 && tableau[j-1].score > tableau[j].score && tableau[j].jeu == 1) {
+        while (j > 0 && tableau[j-1].score < tableau[j].score && tableau[j].jeu == 1) {
 
             tmp = tableau[j];
             tableau[j] = tableau[j-1];
@@ -40,7 +42,7 @@ void triInsertion(t_entree_sauvegarde * tableau, int taille_tab) {
         }
 
         // Guitar Hero
-        while (j > 0 && tableau[j-1].score > tableau[j].score && tableau[j].jeu == 2) {
+        while (j > 0 && tableau[j-1].score < tableau[j].score && tableau[j].jeu == 2) {
 
             tmp = tableau[j];
             tableau[j] = tableau[j-1];
@@ -50,7 +52,7 @@ void triInsertion(t_entree_sauvegarde * tableau, int taille_tab) {
         }
 
         // Ballons
-        while (j > 0 && tableau[j-1].temps > tableau[j].temps && tableau[j].jeu == 3) {
+        while (j > 0 && tableau[j-1].temps < tableau[j].temps && tableau[j].jeu == 3) {
 
             tmp = tableau[j];
             tableau[j] = tableau[j-1];
@@ -60,7 +62,7 @@ void triInsertion(t_entree_sauvegarde * tableau, int taille_tab) {
         }
 
         // Course
-        while (j > 0 && tableau[j-1].score > tableau[j].score && tableau[j].jeu == 4) {
+        while (j > 0 && tableau[j-1].score < tableau[j].score && tableau[j].jeu == 4) {
 
             tmp = tableau[j];
             tableau[j] = tableau[j-1];
@@ -70,7 +72,7 @@ void triInsertion(t_entree_sauvegarde * tableau, int taille_tab) {
         }
 
         // Taupe
-        while (j > 0 && tableau[j-1].score > tableau[j].score && tableau[j].jeu == 5) {
+        while (j > 0 && tableau[j-1].score < tableau[j].score && tableau[j].jeu == 5) {
 
             tmp = tableau[j];
             tableau[j] = tableau[j-1];
@@ -80,7 +82,7 @@ void triInsertion(t_entree_sauvegarde * tableau, int taille_tab) {
         }
 
         // Riviere
-        while (j > 0 && tableau[j-1].temps > tableau[j].temps && tableau[j].jeu == 6) {
+        while (j > 0 && tableau[j-1].temps < tableau[j].temps && tableau[j].jeu == 6) {
 
             tmp = tableau[j];
             tableau[j] = tableau[j-1];

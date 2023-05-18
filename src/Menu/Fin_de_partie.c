@@ -26,6 +26,7 @@ void Fin_du_jeu(BITMAP * page,t_joueur tableau_joueurs[NOMBRE_JOUEURS]){
     rect(page, SCREEN_W / 2 - 75, 200, SCREEN_W / 2 - 75 + 150, 350, makecol(0, 0, 0));
 
     blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+    statistique();
     while(!key[KEY_ESC]) {
     }
     PlaySound(0,0,0);
