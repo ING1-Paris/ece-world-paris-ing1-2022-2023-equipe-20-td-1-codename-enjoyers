@@ -385,7 +385,7 @@ int main() {
 
         } else if (Choix_epreuve == 6){
 
-           // traverser_riviere(tableau_joueurs, &Temps_d_epreuve);
+           traverser_riviere(tableau_joueurs, tab_temps_epreuves);
 
         } else if (Choix_epreuve == 7){
             statistique();

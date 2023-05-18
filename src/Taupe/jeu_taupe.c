@@ -13,6 +13,7 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
     BITMAP *fond;
 
 
+    //Chargement BITMAP
     page = create_bitmap(SCREEN_W, SCREEN_H);
 
     decor = load_bitmap("../assets/maps/MAP_TAUPE.bmp",NULL);
@@ -28,7 +29,7 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
 
     if (!fond)
     {
-        allegro_message("decor introuvable");
+        allegro_message("fond introuvable");
         exit(EXIT_FAILURE);
     }
 
@@ -69,14 +70,12 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
             mesTaupes[j].ty = mesTaupes[j].skin->h;
 
 
-            //mesTaupes[j].y = rand() % (((500 - mesTaupes[j].ty) - 200 + 1) + 200);
-            //mesTaupes[j].x = rand() % (((800 - mesTaupes[j].tx) - 200 + 1) + 200);
+            mesTaupes[j].y = rand() % (( 500 - 200 + 1) + 200);
+            mesTaupes[j].x = rand() % ((700 - 300 + 1) + 300);
 
-
-            mesTaupes[j].y = 200 + 8*j;
-            mesTaupes[j].x = 300 + 8*j;
 
             mesTaupes[j].affichage = 1;
+
 
             for (int i = 0; i < 79; ++i) {
                 for (int m = 0; m < 100; ++m) {
@@ -107,8 +106,9 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
 
             //Condition d'affichage des taupes
             for (int i = 0; i < NOMBRE_TAUPE; i++) {
+
                 if (mouse_b && verfication(mesTaupes[i]) == 1) {
-                    printf("TAP !\n");
+
                     mesTaupes[i].affichage = 0;
                     rest(200);
                     joueur_taupe[k].score = joueur_taupe[k].score + 1;
@@ -122,7 +122,9 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
                 if (mesTaupes[i].affichage == 1) {
 
                     masked_blit(mesTaupes[i].skin, page, 0, 0, mesTaupes[i].x, mesTaupes[i].y, mesTaupes[i].tx,mesTaupes[i].ty);
+
                 } else {
+
                     //la taupe ne s'affiche plus
                 }
             }
@@ -139,8 +141,8 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
             stretch_blit(joueur_taupe[k].sprites[12], page, 0, 0, 225, 225, 15, 15, 70, 70);
 
             textprintf_ex(page, font, 90, 20, makecol(0, 0, 0), -1, "%s", joueur_taupe[k].nom);
-            textprintf_ex(page, font, 90, 50, makecol(0, 0, 0), -1, "score: %d", joueur_taupe[k].score);
-            textprintf_ex(page, font, 90, 70, makecol(0, 0, 0), -1, "temps écoulé: %lu", monJoueur[k].temps);
+            textprintf_ex(page, font, 90, 50, makecol(0, 0, 0), -1, "Score: %d", joueur_taupe[k].score);
+            textprintf_ex(page, font, 90, 70, makecol(0, 0, 0), -1, "Temps restant: %lu", 5 - monJoueur[k].temps);
 
 
             blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
@@ -151,19 +153,28 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
 
 
     //Gestion des tickets
-    if (monJoueur[0].score > monJoueur[1].score) {
+    if (joueur_taupe[0].score > joueur_taupe[1].score) {
 
-        alert("Joueur 1, vous avez gagné un ticket ! ", NULL, NULL, "go!", NULL, 0, 0);
+        alert("Joueur 1, vous avez gagné un ticket ! ", NULL, NULL, " Retour au menu ", NULL, 0, 0);
         joueur_taupe[0].tickets = joueur_taupe[0].tickets + 1;
 
-    } else if (monJoueur[0].score < monJoueur[1].score) {
+    } else if (joueur_taupe[0].score < joueur_taupe[1].score) {
 
-        alert("Joueur 2, vous avez gagné un ticket ! ", NULL, NULL, "go !", NULL, 0, 0);
+        alert("Joueur 2, vous avez gagné un ticket ! ", NULL, NULL, " Retour au menu ", NULL, 0, 0);
         joueur_taupe[1].tickets = joueur_taupe[1].tickets + 1;
 
     } else {
 
-        alert("Egalité ! ", NULL, NULL, "go !", NULL, 0, 0);
+        alert("Egalité ! ", NULL, NULL, " Retour au menu ", NULL, 0, 0);
     }
+
+
+    //Destruction BITMAP
+    destroy_bitmap(page);
+
+    destroy_bitmap(decor);
+
+    destroy_bitmap(fond);
+
 
 }

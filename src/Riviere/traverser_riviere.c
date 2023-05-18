@@ -79,9 +79,9 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], int tab_temps[NOMBRE
 
     for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
 
-        time_t begin = time(NULL);
-
         alert("Tenez-vous prêt...", NULL, "Vous devez traverser la riviere pour rejoindre Dragonne,", "c'est parti !", NULL, 0, 0);
+
+        time_t begin = time(NULL);
 
         joueur[i]->temps = 0;
         joueur[i]->temps = begin;
@@ -106,7 +106,7 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], int tab_temps[NOMBRE
 
             for (int j = 0; j < NOMBRE_JOUEURS; ++j) {
 
-                //On verifie si le personnage est innactif ou non
+                //On vérifie si le personnage est innactif ou non
                 if (innactivite[j] == 1){
 
                     joueur[j]->skin_utilise = joueur[j]->skin_utilise +2;
@@ -128,7 +128,7 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], int tab_temps[NOMBRE
 
 
 
-                //On enleve le sprite d'innactivite
+                //On enlève le sprite d'innactivite
                 if (innactivite[j] == 1)
                     joueur[j]->skin_utilise = joueur[j]->skin_utilise -2;
 
@@ -154,8 +154,8 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], int tab_temps[NOMBRE
             stretch_blit(joueur_riv[i].sprites[12], page, 0, 0, 225, 225, 15, 15, 70, 70);
 
             textprintf_ex(page, font, 90, 20, makecol(0, 0, 0), -1, "%s", joueur_riv[i].nom);
-            textprintf_ex(page, font, 90, 50, makecol(0, 0, 0), -1, "position: %d", joueur[i]->y);
-            textprintf_ex(page, font, 90, 70, makecol(0, 0, 0), -1, "temps écoulé: %lu", joueur[i]->temps);
+            textprintf_ex(page, font, 90, 50, makecol(0, 0, 0), -1, "Arrivée : %dm ", 640 - joueur[i]->y);
+            textprintf_ex(page, font, 90, 70, makecol(0, 0, 0), -1, "Temps écoulé: %lu", joueur[i]->temps);
             masked_blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
             rest(15);
@@ -164,24 +164,36 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], int tab_temps[NOMBRE
 
         }
 
-        //*Temps = (unsigned long) difftime(joueur_tps_parcours[i],begin);
-        //printf("Le joueur %d a traverse la riviere en %lus\n",i+1,*Temps);
+
+        tab_temps[i] = (int) difftime(joueur_tps_parcours[i], begin);
+        printf("Le joueur %d est reste en vie pendant %d\n", i+1, tab_temps[i]);
+
     }
 
 
 
 
+    //Detection de la victoire
     if (joueur[0]->temps < joueur[1]->temps) {
 
-        alert("Joueur 1, vous avez gagné un ticket ! ", NULL, NULL, "ok!", NULL, 0, 0);
+        alert("Joueur n°1, vous avez gagné un ticket ! ", NULL, NULL, " Retour au menu ", NULL, 0, 0);
         joueur_riv[0].tickets = joueur_riv[0].tickets + 1;
     }
 
     else {
 
-        alert("Joueur 2, vous avez gagné un ticket ! ", NULL, NULL, "ok !", NULL, 0, 0);
+        alert("Joueur n°2, vous avez gagné un ticket ! ", NULL, NULL, " Retour au menu ", NULL, 0, 0);
         joueur_riv[1].tickets = joueur_riv[1].tickets + 1;
 
     }
+
+
+    //Destruction BITMAP
+    destroy_bitmap(page);
+
+    destroy_bitmap(decor);
+
+    destroy_bitmap(fond);
+
 
 }

@@ -13,7 +13,7 @@ void Deplacement_joueur(int Couleur[NOMBRE_JOUEURS], t_rondin *rondin[NRONDIN], 
 
     for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
 
-        if (Couleur[i] == makecol(80, 167, 232)) {
+        if (Couleur[i] == bleu) {
             joueur_en_train_de_jouer->x = 500;
             joueur_en_train_de_jouer->y = 70;
         }
@@ -81,23 +81,6 @@ void Deplacement_joueur(int Couleur[NOMBRE_JOUEURS], t_rondin *rondin[NRONDIN], 
 
 
         }
-
-        /*else if (couleurPixelJoueur == bleu) {
-            joueur_en_train_de_jouer->x = 500;
-            joueur_en_train_de_jouer->y = 70;
-        }*/
-
-
-
-
-       /* else if (((joueur_en_train_de_jouer->y > 190)&&(!(Collision_joueur_rondin(rondin[0], joueur_en_train_de_jouer))))||(joueur_en_train_de_jouer->x>SCREEN_W)||(joueur_en_train_de_jouer->x==0)){
-
-            joueur_en_train_de_jouer->x = 500;
-            joueur_en_train_de_jouer->y = 70;
-
-        }*/
-
-
 
     }
 }
