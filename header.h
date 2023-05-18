@@ -239,7 +239,7 @@ typedef struct joueur_tir_aux_ballons
     int score;
 } t_joueur_tir_aux_ballons;
 
-void jeuballons();
+void jeuballons(t_joueur joueur_ballons[NOMBRE_JOUEURS]);
 
 t_acteur * creerActeur(int x,int y,int type);
 t_acteur * ajouterActeur(t_listeActeurs *la,int x,int y,int type);
