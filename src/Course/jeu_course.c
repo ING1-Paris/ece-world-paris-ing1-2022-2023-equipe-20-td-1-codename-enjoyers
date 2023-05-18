@@ -79,7 +79,6 @@ void jeu_course()
     // Image de fond
     BITMAP *decor;
 
-    // Cr�ation du buffer d'affichage � la taille de l'�cran
     page=create_bitmap(SCREEN_W,SCREEN_H);
     clear_bitmap(page);
 
@@ -95,8 +94,7 @@ void jeu_course()
     // Chargement des images des s�quences anim�es
     chargerTabSequences();
 
-    // Initialisation al�atoire des param�tres des lapins :
-    // remplir le tableau avec des lapins allou�s et initialis�s
+    // remplir le tableau avec des lapins alloués et initialisés
     remplirTablapins(meslapins);
 
 
@@ -134,10 +132,10 @@ t_lapin * creerlapin(int type, int x, int y, int dx, int tmpdx, int tmpimg)
     // pointeur sur l'lapin qui sera cr�� (et retourn�)
     t_lapin *lapin;
 
-    // Cr�ation (allocation)
+    // Création (allocation)
     lapin = (t_lapin *)malloc(1*sizeof(t_lapin));
 
-    // Initialisation g�om�trie et d�placement
+    // Initialisation et déplacement
     lapin->x=x;
     lapin->y=y;
     lapin->dx=dx;
@@ -146,23 +144,21 @@ t_lapin * creerlapin(int type, int x, int y, int dx, int tmpdx, int tmpimg)
     lapin->tx=tabSequences[type].tx;
     lapin->ty=tabSequences[type].ty;
 
-    // Initialisation s�quence d'images de l'animation
+    // Initialisation séquence d'images de l'animation
     lapin->imgcourante=0;
     lapin->tmpimg=tmpimg;
     lapin->cptimg=0;
 
-    // num�ro de s�quence
+    // numéro de séquence
     lapin->type=type;
 
-    // on retourne cet lapin fraichement cr��
     return lapin;
 }
 
-// Pour remplir un tableau avec des lapins cr��s
-// Sur cet exemple on cr�e 6 lapins, chacun associ� � une s�quence
+//remplir le tableau de lapins (6 lapins)
 void remplirTablapins(t_lapin * tab[Nlapin])
 {
-    // Appeler Nlapin fois creerlapin avec les param�tres souhait�s :
+    // Appeler Nlapin fois creerlapin avec les paramètres souhaités :
     //                (type,   x,   y,  dx, tmpdx, tmpimg )
     tab[0]=creerlapin(   0, 2,   10,  4,     rand()%(6-1)+1,      4 );
     tab[1]=creerlapin(   1, 2, 100,   4,     rand()%(6-1)+1,      4 );
@@ -173,12 +169,11 @@ void remplirTablapins(t_lapin * tab[Nlapin])
 }
 
 
-// Actualiser un lapin (bouger ...)
+// Actualiser un lapin
 void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page, t_joueur tableau_joueurs[NOMBRE_JOUEURS])
 {
 
-    // gestion des bords
-    // sur cet exemple seulement sur l'axe x (car pas de dy)
+    // gestion des bords sur l'axe x
 
     if (lapin->x+lapin->tx/2 > SCREEN_W){
         lapin->x=SCREEN_W-lapin->tx/2;
@@ -186,39 +181,37 @@ void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page, 
 
         int gagnant = 0;
 
-    for (int i = 0; i < 2; ++i) {
+        for (int i = 0; i < 2; ++i) {
 
-        if(lapin->type == tabParis[i]) {
-
-            gagnant = 1;
+            if(lapin->type == tabParis[i]) {
+                gagnant = 1;
+            }
         }
-    }
 
-    if (gagnant) {
+        if (gagnant) {
 
-        if(lapin->type == tabParis[0]) {
-            tableau_joueurs[0].tickets = tableau_joueurs[0].tickets+1 ;
-            allegro_message("joueur 1, vous avez gagné un ticket !");
+            if(lapin->type == tabParis[0]) {
+                tableau_joueurs[0].tickets = tableau_joueurs[0].tickets+1 ;
+                allegro_message("joueur 1, vous avez gagné un ticket !");
+            }
+            else {
+                tableau_joueurs[1].tickets = tableau_joueurs[1].tickets+1;
+                allegro_message("joueur 2, vous avez gagné un ticket !");
+            }
+
         }
         else {
-            tableau_joueurs[1].tickets = tableau_joueurs[1].tickets+1;
-            allegro_message("joueur 2, vous avez gagné un ticket !");
+
+            //textout_ex(page, font, "vous avez perdu", 150, 300, makecol(255, 255, 255), -1);
+            //textprintf_ex(page,font,150, 300, makecol(255,255,255), -1,"vous avez perdu");
+            allegro_message("vous avez perdu");
+
         }
-
     }
-    else {
-
-        //textout_ex(page, font, "vous avez perdu", 150, 300, makecol(255, 255, 255), -1);
-        //textprintf_ex(page,font,150, 300, makecol(255,255,255), -1,"vous avez perdu");
-        allegro_message("vous avez perdu");
-
-    }
-        }
 
 
     // calculer nouvelle position
-    // nouvelle position = position actuelle + deplacement seulement une fois sur tmpdx
-    // sur cet exemple seulement sur l'axe x (car pas de dy)
+    // nouvelle position = position actuelle + déplacement seulement une fois sur tmpdx
     lapin->cptdx++;
     if (lapin->cptdx >= lapin->tmpdx){
         lapin->cptdx=0;
@@ -226,13 +219,12 @@ void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page, 
     }
 
     // gestion enchainement des images
-    // incr�menter imgcourante une fois sur tmpimg
+    // incrémenter imgcourante une fois sur tmpimg
     lapin->cptimg++;
     if (lapin->cptimg >= lapin->tmpimg){
         lapin->cptimg=0;
         lapin->imgcourante++;
-        // quand l'indice de l'image courante arrive � nimg de la s�quence
-        // on recommence la s�quence � partir de 0
+        // quand l'indice de l'image courante arrive à nimg de la séquence on recommence la séquence à 0
         if ( lapin->imgcourante >= tabSequences[ lapin->type ].nimg )
             lapin->imgcourante=0;
     }
@@ -241,11 +233,10 @@ void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page, 
     lapin->dx = rand()%(8-1)+1;
 }
 
-// G�rer l'�volution de l'ensemble des lapins
+// Gérer l'évolution de l'ensemble des lapins
 void actualiserTablapins(t_lapin * tab[Nlapin], int tabParis[2], int *alive, BITMAP *page, t_joueur tableau_joueurs[NOMBRE_JOUEURS])
 {
     int i;
-
     for (i=0;i<Nlapin;i++)
         actualiserlapin(tab[i], tabParis, alive, page, tableau_joueurs);
 }
@@ -254,11 +245,11 @@ void actualiserTablapins(t_lapin * tab[Nlapin], int tabParis[2], int *alive, BIT
 // Dessiner un lapin sur une bitmap bmp
 void dessinerlapin(BITMAP *bmp, t_lapin *lapin)
 {
-    // Pointeur sur la s�quence concern�e (prise en compte du type de l'lapin)
+    // Pointeur sur la séquence concernée (prise en compte du type du lapin)
     t_sequence *seq;
     seq=&tabSequences[ lapin->type ];
 
-    //  Prise en compte du num�ro d'image courante de l'lapin dans cette s�quence
+    //  Prise en compte du numéro d'image courante du lapin dans cette séquence
     draw_sprite(bmp, seq->img[ lapin->imgcourante ], lapin->x, lapin->y);
 }
 
@@ -266,24 +257,22 @@ void dessinerlapin(BITMAP *bmp, t_lapin *lapin)
 void dessinerTablapins(BITMAP *bmp,t_lapin * tab[Nlapin])
 {
     int i;
-
     for (i=0;i<Nlapin;i++)
         dessinerlapin(bmp,tab[i]);
 }
 
 
-// Charger les images d'une s�quence d'animation
-// D�coupe une image source en plusieurs vignettes
-// (doivent �tre rang�es de gauche � droite et de haut en bas)
+// Charger les images d'une séquence d'animation
+// Découpe une image source en plusieurs vignettes
 void chargerSequence(t_sequence * seq)
 {
-    BITMAP *source;  // la bitmap qui charge l'image de s�quence (temporairement)
-    int i;           // indice de l'image dans la s�quence
+    BITMAP *source;  // la bitmap qui charge l'image de séquence (temporairement)
+    int i;           // indice de l'image dans la séquence
     int ix,iy;       // indices (horizontal et vertical) dans le "tableau" des images
-    int sx,sy;       // coordonn�es correspondantes (en pixels)
+    int sx,sy;       // coordonnées correspondantes (en pixels)
 
 
-    // Charger l'image de s�quence
+    // Charger l'image de séquence
     source=load_bitmap(seq->nomSource,NULL);
     if (!source)
     {
@@ -294,7 +283,7 @@ void chargerSequence(t_sequence * seq)
     // Allouer le tableau de pointeur sur les images de l'animation
     seq->img=(BITMAP **)malloc(seq->nimg*sizeof(BITMAP *));
 
-    // Allouer les images de l'animation et les r�cup�rer sur l'image source
+    // Allouer les images de l'animation et les récupérer sur l'image source
     ix=0;
     iy=0;
     for (i=0;i<seq->nimg;i++)
@@ -302,26 +291,19 @@ void chargerSequence(t_sequence * seq)
         // allouer image
         seq->img[i]=create_bitmap(seq->tx,seq->ty);
 
-        // r�cup�rer image
+        // récupérer l'image
         sx=ix*seq->tx;
         sy=iy*seq->ty;
         blit(source,seq->img[i],sx,sy,0,0,seq->tx,seq->ty);
 
-        // pr�parer indices pour l'image suivante
-        ix++;          // colonne suivante
-        if (ix >= seq->ncol)  // si je suis � droite de la derni�re colonne alors...
-        {
-            ix=0;      // repartir sur la colonne 0
-            iy++;      // � la ligne en dessous
-        }
+        // préparer indices pour l'image suivante
+        ix++;
     }
 
-    // On a fini de r�cup�rer s�par�ment chaque �tape (image) de l'animation
-    // on n'a donc plus besoin de l'image source qui les regroupe
     destroy_bitmap(source);
 }
 
-// Charger toutes les s�quences du tableau global tabSequence
+// Charger toutes les séquences du tableau global tabSequence
 void chargerTabSequences()
 {
     int i;

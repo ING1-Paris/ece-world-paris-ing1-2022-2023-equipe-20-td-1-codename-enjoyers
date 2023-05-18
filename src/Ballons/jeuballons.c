@@ -5,10 +5,9 @@
 /* initialisation puis boucle d'animation */
 /******************************************/
 
-void jeuballons()
+void jeuballons(t_joueur joueur_ballons[NOMBRE_JOUEURS])
 {
-    int tmpJ1;
-    t_joueur tableau_joueurs[NOMBRE_JOUEURS];
+    unsigned long tmpJ1;
     t_joueur_tir_aux_ballons Joueur_actuel[NOMBRE_JOUEURS];
 
 
@@ -148,10 +147,10 @@ void jeuballons()
             tmpJ1 = Joueur_actuel[j].temps;
         else {
             if (tmpJ1 < Joueur_actuel[j].temps) {
-                tableau_joueurs[0].tickets = tableau_joueurs[0].tickets + 1;
+                joueur_ballons[0].tickets = joueur_ballons[0].tickets + 1;
                 allegro_message("Joueur 1, vous avez gagné un ticket !");
             } else {
-                tableau_joueurs[1].tickets = tableau_joueurs[1].tickets + 1;
+                joueur_ballons[1].tickets = joueur_ballons[1].tickets + 1;
                 allegro_message("Joueur 2, vous avez gagné un ticket !");
             }
         }
