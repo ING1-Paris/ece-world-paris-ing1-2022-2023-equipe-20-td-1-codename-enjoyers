@@ -5,7 +5,7 @@
 
 #include "../../header.h"
 
-t_joueur_riv * Creation_joueur(t_joueur *joueur){
+t_joueur_riv * Creation_joueur(){
 
     t_joueur_riv *mon_joueur;
 
@@ -20,13 +20,10 @@ t_joueur_riv * Creation_joueur(t_joueur *joueur){
     mon_joueur->dx = 5;
     mon_joueur->dy = 5;
 
-    mon_joueur->skin_utilise = 1;
+    mon_joueur->skin_utilise = 0;
 
     mon_joueur->temps = 0;
 
-    for (int i = 0; i < 12; ++i) {
-        mon_joueur->skin_perso[i] = joueur->sprites[i];
-    }
 
     return mon_joueur;
 

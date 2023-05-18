@@ -369,12 +369,12 @@ void Deplacement_rondin(t_rondin *le_rondin);
 void Deplacement_tab_rondin(t_rondin *le_rondin[NRONDIN]);
 
 
-t_joueur_riv * Creation_joueur(t_joueur *joueur);
-void Remplir_tab_joueur(t_joueur_riv *tab_joueur[NOMBRE_JOUEURS], t_joueur *joueur_riv[NOMBRE_JOUEURS]);
-void Afficher_joueur(BITMAP *bmp, t_joueur_riv *joueur_a_afficher);
+t_joueur_riv * Creation_joueur();
+void Remplir_tab_joueur(t_joueur_riv *tab_joueur[NOMBRE_JOUEURS]);
+void Afficher_joueur(BITMAP *bmp, t_joueur_riv *joueur_a_afficher, int animation);
 void Afficher_tab_joueur(BITMAP *bmp, t_joueur_riv *tab_joueur[NOMBRE_JOUEURS]);
 
-void Deplacement_joueur(t_rondin * rondin[NRONDIN], t_joueur_riv * joueur_en_train_de_jouer);
+void Deplacement_joueur(int Couleur[NOMBRE_JOUEURS], t_rondin *rondin[NRONDIN], t_joueur_riv * joueur_en_train_de_jouer, int Innactivite[NOMBRE_JOUEURS]);
 void Deplacement_tab_joueur(t_rondin * tab_rondin, t_joueur *tab_joueur[NOMBRE_JOUEURS]);
 
 

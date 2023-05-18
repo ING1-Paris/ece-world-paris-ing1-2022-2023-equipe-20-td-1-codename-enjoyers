@@ -111,7 +111,7 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
                     printf("TAP !\n");
                     mesTaupes[i].affichage = 0;
                     rest(200);
-                    monJoueur[k].score = monJoueur[k].score + 1;
+                    joueur_taupe[k].score = joueur_taupe[k].score + 1;
 
                 }
 
@@ -139,7 +139,7 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
             stretch_blit(joueur_taupe[k].sprites[12], page, 0, 0, 225, 225, 15, 15, 70, 70);
 
             textprintf_ex(page, font, 90, 20, makecol(0, 0, 0), -1, "%s", joueur_taupe[k].nom);
-            textprintf_ex(page, font, 90, 50, makecol(0, 0, 0), -1, "score: %d", monJoueur[k].score);
+            textprintf_ex(page, font, 90, 50, makecol(0, 0, 0), -1, "score: %d", joueur_taupe[k].score);
             textprintf_ex(page, font, 90, 70, makecol(0, 0, 0), -1, "temps écoulé: %lu", monJoueur[k].temps);
 
 

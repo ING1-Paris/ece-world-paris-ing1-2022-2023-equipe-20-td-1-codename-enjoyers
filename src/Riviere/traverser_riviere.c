@@ -34,20 +34,38 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps
     //variable acteur
     t_joueur_riv * joueur[NOMBRE_JOUEURS];
     t_rondin * tabl_rondin[NRONDIN];
+    int couleurPixelJoueur[NOMBRE_JOUEURS];
 
 
     // SPRITES
-    int innactivite[NOMBRE_JOUEURS]={1,1};
+    int innactivite[NOMBRE_JOUEURS] = {1, 1};
     int animation[NOMBRE_JOUEURS]={0,0};
+
+
 
     //Variable temps
     time_t joueur_tps_parcours[NOMBRE_JOUEURS];
 
 
+
     //Création rondin et joueur
     Remplir_tab_rondin(tabl_rondin);
-    Remplir_tab_joueur(joueur, &joueur_riv);
+    Remplir_tab_joueur(joueur);
 
+    for (int j = 0; j < NOMBRE_JOUEURS; ++j) {
+        for (int i = 0; i < 12; ++i) {
+            joueur[j]->skin_perso[i] = joueur_riv[j].sprites[i];
+        }
+    }
+
+
+    for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
+        for (int j = 0; j < 12; ++j) {
+            couleurPixelJoueur[i] = getpixel(joueur[i]->skin_perso[j], joueur[i]->x, joueur[i]->y);
+
+        }
+
+    }
 
 
 
@@ -74,19 +92,49 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], unsigned long* Temps
 
             blit(decor, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
+            for (int j = 0; j < NOMBRE_JOUEURS; ++j) {
+                innactivite[j]=1;
+            }
 
 
             Afficher_tab_rondin(page, tabl_rondin);
 
-            Afficher_joueur(page,joueur[i]);
-
-            //Afficher_tab_joueur(page, joueur);
-            //Deplacement_tab_joueur(tabl_rondin, joueur);
-
             Deplacement_tab_rondin(tabl_rondin);
 
-            Deplacement_joueur(tabl_rondin, joueur[i]);
+            Deplacement_joueur(couleurPixelJoueur, tabl_rondin, joueur[i], innactivite);
 
+
+            for (int j = 0; j < NOMBRE_JOUEURS; ++j) {
+
+                //On verifie si le personnage est innactif ou non
+                if (innactivite[j] == 1){
+
+                    joueur[j]->skin_utilise = joueur[j]->skin_utilise +2;
+                    animation[j] = 0;
+
+                }
+                else{
+
+                    if (animation[j] == 0)
+                        animation[j] = 1;
+                    else {
+                        animation[j] = 0;
+                    }
+                }
+
+
+                //Affichage du joueur
+                masked_blit(joueur[i]->skin_perso[joueur[i]->skin_utilise+animation[i]],page,0,0,joueur[i]->x,joueur[i]->y,joueur[i]->tx,joueur[i]->ty);
+
+
+
+                //On enleve le sprite d'innactivite
+                if (innactivite[j] == 1)
+                    joueur[j]->skin_utilise = joueur[j]->skin_utilise -2;
+
+
+
+            }
 
 
 
