@@ -93,8 +93,7 @@ t_rondin * Creation_rondin(int nb) {
     //mon_rondin->depx = ((-1) ^ (rand() % (2-1+1) + 1)) * (rand() % (5-1+1) + 1);
     mon_rondin->depx = pow(-1, rand()%(2-1+1)+1)* (rand() % (5-1+1) + 1);
 
-
-
+    mon_rondin->affichage = 1;
 
     /*for (int i = 0; i < 109; ++i) {
         for (int k = 0; k < 50; ++k) {

@@ -4,11 +4,11 @@
 
 #include "../../header.h"
 
-void Afficher_tab_rondin(BITMAP *bmp, t_rondin *tab_rondin[NRONDIN]){
+void Afficher_tab_rondin(BITMAP * bmp, t_rondin * tab_rondin[NRONDIN]) {
 
     for (int i = 0; i < NRONDIN; ++i) {
 
-        Afficher_rondin(bmp,tab_rondin[i]);
+        Afficher_rondin(bmp, tab_rondin[i]);
 
     }
 

@@ -394,7 +394,7 @@ int main() {
         } else if(Choix_epreuve == 8){
 
             Choix_epreuve = 0;
-            alert("AU revoir !", NULL, NULL, "Close", NULL, 0, 0);
+            alert("Au revoir !", NULL, NULL, "Quitter SHREK MANIA WORLD", NULL, 0, 0);
             Fin = 1;
 
         }

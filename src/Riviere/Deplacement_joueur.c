@@ -4,14 +4,13 @@
 
 #include "../../header.h"
 
-void Deplacement_joueur(int Couleur[NOMBRE_JOUEURS], t_rondin *rondin[NRONDIN], t_joueur_riv * joueur_en_train_de_jouer, int Innactivite[NOMBRE_JOUEURS]){
+void Deplacement_joueur(t_rondin * tab_rondins[NRONDIN], t_joueur_riv * joueur_en_train_de_jouer, int Innactivite[NOMBRE_JOUEURS]){
 
 
-    int bleu;
-    bleu = makecol(80, 167, 232);
+    // Initialisation de la couleur bleue de la riviere
+    int bleu = makecol(80, 167, 232) ;
 
-
-
+    // Algorithme de déplacement du joueur
     if (key[KEY_UP]) {
 
         joueur_en_train_de_jouer->y = joueur_en_train_de_jouer->y - joueur_en_train_de_jouer->dy;
@@ -64,30 +63,25 @@ void Deplacement_joueur(int Couleur[NOMBRE_JOUEURS], t_rondin *rondin[NRONDIN], 
 
     }
 
+    // Détection de collisions du joueur avec les rondins
     for (int i=0; i<NRONDIN; i++) {
 
-        if (Collision_joueur_rondin(rondin[i], joueur_en_train_de_jouer)) {
+        if (Collision_joueur_rondin(tab_rondins[i], joueur_en_train_de_jouer)) {
 
-            joueur_en_train_de_jouer->x = rondin[i]->posx + rondin[i]->tx/2;
-            joueur_en_train_de_jouer->dx = 5 + rondin[i]->depx;
+            joueur_en_train_de_jouer->x = tab_rondins[i]->posx + tab_rondins[i]->tx/2;
+            joueur_en_train_de_jouer->dx = 5 + tab_rondins[i]->depx;
 
-        }
+        } else {
 
-        else {
+            if ((joueur_en_train_de_jouer->couleur == bleu) && (!(Collision_joueur_rondin(tab_rondins[i], joueur_en_train_de_jouer)))) {
 
-            for (int k = 0; k < NOMBRE_JOUEURS; ++k) {
-
-                if ((Couleur[k] == bleu)&&(!(Collision_joueur_rondin(rondin[i], joueur_en_train_de_jouer)))) {
-
-                    joueur_en_train_de_jouer->x = 500;
-                    joueur_en_train_de_jouer->y = 70;
-                    joueur_en_train_de_jouer->dx = 5;
-                    joueur_en_train_de_jouer->dy = 5;
-
-
-                }
+                joueur_en_train_de_jouer->x = 400; // On le fait reculer un peu plus pour qu'il évite de tout de suite foncer dans l'eau
+                joueur_en_train_de_jouer->y = 70;
+                joueur_en_train_de_jouer->dx = 5;
+                joueur_en_train_de_jouer->dy = 5;
 
             }
+
 
         }
 

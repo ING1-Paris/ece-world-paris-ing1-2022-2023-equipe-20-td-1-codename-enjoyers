@@ -66,7 +66,7 @@ void remplir_tab_sauvegardes(t_entree_sauvegarde tab_donnees[NOMBRE_JOUEURS], t_
 
             tab_donnees[i].jeu = choix_jeu;
             tab_donnees[i].score = tab_joueurs[i].score;
-            tab_donnees[i].temps = -1;
+            tab_donnees[i].temps = 5;
             tab_donnees[i].date = time(NULL);
             strcpy(tab_donnees[i].map, "!");
             strcpy(tab_donnees[i].nom, tab_joueurs[i].nom);

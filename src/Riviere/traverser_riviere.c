@@ -5,13 +5,35 @@
 
 #include "../../header.h"
 
-void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], int tab_temps[NOMBRE_JOUEURS]){
+void traverser_riviere(t_joueur tab_joueurs[NOMBRE_JOUEURS], int tab_temps[NOMBRE_JOUEURS]){
 
-   //variable decor
+    // Déclaration des BITMAPS
     BITMAP *decor;
     BITMAP *page;
     BITMAP *fond;
 
+    // Déclaration des variables de joueurs et de rondins
+    t_joueur_riv * tab_joueurs_riv[NOMBRE_JOUEURS];
+    t_rondin * tab_rondins[NRONDIN];
+
+    // Déclaration des variables de gestion d'animation
+    int innactivite[NOMBRE_JOUEURS] = {1, 1};
+    int animation[NOMBRE_JOUEURS]={0,0};
+
+    // Déclaration des variables de temps
+    time_t begin;
+    time_t end;
+
+    // Déclaration des variables de jeu
+    int alive = 1;
+
+
+
+
+
+
+
+    // Initialisation des BITMAPS
     page = create_bitmap(SCREEN_W, SCREEN_H);
 
     decor=load_bitmap("../assets/maps/MAP_RIVIERE.bmp",NULL);
@@ -31,172 +53,166 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], int tab_temps[NOMBRE
     }
 
 
-    //variable acteur
-    t_joueur_riv * joueur[NOMBRE_JOUEURS];
-    t_rondin * tabl_rondin[NRONDIN];
-    int couleurPixelJoueur[NOMBRE_JOUEURS];
 
 
-    // SPRITES
-    int innactivite[NOMBRE_JOUEURS] = {1, 1};
-    int animation[NOMBRE_JOUEURS]={0,0};
+    // Création des rondins et des joueurs
+    Remplir_tab_rondin(tab_rondins);
+    Remplir_tab_joueur(tab_joueurs_riv);
 
 
 
-    //Variable temps
-    time_t joueur_tps_parcours[NOMBRE_JOUEURS];
+    // Initialisation des sprites (skins) des joueurs rivieres
+    for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
 
+        for (int j = 0; j < 12; ++j) {
 
-
-    //Création rondin et joueur
-    Remplir_tab_rondin(tabl_rondin);
-    Remplir_tab_joueur(joueur);
-
-    for (int j = 0; j < NOMBRE_JOUEURS; ++j) {
-        for (int i = 0; i < 12; ++i) {
-            joueur[j]->skin_perso[i] = joueur_riv[j].sprites[i];
+            tab_joueurs_riv[i]->skin_perso[j] = tab_joueurs[i].sprites[j];
         }
     }
 
 
 
-
+    // Affichage de l'interface
     blit(fond, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
     blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-    alert("Bienvenue sur le JEU DE LA RIVIERE !", NULL, NULL, "go !", NULL, 0, 0);
+    alert("Bienvenue dans la TRAVERSEE DE LA MORT !", NULL, NULL, "Go !", NULL, 0, 0);
 
 
 
 
-
+    // Boucle de joueurs (joueur 1 puis joueur 2)
     for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
 
-        alert("Tenez-vous prêt...", NULL, "Vous devez traverser la riviere pour rejoindre Dragonne,", "c'est parti !", NULL, 0, 0);
+        alert("Tenez-vous prêt...", NULL, "Vous devez traverser la riviere pour rejoindre Dragonne,", "C'est parti !", NULL, 0, 0);
 
-        time_t begin = time(NULL);
+        // Initialisation de la variable de démarrage de la partie
+        alive = 1;
 
-        joueur[i]->temps = 0;
-        joueur[i]->temps = begin;
+        // Démarrage du chronomètre
+        begin = time(NULL);
 
 
         //Début du jeu
-        while (joueur[i]->y < 640){
+        while (alive) {
 
+            // Affichage du décor sur la page (double buffer)
             blit(decor, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
-            for (int j = 0; j < NOMBRE_JOUEURS; ++j) {
-
-                innactivite[j]=1;
-            }
-
-
-            Afficher_tab_rondin(page, tabl_rondin);
-
-            Deplacement_tab_rondin(tabl_rondin);
-
-
-            //Detection de l'eau
-            for (int j = 0; j < NOMBRE_JOUEURS; ++j) {
-
-                couleurPixelJoueur[j] = getpixel(page, joueur[j]->x+joueur[j]->tx/2, joueur[j]->y+joueur[j]->ty);
-
-            }
-
-
-            Deplacement_joueur(couleurPixelJoueur, tabl_rondin, joueur[i], innactivite);
+            // Gestion de l'inactivité du joueur
+            innactivite[i]=1;
 
 
 
-            for (int j = 0; j < NOMBRE_JOUEURS; ++j) {
+            // Affichage du tableau de rondins
+            Afficher_tab_rondin(page, tab_rondins);
 
-                //On vérifie si le personnage est innactif ou non
-                if (innactivite[j] == 1){
+            // Calcul des déplacements des rondins sur l'écran
+            Deplacement_tab_rondin(tab_rondins);
 
-                    joueur[j]->skin_utilise = joueur[j]->skin_utilise +2;
-                    animation[j] = 0;
+            //Affichage du joueur
+            masked_blit(tab_joueurs_riv[i]->skin_perso[tab_joueurs_riv[i]->skin_utilise+animation[i]],page,0,0,tab_joueurs_riv[i]->x,tab_joueurs_riv[i]->y,tab_joueurs_riv[i]->tx,tab_joueurs_riv[i]->ty);
 
+            // Calcul du déplacement du joueur
+            Deplacement_joueur(tab_rondins, tab_joueurs_riv[i], innactivite);
+
+
+
+
+            // Detection de la couleur sur laquelle le joueur se trouve (pour détecter s'il est présent sur l'eau ou pas)
+            tab_joueurs_riv[i]->couleur = getpixel(page, tab_joueurs_riv[i]->x + tab_joueurs_riv[i]->tx / 2, tab_joueurs_riv[i]->y + tab_joueurs_riv[i]->ty);
+
+
+
+            // Gestion de l'animation des sprites du joueur
+            // On vérifie si le personnage est inactif ou non
+            if (innactivite[i] == 1) {
+
+                tab_joueurs_riv[i]->skin_utilise = tab_joueurs_riv[i]->skin_utilise +2;
+                animation[i] = 0;
+
+            } else{
+
+                if (animation[i] == 0) {
+
+                    animation[i] = 1;
+
+                } else {
+
+                    animation[i] = 0;
                 }
-                else{
 
-                    if (animation[j] == 0)
-                        animation[j] = 1;
-                    else {
-                        animation[j] = 0;
-                    }
+
+                //On enlève le sprite d'inactivite
+                if (innactivite[i] == 1) {
+
+                    tab_joueurs_riv[i]->skin_utilise = tab_joueurs_riv[i]->skin_utilise - 2;
                 }
 
 
-                //Affichage du joueur
-                masked_blit(joueur[i]->skin_perso[joueur[i]->skin_utilise+animation[i]],page,0,0,joueur[i]->x,joueur[i]->y,joueur[i]->tx,joueur[i]->ty);
-
-
-
-                //On enlève le sprite d'innactivite
-                if (innactivite[j] == 1)
-                    joueur[j]->skin_utilise = joueur[j]->skin_utilise -2;
-
-
-
             }
 
 
 
-            //arrêt du chrono pour le joueur qui est arrivé à la fin
-            if(joueur[i]->y < 640) {
-                joueur_tps_parcours[i] = time(NULL);
+            // Arrêt du chronomètre lorsque le joueur arrive à la fin et fin de la boucle de jeu
+            if (tab_joueurs_riv[i]->y >= 640) {
+
+                end = time(NULL);
+
+                alive = 0;
             }
 
 
-            time_t tps_actuel = time(NULL);
-            joueur[i]->temps = (unsigned long) difftime(tps_actuel, begin);
+            // Calcul du temps de parcours et stockage de la valeur dans la structure du joueur
+            tab_joueurs_riv[i]->temps = (end - begin);
 
 
-            //Affichage score
+            // Affichage de l'interface de jeu
             rectfill(page, 10, 10, 250, 90, makecol(255, 255, 255));
             rect(page, 10, 10, 250, 90, makecol(0, 0, 0));
-            stretch_blit(joueur_riv[i].sprites[12], page, 0, 0, 225, 225, 15, 15, 70, 70);
+            stretch_blit(tab_joueurs[i].sprites[12], page, 0, 0, 225, 225, 15, 15, 70, 70);
 
-            textprintf_ex(page, font, 90, 20, makecol(0, 0, 0), -1, "%s", joueur_riv[i].nom);
-            textprintf_ex(page, font, 90, 50, makecol(0, 0, 0), -1, "Arrivée : %dm ", 640 - joueur[i]->y);
-            textprintf_ex(page, font, 90, 70, makecol(0, 0, 0), -1, "Temps écoulé: %lu", joueur[i]->temps);
+            textprintf_ex(page, font, 90, 20, makecol(0, 0, 0), -1, "%s", tab_joueurs[i].nom);
+            textprintf_ex(page, font, 90, 50, makecol(0, 0, 0), -1, "Arrivée : %dm ", 640 - tab_joueurs_riv[i]->y);
+            textprintf_ex(page, font, 90, 70, makecol(0, 0, 0), -1, "Temps écoulé: %lu", time(NULL) - begin);
+
+            // Affichage de la page sur l'écran (double buffer)
             masked_blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
             rest(15);
 
 
-
         }
 
-
-        tab_temps[i] = (int) difftime(joueur_tps_parcours[i], begin);
+        // Remplissage du tableau de temps (utilisé ultérieurement pour la sauvegarde) avec le temps de parcours du joueur actuel
+        tab_temps[i] = (int) tab_joueurs_riv[i]->temps;
         printf("Le joueur %d est reste en vie pendant %d\n", i+1, tab_temps[i]);
 
     }
 
 
 
-
-    //Detection de la victoire
-    if (joueur[0]->temps < joueur[1]->temps) {
+    // Détection de la victoire
+    if (tab_joueurs_riv[0]->temps < tab_joueurs_riv[1]->temps) {
 
         alert("Joueur n°1, vous avez gagné un ticket ! ", NULL, NULL, " Retour au menu ", NULL, 0, 0);
-        joueur_riv[0].tickets = joueur_riv[0].tickets + 1;
-    }
+        tab_joueurs[0].tickets = tab_joueurs[0].tickets + 1;
 
-    else {
+    } else if (tab_joueurs_riv[0]->temps == tab_joueurs_riv[1]->temps) {
+
+        alert("Egalité ! Personne ne gagne de ticket :/", NULL, NULL, " Retour au menu ", NULL, 0, 0);
+
+    } else {
 
         alert("Joueur n°2, vous avez gagné un ticket ! ", NULL, NULL, " Retour au menu ", NULL, 0, 0);
-        joueur_riv[1].tickets = joueur_riv[1].tickets + 1;
+        tab_joueurs[1].tickets = tab_joueurs[1].tickets + 1;
 
     }
 
 
-    //Destruction BITMAP
-    destroy_bitmap(page);
-
+    // Destruction BITMAP
     destroy_bitmap(decor);
-
     destroy_bitmap(fond);
+    destroy_bitmap(page);
 
 
 }
