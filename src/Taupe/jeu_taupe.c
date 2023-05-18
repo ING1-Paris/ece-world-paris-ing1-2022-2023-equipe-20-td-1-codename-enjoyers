@@ -128,6 +128,7 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
 
                     //la taupe ne s'affiche plus
                 }
+
             }
 
 

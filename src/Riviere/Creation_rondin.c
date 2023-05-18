@@ -11,7 +11,7 @@ t_rondin * Creation_rondin(int nb) {
 
     mon_rondin = (t_rondin *) malloc(sizeof(t_rondin));
 
-    mon_rondin->img = load_bitmap("../assets/Item/Riviere/bois1.bmp", NULL);
+    mon_rondin->img = load_bitmap("../assets/Item/Riviere/bois5.bmp", NULL);
 
     if (!mon_rondin->img) {
         allegro_message("rondin introuvable");
@@ -28,67 +28,63 @@ t_rondin * Creation_rondin(int nb) {
 
     if (nb == 0) {
 
-        mon_rondin->posy = 180;
+        mon_rondin->posy = 200;
 
     } else if (nb == 1) {
 
-        mon_rondin->posy = 210;
+        mon_rondin->posy = 230;
 
     } else if (nb == 2) {
 
-        mon_rondin->posy = 240;
+        mon_rondin->posy = 260;
 
     } else if (nb == 3) {
 
-        mon_rondin->posy = 270;
+        mon_rondin->posy = 290;
 
     } else if (nb == 4) {
 
-        mon_rondin->posy = 300;
+        mon_rondin->posy = 320;
 
     } else if (nb == 5) {
 
-        mon_rondin->posy = 330;
+        mon_rondin->posy = 350;
 
     } else if (nb == 6) {
 
-        mon_rondin->posy = 360;
+        mon_rondin->posy = 380;
 
     } else if (nb == 7) {
 
-        mon_rondin->posy = 390;
+        mon_rondin->posy = 410;
 
     } else if (nb == 8) {
 
-        mon_rondin->posy = 420;
+        mon_rondin->posy = 440;
 
     } else if (nb == 9) {
 
-        mon_rondin->posy = 450;
+        mon_rondin->posy = 470;
 
     }else if (nb == 10) {
 
-        mon_rondin->posy = 480;
+        mon_rondin->posy = 500;
 
     }else if (nb == 11) {
 
-        mon_rondin->posy = 510;
+        mon_rondin->posy = 530;
 
     }else if (nb == 12) {
 
-        mon_rondin->posy = 540;
+        mon_rondin->posy = 560;
 
     }else if (nb == 13) {
 
-        mon_rondin->posy = 570;
+        mon_rondin->posy = 590;
 
     }else if (nb == 14) {
 
-        mon_rondin->posy = 600;
-
-    }else if (nb == 15) {
-
-        mon_rondin->posy = 630;
+        mon_rondin->posy = 620;
 
     }
 
