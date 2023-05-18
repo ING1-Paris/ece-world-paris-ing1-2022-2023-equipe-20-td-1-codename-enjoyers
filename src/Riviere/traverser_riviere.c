@@ -59,14 +59,6 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], int tab_temps[NOMBRE
     }
 
 
-    for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
-        for (int j = 0; j < 12; ++j) {
-            couleurPixelJoueur[i] = getpixel(joueur[i]->skin_perso[j], joueur[i]->x, joueur[i]->y);
-
-        }
-
-    }
-
 
 
     blit(fond, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
@@ -93,6 +85,7 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], int tab_temps[NOMBRE
             blit(decor, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
             for (int j = 0; j < NOMBRE_JOUEURS; ++j) {
+
                 innactivite[j]=1;
             }
 
@@ -101,7 +94,17 @@ void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], int tab_temps[NOMBRE
 
             Deplacement_tab_rondin(tabl_rondin);
 
+
+            //Detection de l'eau
+            for (int j = 0; j < NOMBRE_JOUEURS; ++j) {
+
+                couleurPixelJoueur[j] = getpixel(page, joueur[j]->x+joueur[j]->tx/2, joueur[j]->y+joueur[j]->ty);
+
+            }
+
+
             Deplacement_joueur(couleurPixelJoueur, tabl_rondin, joueur[i], innactivite);
+
 
 
             for (int j = 0; j < NOMBRE_JOUEURS; ++j) {

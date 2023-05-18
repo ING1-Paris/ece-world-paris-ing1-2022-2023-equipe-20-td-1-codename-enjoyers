@@ -8,6 +8,7 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
 
     t_taupe mesTaupes[NOMBRE_TAUPE];
     t_joueur_taupe monJoueur[NOMBRE_JOUEURS];
+
     BITMAP *page;        // BITMAP buffer d'affichage
     BITMAP *decor;
     BITMAP *fond;

@@ -1,61 +1,48 @@
 ---
 marp: true
-theme: labyrinthe
+theme: gaia
 title: Projet d'informatique - Le Labyrinthe - Algorithmique et Langage C
 paginate: true
-_paginate: false
+_paginate: true
 ---
+
 
 <!--
 # Style lead only for this slide
 _class: lead
 -->
 
-![bg left](./images/fond_ece.png)
+![bg left](./images/shrek_world.png)
 
 Projet d'informatique
-Algorithmique et langage C
+Algorithmique et langage C : 
 
-<br><br><br>
 
-# Labyrinthe<br>🧭🗺
+# SHREK WORLD 
 
-<br><br><br>
+<br>
 
-<sub>2022-2023</sub>
+* Thaïs LECLAIRE
+* Thomas Leroy
+* Guy-Charbel KAIROUZ
+* Lucie Daix
+
+<br>
+
+2022-2023
+
+---
+# Sommaire
+
+<br>
+
+* Présentation du jeu
+* Fonctionnement du jeu
+* Repartion du travail
+* Bilan
+
+![bg right](./images/menu_jeu.png)
 
 ---
 
-# Titre
 
-Lorem ipsum dolor sit amet [ece](https://www.ece.fr), consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-
-## Titre 2
-
-- Liste 1
-- Liste 2
-- Liste 3
-
----
-
-# Titre
-
-Lorem ipsum dolor **sit amet**, consectetur *adipiscing* elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-
-## Titre 2
-
-1. Liste 1
-1. Liste 2
-1. Liste 3
-
----
-
-# Titre
-
-```C
-for(int i = 0; i < 5; i++) {
-    printf("%d ", i);
-}
-```
-
-> 0 1 2 3 4 

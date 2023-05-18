@@ -11,14 +11,6 @@ void Deplacement_joueur(int Couleur[NOMBRE_JOUEURS], t_rondin *rondin[NRONDIN], 
     bleu = makecol(80, 167, 232);
 
 
-    for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
-
-        if (Couleur[i] == bleu) {
-            joueur_en_train_de_jouer->x = 500;
-            joueur_en_train_de_jouer->y = 70;
-        }
-    }
-
 
 
 
@@ -73,7 +65,7 @@ void Deplacement_joueur(int Couleur[NOMBRE_JOUEURS], t_rondin *rondin[NRONDIN], 
 
             rondin[i]->indice_ligne = 0;
 
-            joueur_en_train_de_jouer->x = rondin[i]->posx + rondin[i]->tx / 3;
+            joueur_en_train_de_jouer->x = rondin[i]->posx + rondin[i]->tx/2;
 
             joueur_en_train_de_jouer->dx = 5 + rondin[i]->depx;
 
@@ -82,5 +74,17 @@ void Deplacement_joueur(int Couleur[NOMBRE_JOUEURS], t_rondin *rondin[NRONDIN], 
 
         }
 
+        else {
+
+            for (int k = 0; k < NOMBRE_JOUEURS; ++k) {
+
+                if ((Couleur[k] == bleu)&&(!(Collision_joueur_rondin(rondin[i], joueur_en_train_de_jouer)))) {
+
+                    joueur_en_train_de_jouer->x = 500;
+                    joueur_en_train_de_jouer->y = 70;
+
+                }
+            }
+        }
     }
 }
