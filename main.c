@@ -303,7 +303,6 @@ int main() {
 
     while (!Fin) {
 
-
         blit(map_menu, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
         if (key[KEY_H]) {

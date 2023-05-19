@@ -56,16 +56,6 @@ void jeuballons(t_joueur joueur_ballons[NOMBRE_JOUEURS], int tab_tmp[NOMBRE_JOUE
     // Le fusil manipulé par le joueur
     t_joueur_ballons *fusil;
 
-    // Création du fusil et des ballons
-    fusil = creerJoueur("../assets/Item/TirBallons/fusil.bmp");
-
-    for (int i=0; i<5; i++) {
-
-        sprintf(nom_fichier, "../assets/Item/TirBallons/ballon_%d.bmp", i);
-
-        tab_ballons[i] = creerBallon(nom_fichier);
-    }
-
 
 
     // préparer la liste des acteurs (100 maxi)
@@ -74,6 +64,17 @@ void jeuballons(t_joueur joueur_ballons[NOMBRE_JOUEURS], int tab_tmp[NOMBRE_JOUE
 
 
     for (int j=0; j<NOMBRE_JOUEURS; j++) {
+
+        // Création du fusil et des ballons
+        fusil = creerJoueur("../assets/Item/TirBallons/fusil.bmp");
+
+        for (int i=0; i<5; i++) {
+
+            sprintf(nom_fichier, "../assets/Item/TirBallons/ballon_%d.bmp", i);
+
+            tab_ballons[i] = creerBallon(nom_fichier);
+        }
+
 
         Joueur_actuel[j].temps = 0;
         Joueur_actuel[j].score = 0;
