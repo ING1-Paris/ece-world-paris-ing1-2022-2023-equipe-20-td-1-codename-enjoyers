@@ -27,6 +27,7 @@ t_sequence tabSequences[NSEQUENCE] =
 void jeu_course()
 {
     fflush(stdin);
+
     int tab_paris[2] = {0, 0};
     int tab_joueurs[NOMBRE_JOUEURS];
 

@@ -18,7 +18,7 @@ void traverser_riviere(t_joueur tab_joueurs[NOMBRE_JOUEURS], int tab_temps[NOMBR
 
     // Déclaration des variables de gestion d'animation
     int innactivite[NOMBRE_JOUEURS] = {1, 1};
-    int animation[NOMBRE_JOUEURS]={0,0};
+    int animation[NOMBRE_JOUEURS] = {0,0};
 
     // Déclaration des variables de temps
     time_t begin;
@@ -99,9 +99,7 @@ void traverser_riviere(t_joueur tab_joueurs[NOMBRE_JOUEURS], int tab_temps[NOMBR
             blit(decor, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
             // Gestion de l'inactivité du joueur
-            innactivite[i]=1;
-
-
+            innactivite[i] = 1;
 
             // Affichage du tableau de rondins
             Afficher_tab_rondin(page, tab_rondins);
@@ -109,13 +107,8 @@ void traverser_riviere(t_joueur tab_joueurs[NOMBRE_JOUEURS], int tab_temps[NOMBR
             // Calcul des déplacements des rondins sur l'écran
             Deplacement_tab_rondin(tab_rondins);
 
-            //Affichage du joueur
-            masked_blit(tab_joueurs_riv[i]->skin_perso[tab_joueurs_riv[i]->skin_utilise+animation[i]],page,0,0,tab_joueurs_riv[i]->x,tab_joueurs_riv[i]->y,tab_joueurs_riv[i]->tx,tab_joueurs_riv[i]->ty);
-
             // Calcul du déplacement du joueur
             Deplacement_joueur(tab_rondins, tab_joueurs_riv[i], innactivite);
-
-
 
 
             // Detection de la couleur sur laquelle le joueur se trouve (pour détecter s'il est présent sur l'eau ou pas)
@@ -127,10 +120,10 @@ void traverser_riviere(t_joueur tab_joueurs[NOMBRE_JOUEURS], int tab_temps[NOMBR
             // On vérifie si le personnage est inactif ou non
             if (innactivite[i] == 1) {
 
-                tab_joueurs_riv[i]->skin_utilise = tab_joueurs_riv[i]->skin_utilise +2;
+                tab_joueurs_riv[i]->skin_utilise = tab_joueurs_riv[i]->skin_utilise + 2;
                 animation[i] = 0;
 
-            } else{
+            } else {
 
                 if (animation[i] == 0) {
 
@@ -141,14 +134,17 @@ void traverser_riviere(t_joueur tab_joueurs[NOMBRE_JOUEURS], int tab_temps[NOMBR
                     animation[i] = 0;
                 }
 
-
-                //On enlève le sprite d'inactivite
-                if (innactivite[i] == 1) {
-
-                    tab_joueurs_riv[i]->skin_utilise = tab_joueurs_riv[i]->skin_utilise - 2;
-                }
+            }
 
 
+            // Affichage du joueur
+            masked_blit(tab_joueurs_riv[i]->skin_perso[(tab_joueurs_riv[i]->skin_utilise + animation[i])],page,0,0,tab_joueurs_riv[i]->x,tab_joueurs_riv[i]->y,tab_joueurs_riv[i]->tx,tab_joueurs_riv[i]->ty);
+
+
+            // On enlève le sprite d'inactivite
+            if (innactivite[i] == 1) {
+
+                tab_joueurs_riv[i]->skin_utilise = tab_joueurs_riv[i]->skin_utilise - 2;
             }
 
 

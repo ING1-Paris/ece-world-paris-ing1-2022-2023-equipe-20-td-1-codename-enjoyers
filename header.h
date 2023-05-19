@@ -339,11 +339,11 @@ void chargerTabSequences();
 
 
 
-//LA RIVIERE
+// LA RIVIERE
 
 #define NRONDIN 15
 
-typedef struct rondin{
+typedef struct rondin {
 
     int tx,ty;   // taille
     BITMAP *img;
@@ -364,7 +364,7 @@ typedef struct joueur_riv
     int x, y;
     int dx,dy;
     int skin_utilise;
-    BITMAP *skin_perso[13];
+    BITMAP * skin_perso[13];
     int affichage;
     int couleur;
 

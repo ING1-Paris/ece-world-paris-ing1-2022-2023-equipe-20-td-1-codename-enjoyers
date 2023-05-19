@@ -78,7 +78,7 @@ void guitar_hero(t_joueur * tab_joueurs, t_entree_sauvegarde tab_donnees[NOMBRE_
 
 
                     {    d_button_proc,160, 190,  160,  16,   0,  0,    0, D_EXIT,  0,   0, (void*)"Suivant"                                                 ,  NULL , NULL  },
-                    {      d_text_proc,  4,  40,    0,   0,   0,  0,    0,      0,  0,   0, (void*) "Controles: D F   J K L"                                 ,  NULL , NULL  },
+                    {      d_text_proc,  4,  170,    0,   0,   0,  0,    0,      0,  0,   0, (void*) "Controles: D F   J K L"                                 ,  NULL , NULL  },
                     {     d_yield_proc,  0,   0,    0,   0,   0,  0,    0,      0,  0,   0, NULL                                                             ,  NULL , NULL  },
                     {             NULL,  0,   0,    0,   0,   0,  0,    0,      0,  0,   0, NULL                                                             ,  NULL , NULL  },
             };
@@ -101,7 +101,6 @@ void guitar_hero(t_joueur * tab_joueurs, t_entree_sauvegarde tab_donnees[NOMBRE_
 
         strcpy(tab_donnees[i].map, listbox_getter(GUI_guitar_hero[2].d1, (int *) TAILLE_TAB_CHANSONS));
     }
-
 
     // Chargement du csv de la musique
     t_note * chanson_jouee = charger_musique(listbox_getter(GUI_guitar_hero[2].d1, (int*) TAILLE_TAB_CHANSONS), &taille_tableau, &tempo_musique);
@@ -264,13 +263,14 @@ void guitar_hero(t_joueur * tab_joueurs, t_entree_sauvegarde tab_donnees[NOMBRE_
             // Attention => dans ce programme il y a un clear(bmp)
             actualiser_tab_cercles(page, portee_1, taille_portee_1);
 
-            // On affiche en premier le décor
-            blit(decor, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-
             if (!mono_portee) {
 
                 actualiser_tab_cercles(page, portee_2, taille_portee_2);
             }
+
+            // On affiche en premier le décor
+            blit(decor, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
 
             charger_interface(page, tableau_cercles_fixes, tab_joueurs);
 
