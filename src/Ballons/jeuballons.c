@@ -5,7 +5,7 @@
 /* initialisation puis boucle d'animation */
 /******************************************/
 
-void jeuballons(t_joueur joueur_ballons[NOMBRE_JOUEURS])
+void jeuballons(t_joueur joueur_ballons[NOMBRE_JOUEURS], int tab_tmp[NOMBRE_JOUEURS])
 {
     unsigned long tmpJ1;
     t_joueur_tir_aux_ballons Joueur_actuel[NOMBRE_JOUEURS];
@@ -141,12 +141,14 @@ void jeuballons(t_joueur joueur_ballons[NOMBRE_JOUEURS])
             rest(10);
 
             Joueur_actuel[j].temps = (unsigned long)difftime(temps_actuel, temps_initial);
+            // Remplissage du tableau de temps (utilisé ultérieurement pour la sauvegarde) avec le temps de parcours du joueur actuel
+            tab_tmp[j] = (int) Joueur_actuel[j].temps;
         }
-        allegro_message("vous avez éclaté les 5 ballons en %.lu secondes", Joueur_actuel[j].temps);
+        allegro_message("vous avez éclaté les 5 ballons en %d secondes", tab_tmp[j]);
         if (j == 0)
-            tmpJ1 = Joueur_actuel[j].temps;
+            tmpJ1 = tab_tmp[j];
         else {
-            if (tmpJ1 < Joueur_actuel[j].temps) {
+            if (tmpJ1 < tab_tmp[j]) {
                 joueur_ballons[0].tickets = joueur_ballons[0].tickets + 1;
                 allegro_message("Joueur 1, vous avez gagné un ticket !");
             } else {

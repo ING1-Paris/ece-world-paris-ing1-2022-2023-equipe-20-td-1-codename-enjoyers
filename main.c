@@ -373,7 +373,7 @@ int main() {
 
         } else if (Choix_epreuve == 3) {
 
-            jeuballons(tableau_joueurs);
+            jeuballons(tableau_joueurs, tab_temps_epreuves);
 
         } else if (Choix_epreuve == 4) {
 
