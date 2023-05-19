@@ -16,6 +16,22 @@ void jeuballons(t_joueur joueur_ballons[NOMBRE_JOUEURS], int tab_tmp[NOMBRE_JOUE
 
     // Image de fond
     BITMAP *decor;
+    BITMAP *fond;
+
+
+    fond = load_bitmap("../assets/maps/map_ballons.bmp", NULL);
+
+    if (!fond)
+    {
+        allegro_message("pas pu trouver map_ballons.bmp");
+        exit(EXIT_FAILURE);
+    }
+
+    blit(fond, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+    blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+    alert("Vous venez d'entrer dans le jeu du TIR AU BALLONS !", NULL, "Vous devez éclater tous les ballons le plus rapidement possible.", "Suivant", NULL, 0, 0);
+    alert("Tenez-vous prêt...", NULL, "Appuyer sur la barre d'espace pour tirer et déplacez-vous avec les flèches droite et gauche", "C'est partiiiii !", NULL, 0, 0);
+
 
     decor = load_bitmap("../assets/maps/map_ballons.bmp", NULL);
     if (!decor) {
@@ -24,6 +40,7 @@ void jeuballons(t_joueur joueur_ballons[NOMBRE_JOUEURS], int tab_tmp[NOMBRE_JOUE
         allegro_exit();
         exit(EXIT_FAILURE);
     }
+
 
     for (int j=0; j<NOMBRE_JOUEURS; j++) {
 
