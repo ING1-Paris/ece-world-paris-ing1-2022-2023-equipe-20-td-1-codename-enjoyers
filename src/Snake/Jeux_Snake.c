@@ -184,7 +184,7 @@ void Snake(t_joueur * Joueur, int tab_temps[NOMBRE_JOUEURS]) {
             masked_blit(Pomme[j].Skin,page,0,0,Pomme[j].x,Pomme[j].y,29,29);
 
 
-            // Affichage du Snake
+            // Affichage du Snake (dans deux sens en fonction de la direction)
             if (head[j]->dy == 5){
                 Invertion(head[j],page,Animation);
             }
