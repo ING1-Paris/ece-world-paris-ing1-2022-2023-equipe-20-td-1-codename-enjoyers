@@ -377,7 +377,7 @@ int main() {
 
         } else if (Choix_epreuve == 4) {
 
-            jeu_course();
+            jeu_course(tableau_joueurs);
 
         } else if (Choix_epreuve == 5){
 
