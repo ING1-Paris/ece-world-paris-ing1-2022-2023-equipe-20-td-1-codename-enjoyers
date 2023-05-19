@@ -25,43 +25,52 @@ void jeuballons(t_joueur joueur_ballons[NOMBRE_JOUEURS], int tab_tmp[NOMBRE_JOUE
         exit(EXIT_FAILURE);
     }
 
+    // Création du tableau de ballons
+    t_ballon * tab_ballons[NBALLONS];
+
+    // Nom fichier
+    char nom_fichier[64];
+
+    // Tableau d'indicateurs d'arret des ballons permettant de ne les comptabiliser qu'une seule fois
+    int tab_stops[NBALLONS] = {0, 0, 0, 0, 0};
+
+    // La collection des acteurs (les tirs)
+    t_listeActeurs *acteurs;
+
+    // Le fusil manipulé par le joueur
+    t_joueur_ballons *fusil;
+
+    // Création du fusil et des ballons
+    fusil = creerJoueur("../assets/Item/TirBallons/fusil.bmp");
+
+    for (int i=0; i<5; i++) {
+
+        sprintf(nom_fichier, "../assets/Item/TirBallons/ballon_%d.bmp", i);
+
+        tab_ballons[i] = creerBallon(nom_fichier);
+    }
+
+
+
+    // préparer la liste des acteurs (100 maxi)
+    // mais vide initialement
+    acteurs = creerListeActeurs(100);
+
+
     for (int j=0; j<NOMBRE_JOUEURS; j++) {
 
         Joueur_actuel[j].temps = 0;
         Joueur_actuel[j].score = 0;
 
+        // Stockage du temps initial
         time_t temps_initial = time(NULL);
 
-        int tab_stops[NBALLONS] = {0, 0, 0, 0, 0};
+        // Initialisation du tableau d'arrets de ballons
+        for (int i = 0; i < NBALLONS; ++i) {
 
-
-        // La collection des acteurs (les tirs)
-        t_listeActeurs *acteurs;
-
-        // Le fusil manipulé par le joueur
-        t_joueur_ballons *fusil;
-
-        // Création du tableau de ballons
-        t_ballon * tab_ballons[NBALLONS];
-
-        // Nom fichier
-        char nom_fichier[64];
-
-
-
-        // Création du fusil et des ballons
-        fusil = creerJoueur("../assets/Item/TirBallons/fusil.bmp");
-
-        for (int i=0; i<5; i++) {
-
-            sprintf(nom_fichier, "../assets/Item/TirBallons/ballon_%d.bmp", i);
-
-            tab_ballons[i] = creerBallon(nom_fichier);
+            tab_stops[i] = 0;
         }
 
-        // préparer la liste des acteurs (100 maxi)
-        // mais vide initialement
-        acteurs = creerListeActeurs(100);
 
         // BOUCLE DE JEU
         while (Joueur_actuel[j].score < 5) {
@@ -154,6 +163,13 @@ void jeuballons(t_joueur joueur_ballons[NOMBRE_JOUEURS], int tab_tmp[NOMBRE_JOUE
         }
     }
 
+
+    for (int i = 0; i < NBALLONS; ++i) {
+
+        destroy_bitmap(tab_ballons[i]->img);
+    }
+
+    destroy_bitmap(fusil->img);
     destroy_bitmap(page);
 
 }

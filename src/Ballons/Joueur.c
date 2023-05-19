@@ -5,7 +5,8 @@
 
 
 // Allouer et initialiser un joueur
-t_joueur_ballons * creerJoueur(char *nomimage){
+t_joueur_ballons * creerJoueur(char *nomimage) {
+
     t_joueur_ballons *nouv;
 
     // Allouer
