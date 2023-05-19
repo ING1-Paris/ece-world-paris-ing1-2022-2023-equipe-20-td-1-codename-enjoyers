@@ -119,6 +119,8 @@ void jeu_course(t_joueur joueur_course[NOMBRE_JOUEURS])
         rest(20);
     }
 
+    destroy_bitmap(decor);
+    destroy_bitmap(page);
 
 }
 
