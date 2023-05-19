@@ -24,7 +24,7 @@ t_sequence tabSequences[NSEQUENCE] =
 /*           PROGRAMME PRINCIPAL          */
 /******************************************/
 
-void jeu_course()
+void jeu_course(t_joueur joueur_course[NOMBRE_JOUEURS])
 {
     fflush(stdin);
 
@@ -92,7 +92,7 @@ void jeu_course()
     }
 
 
-    // Chargement des images des s�quences anim�es
+    // Chargement des images des séquences animées
     chargerTabSequences();
 
     // remplir le tableau avec des lapins alloués et initialisés
@@ -103,19 +103,19 @@ void jeu_course()
     while (alive)
     {
 
-        // 1)  EFFACER BUFFER, en appliquant d�cor  (pas de clear_bitmap)
+        // 1) EFFACER BUFFER, en appliquant décor
         blit(decor,page,0,0,0,0,SCREEN_W,SCREEN_H);
 
-        // 2) DETERMINER NOUVELLEs POSITIONs
+        // 2) DETERMINER NOUVELLES POSITIONS
         actualiserTablapins(meslapins, tab_paris, &alive, &page, tab_joueurs);
 
-        // 3) AFFICHAGE NOUVELLEs POSITIONs SUR LE BUFFER
+        // 3) AFFICHAGE NOUVELLES POSITIONS SUR LE BUFFER
         dessinerTablapins(page,meslapins);
 
         // 4) AFFICHAGE DU BUFFER MIS A JOUR A L'ECRAN
         blit(page,screen,0,0,0,0,SCREEN_W,SCREEN_H);
 
-        // 5) ON FAIT UNE PETITE PAUSE � chaque fois sinon �a va trop vite...
+        // 5) PAUSE
         rest(20);
     }
 
@@ -130,7 +130,7 @@ void jeu_course()
 // Allouer et initialiser un lapin
 t_lapin * creerlapin(int type, int x, int y, int dx, int tmpdx, int tmpimg)
 {
-    // pointeur sur l'lapin qui sera cr�� (et retourn�)
+    // pointeur sur le lapin qui sera créé et retourné
     t_lapin *lapin;
 
     // Création (allocation)
@@ -161,17 +161,17 @@ void remplirTablapins(t_lapin * tab[Nlapin])
 {
     // Appeler Nlapin fois creerlapin avec les paramètres souhaités :
     //                (type,   x,   y,  dx, tmpdx, tmpimg )
-    tab[0]=creerlapin(   0, 2,   10,  4,     rand()%(6-1)+1,      4 );
-    tab[1]=creerlapin(   1, 2, 100,   4,     rand()%(6-1)+1,      4 );
-    tab[2]=creerlapin(   2, 2, 200,   4,     rand()%(6-1)+1,     4 ); // + tmpdx est grand, moins le lapin avance vite
-    tab[3]=creerlapin(   3, 2, 300,  4,     rand()%(6-1)+1,      4 );
-    tab[4]=creerlapin(   4, 2,  400,   4,     rand()%(6-1)+1,      4 );
-    tab[5]=creerlapin(   5, 2, 500,  4,     rand()%(6-1)+1,      4 );
+    tab[0]=creerlapin(   0, 2, 10,  4,     rand()%(6-1)+1,      4 );
+    tab[1]=creerlapin(   1, 2, 100, 4,     rand()%(6-1)+1,      4 );
+    tab[2]=creerlapin(   2, 2, 200, 4,     rand()%(6-1)+1,      4 ); // + tmpdx est grand, moins le lapin avance vite
+    tab[3]=creerlapin(   3, 2, 300, 4,     rand()%(6-1)+1,      4 );
+    tab[4]=creerlapin(   4, 2, 400, 4,     rand()%(6-1)+1,      4 );
+    tab[5]=creerlapin(   5, 2, 500, 4,     rand()%(6-1)+1,      4 );
 }
 
 
 // Actualiser un lapin
-void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page, t_joueur tableau_joueurs[NOMBRE_JOUEURS])
+void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page, t_joueur joueur_course[NOMBRE_JOUEURS])
 {
 
     // gestion des bords sur l'axe x
@@ -192,11 +192,11 @@ void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page, 
         if (gagnant) {
 
             if(lapin->type == tabParis[0]) {
-                tableau_joueurs[0].tickets = tableau_joueurs[0].tickets+1 ;
+                joueur_course[0].tickets = joueur_course[0].tickets+1 ;
                 allegro_message("joueur 1, vous avez gagné un ticket !");
             }
             else {
-                tableau_joueurs[1].tickets = tableau_joueurs[1].tickets+1;
+                joueur_course[1].tickets = joueur_course[1].tickets+1;
                 allegro_message("joueur 2, vous avez gagné un ticket !");
             }
 
@@ -235,11 +235,11 @@ void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page, 
 }
 
 // Gérer l'évolution de l'ensemble des lapins
-void actualiserTablapins(t_lapin * tab[Nlapin], int tabParis[2], int *alive, BITMAP *page, t_joueur tableau_joueurs[NOMBRE_JOUEURS])
+void actualiserTablapins(t_lapin * tab[Nlapin], int tabParis[2], int *alive, BITMAP *page, t_joueur joueur_course[NOMBRE_JOUEURS])
 {
     int i;
     for (i=0;i<Nlapin;i++)
-        actualiserlapin(tab[i], tabParis, alive, page, tableau_joueurs);
+        actualiserlapin(tab[i], tabParis, alive, page, joueur_course);
 }
 
 
