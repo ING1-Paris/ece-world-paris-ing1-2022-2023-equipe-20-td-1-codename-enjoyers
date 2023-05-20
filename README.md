@@ -13,7 +13,7 @@ Parc à thème Shrek, composé de 6 jeux originaux et d'une direction artistique
 
 ## Téléchargement
 
-- ⬇ Afin d'installer le jeu, téléchargez l'installateur dans la section `Release` et executez le simplement en suivant les indications.️
+⬇ Afin d'installer le jeu, téléchargez l'installateur dans la section `Release` et executez le simplement en suivant les indications.️
 
 
 ## Fonctionnalités
