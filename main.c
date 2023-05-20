@@ -303,7 +303,6 @@ int main() {
 
     while (!Fin) {
 
-
         blit(map_menu, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
         if (key[KEY_H]) {
@@ -377,7 +376,7 @@ int main() {
 
         } else if (Choix_epreuve == 4) {
 
-            jeu_course();
+            jeu_course(tableau_joueurs);
 
         } else if (Choix_epreuve == 5){
 

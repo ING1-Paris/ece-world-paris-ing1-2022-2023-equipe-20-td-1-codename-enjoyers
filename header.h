@@ -192,6 +192,10 @@ int Fin_de_partie(int serpent_en_vie[2]);
 
 // JEU DE TIR AUX BALLONS
 // ----------------------------------------
+
+#define NBALLONS 5
+
+
 typedef struct acteur
 {
     int x,y; // position du coin supérieur gauche
@@ -231,6 +235,7 @@ typedef struct ballon {
     int dx, dy;      // vecteur déplacement
     int tx,ty;   // taille
     BITMAP *img; // sprite (image chargée)
+    int couleur;
 } t_ballon;
 
 typedef struct joueur_tir_aux_ballons
@@ -256,47 +261,30 @@ t_joueur_ballons * creerJoueur(char *nomimage);
 void actualiserJoueur(t_joueur_ballons *joueur,t_listeActeurs *la);
 void dessinerJoueur(BITMAP *bmp,t_joueur_ballons *joueur);
 void destinActeur(t_acteur *acteur);
+
+
 // Gérer collision (éventuelle) entre un acteur (un tir) et un ballon_bleu
-void collisionActeurBleu(t_ballon *ballon_bleu, t_acteur *acteur);
-void collisionActeurRose(t_ballon *ballon_rose, t_acteur *acteur);
-void collisionActeurVert(t_ballon *ballon_vert, t_acteur *acteur);
-void collisionActeurViolet(t_ballon *ballon_violet, t_acteur *acteur);
-void collisionActeurRouge(t_ballon *ballon_rouge, t_acteur *acteur);
+void collisionActeur(t_ballon * ballon ,t_acteur * acteur);
 
 // Gérer les collisions entre les acteurs (tous les tirs) et un ballon_bleu
-void collisionListeActeursBleu(t_ballon *ballon_bleu,t_listeActeurs *la);
-void collisionListeActeursRose(t_ballon *ballon_rose,t_listeActeurs *la);
-void collisionListeActeursVert(t_ballon *ballon_vert,t_listeActeurs *la);
-void collisionListeActeursViolet(t_ballon *ballon_violet,t_listeActeurs *la);
-void collisionListeActeursRouge(t_ballon *ballon_rouge,t_listeActeurs *la);
+void collisionListeActeurs(t_ballon *ballon,t_listeActeurs *la);
 
 // Allouer et initialiser les ballons
-t_ballon * creerBallon_bleu(char *nomimage);
-t_ballon * creerBallon_rose(char *nomimage);
-t_ballon * creerBallon_vert(char *nomimage);
-t_ballon * creerBallon_violet(char *nomimage);
-t_ballon * creerBallon_rouge(char *nomimage);
+t_ballon * creerBallon(char *nomimage);
 
 // Actualiser les ballons (bouger automatiquement au hasard...)
-void actualiserBallon_bleu(t_ballon *ballon_bleu);
-void actualiserBallon_rose(t_ballon *ballon_rose);
-void actualiserBallon_vert(t_ballon *ballon_vert);
-void actualiserBallon_violet(t_ballon *ballon_violet);
-void actualiserBallon_rouge(t_ballon *ballon_rouge);
+void actualiserBallon(t_ballon * ballon);
 
 // Dessiner les ballons sur la bitmap bmp
-void dessinerBallon_bleu(BITMAP *bmp,t_ballon *ballon_bleu);
-void dessinerBallon_rose(BITMAP *bmp,t_ballon *ballon_rose);
-void dessinerBallon_vert(BITMAP *bmp,t_ballon *ballon_vert);
-void dessinerBallon_violet(BITMAP *bmp,t_ballon *ballon_violet);
-void dessinerBallon_rouge(BITMAP *bmp,t_ballon *ballon_rouge);
+void dessinerBallon(BITMAP *bmp, t_ballon * ballon);
+
 
 // ----------------------------------------
 
 
 
 //COURSE DE LAPIN
-void jeu_course();
+void jeu_course(t_joueur joueur_course[NOMBRE_JOUEURS]);
 
 
 typedef struct sequence
@@ -329,8 +317,8 @@ typedef struct lapin
 #define NSEQUENCE 6
 t_lapin * creerlapin(int type, int x, int y, int dx, int tmpdx, int tmpimg);
 void remplirTablapins(t_lapin * tab[Nlapin]);
-void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page, t_joueur tableau_joueurs[NOMBRE_JOUEURS]);
-void actualiserTablapins(t_lapin * tab[Nlapin], int tabParis[2], int *alive, BITMAP *page, t_joueur tableau_joueurs[NOMBRE_JOUEURS]);
+void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page, t_joueur tab_course[NOMBRE_JOUEURS]);
+void actualiserTablapins(t_lapin * tab[Nlapin], int tabParis[2], int *alive, BITMAP *page, t_joueur tab_course[NOMBRE_JOUEURS]);
 void dessinerlapin(BITMAP *bmp, t_lapin *lapin);
 void dessinerTablapins(BITMAP *bmp,t_lapin * tab[Nlapin]);
 void chargerSequence(t_sequence * seq);
@@ -414,7 +402,6 @@ typedef struct taupe{
 }t_taupe;
 
 
-
 typedef struct joueur_taupe
 {
     int tx, ty;
@@ -423,8 +410,9 @@ typedef struct joueur_taupe
 } t_joueur_taupe;
 
 
+int verfication(t_taupe tab_taupe);
+int Fin_partie_taupe(t_joueur_taupe joueur[NOMBRE_JOUEURS]);
 
-int verification(t_taupe tab_taupe);
 
 
 

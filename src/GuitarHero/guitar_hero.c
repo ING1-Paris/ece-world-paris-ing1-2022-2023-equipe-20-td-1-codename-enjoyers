@@ -206,7 +206,7 @@ void guitar_hero(t_joueur * tab_joueurs, t_entree_sauvegarde tab_donnees[NOMBRE_
 
     //printf("Note : %d, Millis: %d, portee: %d, X: %d, Y: %d, Radius: %d, Dy: %f, Affichage: %d\n", portee_2[0].note, portee_2[0].millis, portee_2[0].portee, portee_2[0].x_centre, portee_2[0].y_centre, portee_2[0].radius, portee_2[0].dy, portee_2[0].affichage);
 
-    for (int k = 0; k < NOMBRE_JOUEURS; ++k) {
+     for (int k = 0; k < NOMBRE_JOUEURS; ++k) {
 
         // On initialise les index
         index_portee_1 = 0;
@@ -350,11 +350,12 @@ void guitar_hero(t_joueur * tab_joueurs, t_entree_sauvegarde tab_donnees[NOMBRE_
             clear_bitmap(page);
 
             blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
+
         }
 
 
-        PlaySound(NULL, 0, 0);
-
+         PlaySound(NULL, 0, 0);
     }
 
     clear_bitmap(page);
@@ -368,7 +369,6 @@ void guitar_hero(t_joueur * tab_joueurs, t_entree_sauvegarde tab_donnees[NOMBRE_
     } else if (tab_joueurs[0].score == tab_joueurs[1].score) {
 
         alert("Ex-aequo ! Personne ne gagne de ticket !", NULL, NULL, "Retour au menu", NULL, 0, 0);
-
 
     } else {
 
