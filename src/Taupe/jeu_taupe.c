@@ -108,7 +108,7 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
             //Condition d'affichage des taupes
             for (int i = 0; i < NOMBRE_TAUPE; i++) {
 
-                if (mouse_b && verfication(mesTaupes[i]) == 1) {
+                if (mouse_b && verification(mesTaupes[i]) == 1) {
 
                     mesTaupes[i].affichage = 0;
                     rest(200);

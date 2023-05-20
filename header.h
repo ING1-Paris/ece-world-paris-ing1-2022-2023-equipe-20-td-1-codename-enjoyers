@@ -424,9 +424,7 @@ typedef struct joueur_taupe
 
 
 
-int verfication(t_taupe tab_taupe);
-int Fin_partie_taupe(t_joueur_taupe joueur[NOMBRE_JOUEURS]);
-
+int verification(t_taupe tab_taupe);
 
 
 

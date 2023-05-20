@@ -5,7 +5,7 @@
 #include "../../header.h"
 
 
-int verfication(t_taupe tab_taupe){
+int verification(t_taupe tab_taupe){
 
     for (int i = 0; i < 79; ++i) {
         for (int j = 0; j < 100; ++j) {
@@ -16,5 +16,6 @@ int verfication(t_taupe tab_taupe){
         }
 
     }
+
     return 0;
 }
