@@ -156,8 +156,7 @@ void jeuballons(t_joueur joueur_ballons[NOMBRE_JOUEURS], int tab_tmp[NOMBRE_JOUE
             tab_tmp[j] = (int) Joueur_actuel[j].temps;
         }
 
-
-        allegro_message("Vous avez éclaté les 5 ballons en %d secondes", tab_tmp[j]);
+        alert("Vous avez éclaté les 5 ballons en %d secondes", tab_tmp[j], NULL, "Retour", NULL, 0, 0);
 
 
         if (j == 0)
@@ -166,16 +165,16 @@ void jeuballons(t_joueur joueur_ballons[NOMBRE_JOUEURS], int tab_tmp[NOMBRE_JOUE
             if (tmpJ1 < tab_tmp[j]) {
 
                 joueur_ballons[0].tickets = joueur_ballons[0].tickets + 1;
-                allegro_message("Joueur 1, vous avez gagné un ticket !");
+                alert("Joueur 1, vous avez gagné un ticket !", NULL, NULL, "Retour", NULL, 0, 0);
 
             } else if (tmpJ1 == tab_tmp[j]) {
 
-                allegro_message("Egalité ! Personne ne gagne de ticket :/");
+                alert("Egalité ! Personne ne gagne de ticket :(", NULL, NULL, "Retour", NULL, 0, 0);
 
             } else {
 
                 joueur_ballons[1].tickets = joueur_ballons[1].tickets + 1;
-                allegro_message("Joueur 2, vous avez gagné un ticket !");
+                alert("Joueur 2, vous avez gagné un ticket !", NULL, NULL, "Retour", NULL, 0, 0);
             }
         }
     }

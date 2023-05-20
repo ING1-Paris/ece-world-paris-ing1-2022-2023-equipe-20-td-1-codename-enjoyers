@@ -10,12 +10,12 @@
 t_sequence tabSequences[NSEQUENCE] =
         {
                 //          nomSource           , nimg,  tx,  ty, ncol
-                { "../assets/Item/Course/sprites_lapins.bmp"    ,    8, 112,  140,    8 },
                 { "../assets/Item/Course/sprites_lapins.bmp"   ,    8,  112,  140,    8 },
                 { "../assets/Item/Course/sprites_lapins.bmp"   ,    8,  112,  140,    8 },
                 { "../assets/Item/Course/sprites_lapins.bmp"   ,    8,  112,  140,    8 },
-                { "../assets/Item/Course/sprites_lapins.bmp" ,    8,  112,  140,    8 },
-                { "../assets/Item/Course/sprites_lapins.bmp"   ,    8, 112,  140,    8 }
+                { "../assets/Item/Course/sprites_lapins.bmp"   ,    8,  112,  140,    8 },
+                { "../assets/Item/Course/sprites_lapins.bmp"   ,    8,  112,  140,    8 },
+                { "../assets/Item/Course/sprites_lapins.bmp"   ,    8,  112,  140,    8 }
         };
 
 
@@ -195,19 +195,17 @@ void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page, 
 
             if(lapin->type == tabParis[0]) {
                 joueur_course[0].tickets = joueur_course[0].tickets+1 ;
-                allegro_message("joueur 1, vous avez gagné un ticket !");
+                alert("joueur 1, vous avez gagné un ticket !", NULL, NULL, "Retour", NULL, 0, 0);
             }
             else {
                 joueur_course[1].tickets = joueur_course[1].tickets+1;
-                allegro_message("joueur 2, vous avez gagné un ticket !");
+                alert("joueur 2, vous avez gagné un ticket !", NULL, NULL, "Retour", NULL, 0, 0);
             }
 
         }
         else {
 
-            //textout_ex(page, font, "vous avez perdu", 150, 300, makecol(255, 255, 255), -1);
-            //textprintf_ex(page,font,150, 300, makecol(255,255,255), -1,"vous avez perdu");
-            allegro_message("vous avez perdu");
+            alert("Vous avez perdu :(", NULL, NULL, "Retour", NULL, 0, 0);
 
         }
     }
