@@ -11,6 +11,10 @@ Parc à thème Shrek, composé de 6 jeux originaux et d'une direction artistique
 
 ![Logo](https://cdn.discordapp.com/attachments/1039861665149243435/1109429068983709766/Ecran_d_acceuil.bmp)
 
+## Téléchargement
+
+- ⬇ Afin d'installer le jeu, téléchargez l'installateur dans la section `Release` et executez le simplement en suivant les indications.️
+
 
 ## Fonctionnalités
 
@@ -67,8 +71,8 @@ Toutefois, le code source est disponible ; libre à vous de l'adapter au systèm
 
 - [@Guicha](https://www.github.com/Guicha) 🗿
 - [@Yetiici](https://www.github.com/Yetiici) 🗿
-- [@Thaistatis](https://www.github.com/Thaistatis)
-- [@LuciePicavet](https://www.github.com/LuciePicavet)
+- [@Thaistatis](https://www.github.com/Thaistatis) 🆒
+- [@LuciePicavet](https://www.github.com/LuciePicavet) 🆒
 
 
 ## Sources
