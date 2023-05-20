@@ -68,7 +68,7 @@ void jeuballons(t_joueur joueur_ballons[NOMBRE_JOUEURS], int tab_tmp[NOMBRE_JOUE
         // Création du fusil et des ballons
         fusil = creerJoueur("../assets/Item/TirBallons/fusil.bmp");
 
-        for (int i=0; i<5; i++) {
+        for (int i=0; i<NBALLONS; i++) {
 
             sprintf(nom_fichier, "../assets/Item/TirBallons/ballon_%d.bmp", i);
 
@@ -156,7 +156,7 @@ void jeuballons(t_joueur joueur_ballons[NOMBRE_JOUEURS], int tab_tmp[NOMBRE_JOUE
             tab_tmp[j] = (int) Joueur_actuel[j].temps;
         }
 
-        alert("Vous avez éclaté les 5 ballons en %d secondes", tab_tmp[j], NULL, "Retour", NULL, 0, 0);
+        allegro_message("Vous avez éclaté les 5 ballons en %d secondes", tab_tmp[j]);
 
 
         if (j == 0)

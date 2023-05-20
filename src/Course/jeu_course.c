@@ -28,12 +28,44 @@ void jeu_course(t_joueur joueur_course[NOMBRE_JOUEURS])
 {
     fflush(stdin);
 
+    // BITMAP servant de buffer d'affichage (double buffer)
+    BITMAP *page;
+
+    // Image de fond
+    BITMAP *decor;
+    BITMAP *fond;
+
+    page=create_bitmap(SCREEN_W,SCREEN_H);
+    clear_bitmap(page);
+
+    // charger image de fond
+    decor=load_bitmap("../assets/maps/map_course.bmp",NULL);
+    if (!decor)
+    {
+        allegro_message("pas pu trouver map_course.bmp");
+        exit(EXIT_FAILURE);
+    }
+
     int tab_paris[2] = {0, 0};
     int tab_joueurs[NOMBRE_JOUEURS];
 
     char pari_lapin_temp[256]="";
 
     int alive = 1 ;
+
+
+    fond = load_bitmap("../assets/Item/Course/lapin_cretin.bmp", NULL);
+
+    if (!fond)
+    {
+        allegro_message("pas pu trouver lapin_cretin.bmp");
+        exit(EXIT_FAILURE);
+    }
+
+    blit(fond, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+    blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
+    fflush(stdin);
 
     DIALOG GUI_paris[] =
             {
@@ -74,23 +106,6 @@ void jeu_course(t_joueur joueur_course[NOMBRE_JOUEURS])
     // c'est un tableau de pointeurs sur structures t_lapins
     t_lapin * meslapins[Nlapin];
 
-    // BITMAP servant de buffer d'affichage (double buffer)
-    BITMAP *page;
-
-    // Image de fond
-    BITMAP *decor;
-
-    page=create_bitmap(SCREEN_W,SCREEN_H);
-    clear_bitmap(page);
-
-    // charger image de fond
-    decor=load_bitmap("../assets/maps/map_course.bmp",NULL);
-    if (!decor)
-    {
-        allegro_message("pas pu trouver map_course.bmp");
-        exit(EXIT_FAILURE);
-    }
-
 
     // Chargement des images des séquences animées
     chargerTabSequences();
@@ -119,6 +134,7 @@ void jeu_course(t_joueur joueur_course[NOMBRE_JOUEURS])
         rest(20);
     }
 
+    destroy_bitmap(fond);
     destroy_bitmap(decor);
     destroy_bitmap(page);
 
