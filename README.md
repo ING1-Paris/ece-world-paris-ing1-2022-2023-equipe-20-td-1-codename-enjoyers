@@ -60,7 +60,7 @@ Toutefois, le code source est disponible ; libre à vous de l'adapter au systèm
 
 #### ❓Windows m'indique qu'il s'agit d'un virus !
 
-➡️ Notre jeu ne possède pas de licence logicielle Windows et n'est donc pas signé auprès de la plupart des antivirus. Vous pouvez cliquer sur "Accepter le risque" et lancer l'installation du jeu. Si toutefois vous souhaitez être certain de ce que vous téléchargez, vous pouvez vous même compiler le jeu plus haut (cf )
+➡️ Notre jeu ne possède pas de licence logicielle Windows et n'est donc pas signé auprès de la plupart des antivirus. Vous pouvez cliquer sur "Accepter le risque" et lancer l'installation du jeu. Si toutefois vous souhaitez être certains de ce que vous téléchargez, vous pouvez vous même compiler le jeu plus haut (cf [Deploiement](https://github.com/ING1-Paris/ece-world-paris-ing1-2022-2023-equipe-20-td-1-codename-enjoyers#deploiement))
 
 
 ## Auteurs
