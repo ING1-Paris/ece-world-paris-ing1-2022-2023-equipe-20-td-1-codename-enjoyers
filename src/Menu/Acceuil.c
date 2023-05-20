@@ -31,6 +31,16 @@ void Acceuil(){
 
         blit(page,screen,0,0,0,0,SCREEN_W, SCREEN_H);
 
+        // SI VOUS VOULEZ COUPER CETTE MUSIQUE DE MORT, APPUYEZ SUR W
+        if (key[KEY_Z]) {
+
+            printf("bouton presse !\n");
+
+            PlaySound(NULL, 0, 0);
+
+            rest(1000);
+        }
+
     }
 
 }

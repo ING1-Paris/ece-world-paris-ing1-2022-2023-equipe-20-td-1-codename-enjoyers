@@ -166,7 +166,7 @@ void Actualisation_Snake(t_corp_de_snake* head);
 void Deplacement_Snake_1(t_corp_de_snake * head);
 void Deplacement_Snake_2(t_corp_de_snake * head);
 void Ajout_de_Longueur(t_corp_de_snake* Head,BITMAP* Tab_de_sprites[12],int* Longueur);
-void Invertion(t_corp_de_snake* Liste_init,BITMAP* page,int Animation);
+void Invertion(t_corp_de_snake* Liste_init,BITMAP* page, int Animation);
 int Collision_Acteur(t_corp_de_snake* head,t_corp_de_snake* corp);
 void generation_Pomme(t_Pomme* Pomme);
 int actualistation_Pomme(t_corp_de_snake* head,t_Pomme* Pomme);
@@ -387,7 +387,7 @@ int Collision_joueur_rondin(t_rondin *rondin, t_joueur_riv *joueur);
 
 //JEU DE LA TAUPE
 
-#define NOMBRE_TAUPE 10
+#define NOMBRE_TAUPE 30
 void jeu_taupe(t_joueur joueur_riv[NOMBRE_JOUEURS]);
 
 

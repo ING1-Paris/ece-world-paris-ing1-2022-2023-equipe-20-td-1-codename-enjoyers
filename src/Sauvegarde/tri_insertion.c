@@ -52,7 +52,7 @@ void triInsertion(t_entree_sauvegarde * tableau, int taille_tab) {
         }
 
         // Ballons
-        while (j > 0 && tableau[j-1].temps < tableau[j].temps && tableau[j].jeu == 3) {
+        while (j > 0 && tableau[j-1].temps > tableau[j].temps && tableau[j].jeu == 3) {
 
             tmp = tableau[j];
             tableau[j] = tableau[j-1];
@@ -82,7 +82,7 @@ void triInsertion(t_entree_sauvegarde * tableau, int taille_tab) {
         }
 
         // Riviere
-        while (j > 0 && tableau[j-1].temps < tableau[j].temps && tableau[j].jeu == 6) {
+        while (j > 0 && tableau[j-1].temps > tableau[j].temps && tableau[j].jeu == 6) {
 
             tmp = tableau[j];
             tableau[j] = tableau[j-1];
