@@ -27,6 +27,8 @@ void traverser_riviere(t_joueur tab_joueurs[NOMBRE_JOUEURS], int tab_temps[NOMBR
     // Déclaration des variables de jeu
     int alive = 1;
 
+    // Initialisation de la couleur bleue de la riviere
+    int bleu = makecol(80, 167, 232);
 
 
 
@@ -150,7 +152,7 @@ void traverser_riviere(t_joueur tab_joueurs[NOMBRE_JOUEURS], int tab_temps[NOMBR
 
 
             // Arrêt du chronomètre lorsque le joueur arrive à la fin et fin de la boucle de jeu
-            if (tab_joueurs_riv[i]->y >= 640) {
+            if ((tab_joueurs_riv[i]->y >= 640) || (tab_joueurs_riv[i]->couleur == bleu)) {
 
                 end = time(NULL);
 
@@ -188,7 +190,7 @@ void traverser_riviere(t_joueur tab_joueurs[NOMBRE_JOUEURS], int tab_temps[NOMBR
 
 
     // Détection de la victoire
-    if (tab_joueurs_riv[0]->temps < tab_joueurs_riv[1]->temps) {
+    if ((tab_joueurs_riv[0]->temps < tab_joueurs_riv[1]->temps)&&(tab_joueurs_riv[0]->y>=640)) {
 
         alert("Joueur n°1, vous avez gagné un ticket ! ", NULL, NULL, " Retour au menu ", NULL, 0, 0);
         tab_joueurs[0].tickets = tab_joueurs[0].tickets + 1;
@@ -197,10 +199,13 @@ void traverser_riviere(t_joueur tab_joueurs[NOMBRE_JOUEURS], int tab_temps[NOMBR
 
         alert("Egalité ! Personne ne gagne de ticket :/", NULL, NULL, " Retour au menu ", NULL, 0, 0);
 
-    } else {
+    } else if ((tab_joueurs_riv[1]->temps < tab_joueurs_riv[0]->temps)&&(tab_joueurs_riv[1]->y>=640)){
 
         alert("Joueur n°2, vous avez gagné un ticket ! ", NULL, NULL, " Retour au menu ", NULL, 0, 0);
         tab_joueurs[1].tickets = tab_joueurs[1].tickets + 1;
+
+    } else if ((tab_joueurs_riv[1]->y < 640 )&&(tab_joueurs_riv[0]->y <640)){
+        alert("Vous avez tous les deux perdus... ", NULL, NULL, " Retour au menu ", NULL, 0, 0);
 
     }
 
