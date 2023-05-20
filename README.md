@@ -35,6 +35,8 @@ Parc à thème Shrek, composé de 6 jeux originaux et d'une direction artistique
 **🟥 Quitter:** Vous pouvez quitter en interragissant avec le bord bas de l'écran, encadré en jaune
 
 ![Logo](https://cdn.discordapp.com/attachments/1039861665149243435/1109431343089205308/Attraction_exemple.png)
+
+**😡 Marre de la musique d'accueil ?** Appuyez une fois sur `W` sur l'écran d'accueil du jeu pour désactiver la musique
 ## Deploiement
 
 Si vous souhaitez vous même compiler le projet à partir du code source ci-dessus, inclure le fichier `alleg44.dll` dans le dossier `cmake-build-debug`.
