@@ -320,7 +320,6 @@ void Snake(t_joueur * Joueur, int tab_temps[NOMBRE_JOUEURS]) {
 
     //destruction des bitmaps du snake et liberation de la liste chainée
     destroy_bitmap(page);
-
     destroy_bitmap(decor);
 
     destroy_bitmap(Nom_du_jeu);
