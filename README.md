@@ -37,13 +37,14 @@ Si vous souhaitez vous même compiler le projet à partir du code source ci-dess
 
 
 
+
 ## FAQ
 
 #### ❓Le jeu ne marche pas sur macOS/Linux :/
 
 ➡️ Le jeu n'est disponible que sur Windows, et nous ne prévoyons pour l'instant pas de le porter sur d'autres plateformes.
 
-Toutefois, le code source est disponible ; libre à vous de l'adapter au système d'exploitation de votre choix.
+Toutefois, le code source est disponible ; libre à vous de l'adapter au système d'exploitation de votre choix. (cf [Deploiement](https://github.com/ING1-Paris/ece-world-paris-ing1-2022-2023-equipe-20-td-1-codename-enjoyers#deploiement))
 
 #### ❓ Mon jeu fait un écran noir au démarrage et crash !
 
@@ -62,7 +63,7 @@ Toutefois, le code source est disponible ; libre à vous de l'adapter au systèm
 ➡️ Notre jeu ne possède pas de licence logicielle Windows et n'est donc pas signé auprès de la plupart des antivirus. Vous pouvez cliquer sur "Accepter le risque" et lancer l'installation du jeu. Si toutefois vous souhaitez être certain de ce que vous téléchargez, vous pouvez vous même compiler le jeu plus haut (cf )
 
 
-## Authors
+## Auteurs
 
 - [@Guicha](https://www.github.com/Guicha) 🗿
 - [@Yetiici](https://www.github.com/Yetiici) 🗿
