@@ -200,7 +200,10 @@ void Mort_de_serpent(t_corp_de_snake * head);
 
 # Snake `5/5`
 
-### Algorigramme
+### Logigramme
+
+![bg right w:550](./images/algorigramme_jeu_snake.png)
+
 
 
 
@@ -326,11 +329,13 @@ t_cercle_fixe * tab_cercles_fixes, int * alive, int mono_portee, t_joueur * joue
 
 # Guitar Hero `9/9`
 
-### Algorigramme
+### Logigramme
+
+![bg right w:600 h:500](./images/algorigramme_guitare_heros.png)
 
 ---
 
-# Tir ballons `1/7`
+# Tir ballons `1/8`
 
 *Réalisé par: Thaïs LECLAIRE (100%)*
 
@@ -344,7 +349,7 @@ t_cercle_fixe * tab_cercles_fixes, int * alive, int mono_portee, t_joueur * joue
 
 ---
 
-# Tir ballons `2/7`
+# Tir ballons `2/8`
 
 ### Structures de données utilisées
 
@@ -364,7 +369,7 @@ typedef struct acteur
 
 ---
 
-# Tir ballons `3/7`
+# Tir ballons `3/8`
 
 ```C
 typedef struct joueur_ballons {
@@ -378,7 +383,7 @@ typedef struct joueur_ballons {
 
 ```
 ---
-# Tir ballons `4/7`
+# Tir ballons `4/8`
 
 ```C
 typedef struct ballon {
@@ -399,7 +404,7 @@ typedef struct ballon {
 
 ---
 
-# Tir ballons `5/7`
+# Tir ballons `5/8`
 
 ### Prototypes
 
@@ -419,17 +424,17 @@ int libreListeActeurs(t_listeActeurs *la);
 ```
 
 ---
-# Tir ballons `6/7`
+# Tir ballons `6/8`
 
 ### Prototypes
 
 ```C
+void jeu_course(t_joueur joueur_course[NOMBRE_JOUEURS]);
+
 t_joueur_ballons * creerJoueur(char *nomimage);
 void actualiserJoueur(t_joueur_ballons *joueur,t_listeActeurs *la);
 void dessinerJoueur(BITMAP *bmp,t_joueur_ballons *joueur);
 void destinActeur(t_acteur *acteur);
-
-
 void collisionActeur(t_ballon * ballon ,t_acteur * acteur);
 void collisionListeActeurs(t_ballon *ballon,t_listeActeurs *la);
 
@@ -439,27 +444,35 @@ void dessinerBallon(BITMAP *bmp, t_ballon * ballon);
 ```
 
 ---
-# Tir ballons `7/7`
+# Tir ballons `7/8`
 
-### Algorigramme
+### Logigramme
 
 ![bg right h:700](./images/algorigramme_jeu_ballons.png)
 
 ---
 
-# Course de lapins `1/8`
+# Tir ballons `8/8`
+
+### Graphe d'appel
+
+![center w:620 ](./images/graphe_appel_tir_ballon.png)
+
+---
+
+## Course lapins `1/8`
 
 *Réalisé par: Thaïs LECLAIRE (100%)*
 
 * Gestion aléatoire de la vitesse des lapins  
 * Collisions avec la ligne d'arrivée 
-* Interface de dialogue pour les paris des joueurs
+* Interface de dialogue pour le pari du joueur
 
 ![bg right w:600 h:500](./images/interface_course.jpg)
 
 ---
 
-# Course de lapins  `2/8`
+# Course lapins  `2/8`
 
 ### Structures de données utilisées
 
@@ -477,7 +490,7 @@ typedef struct sequence
 
 ---
 
-# Course de lapins `3/8`
+# Course lapins `3/8`
 
 ```C
 typedef struct lapin
@@ -495,7 +508,7 @@ typedef struct lapin
 } t_lapin;
 ```
 ---
-# Course de lapins `4/8`
+# Course lapins `4/8`
 
 ```C
 typedef struct ballon {
@@ -517,7 +530,7 @@ typedef struct ballon {
 
 ---
 
-# Course de lapins `6/8`
+# Course lapins `5/8`
 
 ### Prototypes
 
@@ -536,7 +549,7 @@ void chargerTabSequences();
 ```
 
 ---
-# Course de lapins `7/8`
+# Course lapins `6/8`
 
 ### Prototypes
 
@@ -556,11 +569,214 @@ void dessinerBallon(BITMAP *bmp, t_ballon * ballon);
 ```
 
 ---
-# Course de lapins `8/8`
+## Course lapins `7/8`
 
-### Algorigramme
+### Logigramme
 
 ![bg right h:700](./images/algorigramme_jeu_course.png)
+
+---
+
+# Course lapins `8/8`
+
+### Graphe d'appel
+
+
+![center w:900 ](./images/graphe_appel_course.png)
+
+---
+
+
+# Rivière  `1/7`
+
+*Réalisé par: Lucie Daix (100%)*
+
+* Gestion aléatoires des rondins 
+* Déplacement des acteurs
+* Collisions avec rondin
+
+
+![bg right w:500 h:400](./images/riviere.jpg)
+
+
+---
+
+# Rivière `2/7`
+
+### Structures de données utilisées
+
+```C
+typedef struct rondin {
+
+    int tx,ty;  
+    BITMAP *img;
+    int posx,posy;
+    int depx;
+    int affichage;
+
+}t_rondin;
+
+```
+
+---
+
+# Rivière `3/7`
+
+```C
+typedef struct joueur_riv
+{
+    int tx, ty;
+    unsigned long temps;
+    int x, y;
+    int dx,dy;
+    int skin_utilise;
+    BITMAP * skin_perso[13];
+    int affichage;
+    int couleur;
+
+} t_joueur_riv;
+
+```
+---
+
+# Rivière `4/7`
+
+### Tableaux importants
+
+
+```C
+t_joueur_riv * tab_joueurs_riv[NOMBRE_JOUEURS];
+t_rondin * tab_rondins[NRONDIN];
+
+```
+
+---
+
+# Rivière `5/7`
+
+### Prototypes
+
+```C
+
+void traverser_riviere(t_joueur joueur_riv[NOMBRE_JOUEURS], int tab_temps[NOMBRE_JOUEURS]);
+
+t_rondin * Creation_rondin(int nb);
+void Remplir_tab_rondin(t_rondin * tableau_de_rondin[NRONDIN]);
+void Afficher_rondin(BITMAP *bmp, t_rondin *rondin_a_afficher);
+void Afficher_tab_rondin(BITMAP *bmp, t_rondin *tab_rondin[NRONDIN]);
+
+t_joueur_riv * Creation_joueur();
+void Remplir_tab_joueur(t_joueur_riv *tab_joueur[NOMBRE_JOUEURS]);
+void Deplacement_tab_rondin(t_rondin *le_rondin[NRONDIN]);
+void Deplacement_joueur(t_rondin * tab_rondins[NRONDIN], t_joueur_riv * joueur_en_train_de_jouer, int Innactivite[NOMBRE_JOUEURS]);
+
+int Collision_joueur_rondin(t_rondin *rondin, t_joueur_riv *joueur);
+
+```
+
+---
+
+# Rivière `6/7`
+
+### Logigramme
+<br>
+
+![bg right h:700](./images/algorigramme_jeu_riviere.png)
+
+---
+
+# Rivière `7/7`
+
+### Graphe d'appel
+
+
+![center w:900 ](./images/graphe_appel_riviere.png)
+
+---
+
+# Taupe-là !  `1/6`
+
+*Réalisé par: Lucie Daix (100%)*
+
+* Gestion aléatoires des taupes 
+* Collisions entre les taupes et les souris
+
+
+![bg right w:500 h:400](./images/taupe.jpg)
+
+
+---
+
+# Taupe-là ! `2/6`
+
+### Structures de données utilisées
+
+```C
+typedef struct taupe{
+
+    int tx,ty;
+    BITMAP *skin;
+    int affichage;
+    int taille[79][100][2];
+    int x,y;
+
+}t_taupe;
+
+```
+
+---
+
+# Taule-là ! `3/6`
+
+```C
+typedef struct joueur_taupe
+{
+    int tx, ty;
+    unsigned long temps;
+    int score;
+} t_joueur_taupe;
+
+```
+
+### Tableaux importants
+
+```C
+t_taupe mesTaupes[NOMBRE_TAUPE];
+t_joueur_taupe monJoueur[NOMBRE_JOUEURS];
+
+```
+
+---
+
+# Taupe-là ! `4/6`
+
+### Prototypes
+
+```C
+
+void jeu_taupe(t_joueur joueur_riv[NOMBRE_JOUEURS]);
+
+int verification(t_taupe tab_taupe);
+
+```
+
+---
+
+# Taupe-là ! `5/6`
+
+### Logigramme
+
+![bg right h:730](./images/algorigramme_jeu_taupes.png)
+
+---
+
+# Taupe-là ! `6/6`
+
+### Graphe d'appel
+
+<br>
+
+![center](./images/graphe_appel_taupe.png)
 
 ---
 
@@ -587,104 +803,79 @@ void dessinerBallon(BITMAP *bmp, t_ballon * ballon);
 
 ---
 
-
 # Preuves de conception
 
-<br>
+![center w:700 h](./images/schemas_jeux.jpg)
 
-![bg right 95%](./images/schemas_jeux.jpg)
+Schémas qui récapitulent les fonctions des jeux
+
+---
 
 
-Schémas qui montrent la gestion des ... dans les 6 jeux 
+
+# bilan collectif 
+
+expérience acquises
+
+//perso thaïs + autre diapo 1er semestre
+
+---
+
+
+# Thomas
+
+## Tâches réalisées
+
+- `✅ 100%` Jeu du snake
+- `✅ 100%` Menu
+- `✅ 100%` Sauvegarde
+
+---
+
+
+# Guy-Charbel
+
+## Tâches réalisées
+
+- `✅ 100%` Jeu de Guitar Hero
+- `✅ 100%` Menu
+- `✅ 100%` Sauvegarde
 
 
 ---
 
-schémas qui illustrent la gestion des sprites
+# Thaïs
 
+## Tâches réalisées
 
-
----
-
-# Investissement GitHub `1/2`
-
-![center h:500](./images/GITHUB_preuve.png)
-
- 
----
-
-# Investissement GitHub `2/2`
-
-![h:400](./images/resume%20github.jpg)
-
-![bg right 90%](./images/graphique_github.png)
-
----
-
-# Bilan collectif 
-
----
-
-# Thomas LEROY
-
-#### Tâches réalisées
-
-- `✅ 100%` Jeu Snake
-- `✅ 100%` Sauvegarde / Statistiques
-- `✅ 100%` Animations joueurs / Gestion des sprites
-- `✅ 100%` Direction artistique
-- `✅ 100%` Contribution MARP
-- `✅ 100%` Score et tickets
-- `✅ 100%` Interfaces
-- `✅ 100%` Finitions / Corrections de bugs
-
----
-
-# Guy-Charbel KAIROUZ
-
-#### Tâches réalisées
-
-- `✅ 100%` Jeu Guitar Hero
-- `✅ 100%` Sauvegarde / Statistiques
-- `✅ 100%` Travail de documentation approfondi
-- `✅ 100%` Contribution MARP
-- `✅ 100%` Interfaces
-- `✅ 100%` Gestion des menus
-- `✅ 100%` Optimisations / Corrections de bugs / Formatage du code
-- `✅ 100%` Gestion du repository Github
-
-
----
-
-# Thaïs LECLAIRE
-
-#### Tâches réalisées
-
-- `✅ 100%` Jeu de la course de lapins
 - `✅ 100%` Jeu du tir aux ballons
-- `✅ 100%` Contribution MARP
-- `✅ 100%` Infographies et schémas
+- `✅ 80%` Jeu course de lapin
+     - manque de compétence*
+- `✅ 100%` Affiche
+- `✅ 100%` Infographie
+---
+
+# Lucie 
+
+## Tâches réalisées 
+
+- `✅ 100%` jeu rivière
+- `✅ 80%` jeu taupe
+    - manque de compétence*
+- `✅ 100%` Marps
 
 ---
 
-# Lucie DAIX
+# Investissement 
 
-#### Tâches réalisées
+![bg right 95%](./images/GITHUB_preuve.png)
 
-- `✅ 100%` Jeu de la traversée de la rivière
-- `✅ 100%` Jeu des taupes
-- `✅ 100%` Contribution MARP
+ ![center h:100](./images/GITHUB_preuve(2).png)
 
 
 ---
 
-# Pourcentage de réalisation de chacun
-
-![center h:500](./images/camembert.png)
-
----
-
-# Récapitulatif des jeux `1/2`
+# Récapitulatif des jeux
 
 | Jeu | Avancement | Problèmes / reste |
 | --- | --- | --- |
@@ -695,7 +886,7 @@ schémas qui illustrent la gestion des sprites
 
 ---
 
-# Récapitulatif des jeux `2/2`
+# Récapitulatif des jeux
 
 | Jeu | Avancement | Problèmes / reste |
 | --- | --- | --- |
@@ -704,10 +895,7 @@ schémas qui illustrent la gestion des sprites
 | Tir aux ballons | 90% | Les ballons n'éclatent pas mais s'envolent |
 
 
----
 
-# Conclusion
 
-De manière générale, nous avons grandement apprécié réaliser ce projet en équipe. Nous avons beaucoup appris sur de nombreux plans tels que le travail de groupe, l'organisation, la recherche, la conception, la détermination et l'entraide. 
 
-Nous sommes ravis de poursuivre sur ce chemin, et attendons avec impatience les prochains projets à venir !
+
