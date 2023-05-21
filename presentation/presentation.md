@@ -202,6 +202,9 @@ void Mort_de_serpent(t_corp_de_snake * head);
 
 ### Algorigramme
 
+
+
+
 ---
 
 # Guitar Hero `1/9`
