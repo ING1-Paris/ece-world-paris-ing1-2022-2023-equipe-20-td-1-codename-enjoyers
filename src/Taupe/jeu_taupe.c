@@ -6,15 +6,23 @@
 
 void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
 
-    t_taupe mesTaupes[NOMBRE_TAUPE];
-    t_joueur_taupe monJoueur[NOMBRE_JOUEURS];
-
-    BITMAP *page;        // BITMAP buffer d'affichage
+    // Déclaration des BITMAPS
+    BITMAP *page;
     BITMAP *decor;
     BITMAP *fond;
 
+    // Déclaration des variables de joueurs et de rondins
+    t_taupe mesTaupes[NOMBRE_TAUPE];
+    t_joueur_taupe monJoueur[NOMBRE_JOUEURS];
 
-    //Chargement BITMAP
+    // Déclaration des variables de temps
+    time_t debut;
+    time_t end;
+
+
+
+
+    // Initialisation des BITMAPS
     page = create_bitmap(SCREEN_W, SCREEN_H);
 
     decor = load_bitmap("../assets/maps/MAP_TAUPE.bmp",NULL);
@@ -37,7 +45,7 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
 
 
 
-    //Initialisation des joueurs
+    //Initialisation du temps et des scores des joueurs
     for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
 
         monJoueur[i].temps = 0;
@@ -46,12 +54,15 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
     }
 
 
+
+    // Affichage de l'interface
     blit(fond, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
     blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
     alert("Bienvenue sur le JEU TAUPE-LA !", NULL, NULL, "go !", NULL, 0, 0);
 
 
 
+    // Boucle de joueurs (joueur 1 puis joueur 2)
     for (int k = 0; k < NOMBRE_JOUEURS; ++k) {
 
 
@@ -85,13 +96,15 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
                 }
 
             }
+
         }
+
 
 
         alert("Tenez-vous prêt...", NULL, "Vous avez 5 secondes pour éliminer le plus de rat,", "C'est parti !", NULL, 0, 0);
 
-
-        time_t debut = time(NULL);
+        // Démarrage du chronomètre
+        debut = time(NULL);
 
 
         // début du jeu
@@ -101,11 +114,11 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
             monJoueur[k].temps = debut;
 
 
-
+            // Affichage du décor sur la page (double buffer)
             blit(decor, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
 
-            //Condition d'affichage des taupes
+            //Gestion de l'affichage des taupes
             for (int i = 0; i < NOMBRE_TAUPE; i++) {
 
                 if (mouse_b && verification(mesTaupes[i]) == 1) {
@@ -122,6 +135,7 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
 
                 if (mesTaupes[i].affichage == 1) {
 
+                    // Affichage du joueur
                     masked_blit(mesTaupes[i].skin, page, 0, 0, mesTaupes[i].x, mesTaupes[i].y, mesTaupes[i].tx,mesTaupes[i].ty);
 
                 } else {
@@ -132,12 +146,15 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
             }
 
 
-            //Gestion chrono
-            time_t end = time(NULL);
+            // Arrêt du chronomètre lorsque le joueur arrive à la fin
+            end = time(NULL);
+
+
+            // Calcul du temps de parcours et stockage de la valeur dans la structure du joueur
             monJoueur[k].temps = (unsigned long) difftime(end, debut);
 
 
-            //Affichage score et temps des joueurs
+            // Affichage de l'interface de jeu
             rectfill(page, 10, 10, 250, 90, makecol(255, 255, 255));
             rect(page, 10, 10, 250, 90, makecol(0, 0, 0));
             stretch_blit(joueur_taupe[k].sprites[12], page, 0, 0, 225, 225, 15, 15, 70, 70);
@@ -146,13 +163,12 @@ void jeu_taupe(t_joueur joueur_taupe[NOMBRE_JOUEURS]) {
             textprintf_ex(page, font, 90, 50, makecol(0, 0, 0), -1, "Score: %d", joueur_taupe[k].score);
             textprintf_ex(page, font, 90, 70, makecol(0, 0, 0), -1, "Temps restant: %lu", 5 - monJoueur[k].temps);
 
-
-            blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+            // Affichage de la page sur l'écran (double buffer)
+            masked_blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
         }
 
     }
-
 
     //Gestion des tickets
     if (joueur_taupe[0].score > joueur_taupe[1].score) {

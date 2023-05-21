@@ -365,9 +365,10 @@ t_rondin * Creation_rondin(int nb);
 void Remplir_tab_rondin(t_rondin * tableau_de_rondin[NRONDIN]);
 void Afficher_rondin(BITMAP *bmp, t_rondin *rondin_a_afficher);
 void Afficher_tab_rondin(BITMAP *bmp, t_rondin *tab_rondin[NRONDIN]);
+void Deplacement_tab_rondin(t_rondin *le_rondin[NRONDIN]);
+
 t_joueur_riv * Creation_joueur();
 void Remplir_tab_joueur(t_joueur_riv *tab_joueur[NOMBRE_JOUEURS]);
-void Deplacement_tab_rondin(t_rondin *le_rondin[NRONDIN]);
 void Deplacement_joueur(t_rondin * tab_rondins[NRONDIN], t_joueur_riv * joueur_en_train_de_jouer, int Innactivite[NOMBRE_JOUEURS]);
 int Collision_joueur_rondin(t_rondin *rondin, t_joueur_riv *joueur);
 
@@ -410,9 +411,7 @@ typedef struct joueur_taupe
 } t_joueur_taupe;
 
 
-int verfication(t_taupe tab_taupe);
-int Fin_partie_taupe(t_joueur_taupe joueur[NOMBRE_JOUEURS]);
-
+int verification(t_taupe tab_taupe);
 
 
 

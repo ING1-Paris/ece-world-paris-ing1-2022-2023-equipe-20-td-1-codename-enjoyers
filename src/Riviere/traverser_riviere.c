@@ -38,7 +38,7 @@ void traverser_riviere(t_joueur tab_joueurs[NOMBRE_JOUEURS], int tab_temps[NOMBR
     // Initialisation des BITMAPS
     page = create_bitmap(SCREEN_W, SCREEN_H);
 
-    decor=load_bitmap("../assets/maps/MAP_RIVIERE.bmp",NULL);
+    decor = load_bitmap("../assets/maps/MAP_RIVIERE.bmp",NULL);
 
     if (!decor)
     {
@@ -46,7 +46,7 @@ void traverser_riviere(t_joueur tab_joueurs[NOMBRE_JOUEURS], int tab_temps[NOMBR
         exit(EXIT_FAILURE);
     }
 
-    fond=load_bitmap("../assets/Item/Riviere/fond_riviere.bmp",NULL);
+    fond = load_bitmap("../assets/Item/Riviere/fond_riviere.bmp",NULL);
 
     if (!fond)
     {

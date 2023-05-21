@@ -327,6 +327,240 @@ t_cercle_fixe * tab_cercles_fixes, int * alive, int mono_portee, t_joueur * joue
 
 ---
 
+# Tir ballons `1/7`
+
+*Réalisé par: Thaïs LECLAIRE (100%)*
+
+* Gestion des ballons aléatoires 
+* Déplacement des ballons (vitesse et positions)
+* Collisions entre les tirs et les ballons
+
+
+![bg right w:600 h:500](./images/interface_tirballons.jpg)
+
+
+---
+
+# Tir ballons `2/7`
+
+### Structures de données utilisées
+
+```C
+typedef struct acteur
+{
+    int x,y; // position du coin supérieur gauche
+    int dx,dy; // vecteur déplacement
+    int tx,ty; // largeur hauteur de l'image
+    int couleur;
+    int comportement; // comportement : 0 normal et 1 explosion
+    int cptexplo; // temps depuis l'explosion
+    int vivant; // vivant : 0 mort (doit disparaitre de la liste) et 1 vivant
+
+} t_acteur;
+```
+
+---
+
+# Tir ballons `3/7`
+
+```C
+typedef struct joueur_ballons {
+    int x,y;     // position
+    int tx,ty;   // taille
+    int vit;     // vitesse des déplacements (nombre de pixels)
+    int cpttir0; // tempo armement 0
+    int cpttir1; // tempo armement 1
+    BITMAP *img; // sprite (image chargée)
+} t_joueur_ballons;
+
+```
+---
+# Tir ballons `4/7`
+
+```C
+typedef struct ballon {
+    int x,y;     // position
+    int dx, dy;      // vecteur déplacement
+    int tx,ty;   // taille
+    BITMAP *img; // sprite (image chargée)
+    int couleur;
+} t_ballon;
+
+```
+
+### Tableaux importants
+
+```C
+    t_joueur_tir_aux_ballons Joueur_actuel[NOMBRE_JOUEURS];
+```
+
+---
+
+# Tir ballons `5/7`
+
+### Prototypes
+
+```C
+void jeuballons(t_joueur joueur_ballons[NOMBRE_JOUEURS], int tab_tmp[NOMBRE_JOUEURS]);
+
+t_acteur * creerActeur(int x,int y,int type);
+t_acteur * ajouterActeur(t_listeActeurs *la,int x,int y,int type);
+t_listeActeurs * creerListeActeurs(int maxacteurs);
+void enleverActeur(t_listeActeurs *la,int i);
+void actualiserActeur(t_acteur *acteur);
+void actualiserListeActeurs(t_listeActeurs *la);
+void dessinerActeur(BITMAP *bmp,t_acteur *acteur);
+void dessinerListeActeurs(BITMAP *bmp,t_listeActeurs *la);
+int libreListeActeurs(t_listeActeurs *la);
+
+```
+
+---
+# Tir ballons `6/7`
+
+### Prototypes
+
+```C
+t_joueur_ballons * creerJoueur(char *nomimage);
+void actualiserJoueur(t_joueur_ballons *joueur,t_listeActeurs *la);
+void dessinerJoueur(BITMAP *bmp,t_joueur_ballons *joueur);
+void destinActeur(t_acteur *acteur);
+
+
+void collisionActeur(t_ballon * ballon ,t_acteur * acteur);
+void collisionListeActeurs(t_ballon *ballon,t_listeActeurs *la);
+
+t_ballon * creerBallon(char *nomimage);
+void actualiserBallon(t_ballon * ballon);
+void dessinerBallon(BITMAP *bmp, t_ballon * ballon);
+```
+
+---
+# Tir ballons `7/7`
+
+### Algorigramme
+
+![bg right h:700](./images/algorigramme_jeu_ballons.png)
+
+---
+
+# Run lapins `1/8`
+
+*Réalisé par: Thaïs LECLAIRE (100%)*
+
+* Gestion aléatoire de la vitesse des lapins  
+* Collisions avec la ligne d'arrivée 
+* Interface de dialogue pour le pari du joueur
+
+![bg right w:600 h:500](./images/interface_course.jpg)
+
+---
+
+# Course de lapins  `2/8`
+
+### Structures de données utilisées
+
+```C
+typedef struct sequence
+{
+    char *nomSource; 
+    int nimg;        
+    int tx,ty;       
+    int ncol;  // nbr images cotes à cotés horizontalement dans le fichier image
+    BITMAP **img;    
+} t_sequence;
+
+```
+
+---
+
+# Course de lapins `3/8`
+
+```C
+typedef struct lapin
+{
+    int x,y;         
+    int dx;        
+    int tmpdx;       // ralentir déplacements en x (1 pour ne pas ralentir)
+    int cptdx;       // compteur pour ralentir déplacement
+    int tx,ty;      
+    int imgcourante; // indice de l'image courante
+    int tmpimg;      // ralentir séquence (image suivante 1 fois sur tmpimg)
+    int cptimg;      // compteur pour ralentir séquence
+    int type;  
+
+} t_lapin;
+```
+---
+# Course de lapins `4/8`
+
+```C
+typedef struct ballon {
+    int x,y;     // position
+    int dx, dy;  // vecteur déplacement
+    int tx,ty;   // taille
+    BITMAP *img; // sprite (image chargée)
+    int couleur;
+} t_ballon;
+
+```
+
+### Tableaux importants
+
+```C
+    int tab_paris[2] = {0, 0};
+    int tab_joueurs[NOMBRE_JOUEURS];
+```
+
+---
+
+# Course de lapins `6/8`
+
+### Prototypes
+
+<br>
+
+```C
+t_lapin * creerlapin(int type, int x, int y, int dx, int tmpdx, int tmpimg);
+void remplirTablapins(t_lapin * tab[Nlapin]);
+void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page, t_joueur tab_course[NOMBRE_JOUEURS]);
+void actualiserTablapins(t_lapin * tab[Nlapin], int tabParis[2], int *alive, BITMAP *page, t_joueur tab_course[NOMBRE_JOUEURS]);
+void dessinerlapin(BITMAP *bmp, t_lapin *lapin);
+void dessinerTablapins(BITMAP *bmp,t_lapin * tab[Nlapin]);
+void chargerSequence(t_sequence * seq);
+void chargerTabSequences();
+
+```
+
+---
+# Course de lapins `7/8`
+
+### Prototypes
+
+```C
+t_joueur_ballons * creerJoueur(char *nomimage);
+void actualiserJoueur(t_joueur_ballons *joueur,t_listeActeurs *la);
+void dessinerJoueur(BITMAP *bmp,t_joueur_ballons *joueur);
+void destinActeur(t_acteur *acteur);
+
+
+void collisionActeur(t_ballon * ballon ,t_acteur * acteur);
+void collisionListeActeurs(t_ballon *ballon,t_listeActeurs *la);
+
+t_ballon * creerBallon(char *nomimage);
+void actualiserBallon(t_ballon * ballon);
+void dessinerBallon(BITMAP *bmp, t_ballon * ballon);
+```
+
+---
+# Course de lapins `8/8`
+
+### Algorigramme
+
+![bg right h:700](./images/algorigramme_jeu_course.png)
+
+---
+
 # Système de sauvegarde (écriture) `1/2`
 
 1- Création du fichier de sauvegarde ou s'il existe déjà, lecture de celui-ci
@@ -348,8 +582,8 @@ t_cercle_fixe * tab_cercles_fixes, int * alive, int mono_portee, t_joueur * joue
 ![center w:900 h:300](./images/stats.png)
 
 
-
 ---
+
 
 # Preuves de conception
 
@@ -369,8 +603,7 @@ schémas qui illustrent la gestion des sprites
 
 ---
 
-# Contributions Github 
-
+# Investissement 
 
 ![center](./images/GITHUB_preuve.png)
 
@@ -385,14 +618,32 @@ schémas qui illustrent la gestion des sprites
 ---
 
 
-# bilan 
+# bilan collectif 
 
 expérience acquises
 
 //perso thaïs + autre diapo 1er semestre
 
+---
+
+# Récapitulatif des jeux
+
+| Jeu | Avancement | Problèmes / reste |
+| --- | --- | --- |
+| Course de lapins | 100% | - |
+| Traversé de la rivière | 100% | - |
+| Taupe-là !| 90% | Les taupes ne se cachent pas, elles restent afficher|
 
 
+---
+
+# Récapitulatif des jeux
+
+| Jeu | Avancement | Problèmes / reste |
+| --- | --- | --- |
+| Snake | 100% | - |
+| Guitar Hero | 100% | - |
+| Tir aux ballons | 90% | Les ballons n'éclatent pas mais s'envolent |
 
 
 

@@ -7,6 +7,7 @@
 
 int verification(t_taupe tab_taupe){
 
+    //verification si la souris se trouve sur une des taupes
     for (int i = 0; i < 79; ++i) {
         for (int j = 0; j < 100; ++j) {
             if (mouse_x == tab_taupe.taille[i][j][0])
