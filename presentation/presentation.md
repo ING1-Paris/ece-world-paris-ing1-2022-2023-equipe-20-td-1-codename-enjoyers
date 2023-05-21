@@ -444,13 +444,13 @@ void dessinerBallon(BITMAP *bmp, t_ballon * ballon);
 
 ---
 
-# Run lapins `1/8`
+# Course de lapins `1/8`
 
 *Réalisé par: Thaïs LECLAIRE (100%)*
 
 * Gestion aléatoire de la vitesse des lapins  
 * Collisions avec la ligne d'arrivée 
-* Interface de dialogue pour le pari du joueur
+* Interface de dialogue pour les paris des joueurs
 
 ![bg right w:600 h:500](./images/interface_course.jpg)
 
@@ -603,41 +603,96 @@ schémas qui illustrent la gestion des sprites
 
 ---
 
-# Investissement 
+# Investissement GitHub `1/2`
 
-![center](./images/GITHUB_preuve.png)
+![center h:500](./images/GITHUB_preuve.png)
 
-
- 
  
 ---
 
-![center](./images/GITHUB_preuve(2).png)
+# Investissement GitHub `2/2`
+
+![h:400](./images/resume%20github.jpg)
+
+![bg right 90%](./images/graphique_github.png)
+
+---
+
+# Bilan collectif 
+
+---
+
+# Thomas LEROY
+
+#### Tâches réalisées
+
+- `✅ 100%` Jeu Snake
+- `✅ 100%` Sauvegarde / Statistiques
+- `✅ 100%` Animations joueurs / Gestion des sprites
+- `✅ 100%` Direction artistique
+- `✅ 100%` Contribution MARP
+- `✅ 100%` Score et tickets
+- `✅ 100%` Interfaces
+- `✅ 100%` Finitions / Corrections de bugs
+
+---
+
+# Guy-Charbel KAIROUZ
+
+#### Tâches réalisées
+
+- `✅ 100%` Jeu Guitar Hero
+- `✅ 100%` Sauvegarde / Statistiques
+- `✅ 100%` Travail de documentation approfondi
+- `✅ 100%` Contribution MARP
+- `✅ 100%` Interfaces
+- `✅ 100%` Gestion des menus
+- `✅ 100%` Optimisations / Corrections de bugs / Formatage du code
+- `✅ 100%` Gestion du repository Github
 
 
 ---
 
+# Thaïs LECLAIRE
 
-# bilan collectif 
+#### Tâches réalisées
 
-expérience acquises
-
-//perso thaïs + autre diapo 1er semestre
+- `✅ 100%` Jeu de la course de lapins
+- `✅ 100%` Jeu du tir aux ballons
+- `✅ 100%` Contribution MARP
+- `✅ 100%` Infographies et schémas
 
 ---
 
-# Récapitulatif des jeux
+# Lucie DAIX
+
+#### Tâches réalisées
+
+- `✅ 100%` Jeu de la traversée de la rivière
+- `✅ 100%` Jeu des taupes
+- `✅ 100%` Contribution MARP
+
+
+---
+
+# Pourcentage de réalisation de chacun
+
+![center h:500](./images/camembert.png)
+
+---
+
+# Récapitulatif des jeux `1/2`
 
 | Jeu | Avancement | Problèmes / reste |
 | --- | --- | --- |
 | Course de lapins | 100% | - |
 | Traversé de la rivière | 100% | - |
-| Taupe-là !| 90% | Les taupes ne se cachent pas, elles restent afficher|
+| Taupe-là !| 90% | Les taupes ne se cachent pas, elles restent affichées|
 
 
 ---
 
-# Récapitulatif des jeux
+# Récapitulatif des jeux `2/2`
 
 | Jeu | Avancement | Problèmes / reste |
 | --- | --- | --- |
@@ -646,7 +701,10 @@ expérience acquises
 | Tir aux ballons | 90% | Les ballons n'éclatent pas mais s'envolent |
 
 
+---
 
+# Conclusion
 
+De manière générale, nous avons grandement apprécié réaliser ce projet en équipe. Nous avons beaucoup appris sur de nombreux plans tels que le travail de groupe, l'organisation, la recherche, la conception, la détermination et l'entraide. 
 
-
+Nous sommes ravis de poursuivre sur ce chemin, et attendons avec impatience les prochains projets à venir !
