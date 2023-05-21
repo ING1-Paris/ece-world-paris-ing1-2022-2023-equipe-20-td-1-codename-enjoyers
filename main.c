@@ -358,7 +358,7 @@ int main() {
 
 
 
-            if(Personne_qui_choisi == 2){
+            if (Personne_qui_choisi == 2) {
                 Personne_qui_choisi = 0;
             }
         }

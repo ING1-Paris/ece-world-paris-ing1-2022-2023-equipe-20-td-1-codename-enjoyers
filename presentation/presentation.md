@@ -39,9 +39,9 @@ Algorithmique et langage C
 <br>
 
 * Thaïs LECLAIRE
-* Thomas Leroy
+* Thomas LEROY
 * Guy-Charbel KAIROUZ
-* Lucie Daix
+* Lucie DAIX
 
 
 ---

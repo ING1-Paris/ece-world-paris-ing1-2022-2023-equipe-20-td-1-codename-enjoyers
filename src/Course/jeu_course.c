@@ -1,25 +1,5 @@
 #include "../../header.h"
 
-/***************************************************/
-/*              VARIABLES GLOBALES                 */
-/***************************************************/
-
-// tableau global de toutes les séquences animées du jeu
-// on s'autorise à utiliser un tableau global car ces données n'existent qu'en un seul exemplaire é l'échelle du programme
-
-t_sequence tabSequences[NSEQUENCE] =
-        {
-                //          nomSource           , nimg,  tx,  ty, ncol
-                { "../assets/Item/Course/sprites_lapins.bmp"   ,    8,  112,  140,    8 },
-                { "../assets/Item/Course/sprites_lapins.bmp"   ,    8,  112,  140,    8 },
-                { "../assets/Item/Course/sprites_lapins.bmp"   ,    8,  112,  140,    8 },
-                { "../assets/Item/Course/sprites_lapins.bmp"   ,    8,  112,  140,    8 },
-                { "../assets/Item/Course/sprites_lapins.bmp"   ,    8,  112,  140,    8 },
-                { "../assets/Item/Course/sprites_lapins.bmp"   ,    8,  112,  140,    8 }
-        };
-
-
-
 /******************************************/
 /*           PROGRAMME PRINCIPAL          */
 /******************************************/
@@ -27,6 +7,18 @@ t_sequence tabSequences[NSEQUENCE] =
 void jeu_course(t_joueur joueur_course[NOMBRE_JOUEURS])
 {
     fflush(stdin);
+
+    // Tableau de toutes les séquences animées du jeu
+    t_sequence tabSequences[NSEQUENCE] =
+            {
+                    //          nomSource           , nimg,  tx,  ty, ncol
+                    { "../assets/Item/Course/sprites_lapins.bmp"   ,    8,  112,  140,    8 },
+                    { "../assets/Item/Course/sprites_lapins.bmp"   ,    8,  112,  140,    8 },
+                    { "../assets/Item/Course/sprites_lapins.bmp"   ,    8,  112,  140,    8 },
+                    { "../assets/Item/Course/sprites_lapins.bmp"   ,    8,  112,  140,    8 },
+                    { "../assets/Item/Course/sprites_lapins.bmp"   ,    8,  112,  140,    8 },
+                    { "../assets/Item/Course/sprites_lapins.bmp"   ,    8,  112,  140,    8 }
+            };
 
     // BITMAP servant de buffer d'affichage (double buffer)
     BITMAP *page;
@@ -108,10 +100,10 @@ void jeu_course(t_joueur joueur_course[NOMBRE_JOUEURS])
 
 
     // Chargement des images des séquences animées
-    chargerTabSequences();
+    chargerTabSequences(tabSequences);
 
     // remplir le tableau avec des lapins alloués et initialisés
-    remplirTablapins(meslapins);
+    remplirTablapins(meslapins, tabSequences);
 
     PlaySound(TEXT("../assets/Item/Course/Son_Stade_Course.wav"), NULL, SND_ASYNC);
 
@@ -124,10 +116,10 @@ void jeu_course(t_joueur joueur_course[NOMBRE_JOUEURS])
         blit(decor,page,0,0,0,0,SCREEN_W,SCREEN_H);
 
         // 2) DETERMINER NOUVELLES POSITIONS
-        actualiserTablapins(meslapins, tab_paris, &alive, page, joueur_course);
+        actualiserTablapins(meslapins, tab_paris, &alive, page, joueur_course, tabSequences);
 
         // 3) AFFICHAGE NOUVELLES POSITIONS SUR LE BUFFER
-        dessinerTablapins(page,meslapins);
+        dessinerTablapins(page,meslapins, tabSequences);
 
         // 4) AFFICHAGE DU BUFFER MIS A JOUR A L'ECRAN
         blit(page,screen,0,0,0,0,SCREEN_W,SCREEN_H);
@@ -149,7 +141,7 @@ void jeu_course(t_joueur joueur_course[NOMBRE_JOUEURS])
 
 
 // Allouer et initialiser un lapin
-t_lapin * creerlapin(int type, int x, int y, int dx, int tmpdx, int tmpimg)
+t_lapin * creerlapin(int type, int x, int y, int dx, int tmpdx, int tmpimg, t_sequence tab_sequences[NSEQUENCE])
 {
     // pointeur sur le lapin qui sera créé et retourné
     t_lapin *lapin;
@@ -163,8 +155,8 @@ t_lapin * creerlapin(int type, int x, int y, int dx, int tmpdx, int tmpimg)
     lapin->dx=dx;
     lapin->tmpdx=tmpdx;
     lapin->cptdx=0;
-    lapin->tx=tabSequences[type].tx;
-    lapin->ty=tabSequences[type].ty;
+    lapin->tx=tab_sequences[type].tx;
+    lapin->ty=tab_sequences[type].ty;
 
     // Initialisation séquence d'images de l'animation
     lapin->imgcourante=0;
@@ -178,21 +170,21 @@ t_lapin * creerlapin(int type, int x, int y, int dx, int tmpdx, int tmpimg)
 }
 
 //remplir le tableau de lapins (6 lapins)
-void remplirTablapins(t_lapin * tab[Nlapin])
+void remplirTablapins(t_lapin * tab[Nlapin], t_sequence tab_sequences[NSEQUENCE])
 {
     // Appeler Nlapin fois creerlapin avec les paramètres souhaités :
     //                (type,   x,   y,  dx, tmpdx, tmpimg )
-    tab[0]=creerlapin(   0, 2, 10,  4,     rand()%(6-1)+1,      4 );
-    tab[1]=creerlapin(   1, 2, 100, 4,     rand()%(6-1)+1,      4 );
-    tab[2]=creerlapin(   2, 2, 200, 4,     rand()%(6-1)+1,      4 ); // + tmpdx est grand, moins le lapin avance vite
-    tab[3]=creerlapin(   3, 2, 300, 4,     rand()%(6-1)+1,      4 );
-    tab[4]=creerlapin(   4, 2, 400, 4,     rand()%(6-1)+1,      4 );
-    tab[5]=creerlapin(   5, 2, 500, 4,     rand()%(6-1)+1,      4 );
+    tab[0]=creerlapin(   0, 2, 10,  4,     rand()%(6-1)+1,      4, tab_sequences);
+    tab[1]=creerlapin(   1, 2, 100, 4,     rand()%(6-1)+1,      4, tab_sequences);
+    tab[2]=creerlapin(   2, 2, 200, 4,     rand()%(6-1)+1,      4, tab_sequences); // + tmpdx est grand, moins le lapin avance vite
+    tab[3]=creerlapin(   3, 2, 300, 4,     rand()%(6-1)+1,      4, tab_sequences);
+    tab[4]=creerlapin(   4, 2, 400, 4,     rand()%(6-1)+1,      4, tab_sequences);
+    tab[5]=creerlapin(   5, 2, 500, 4,     rand()%(6-1)+1,      4, tab_sequences);
 }
 
 
 // Actualiser un lapin
-void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page, t_joueur tab_course[NOMBRE_JOUEURS])
+void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page, t_joueur tab_course[NOMBRE_JOUEURS], t_sequence tab_sequences[NSEQUENCE])
 {
 
     // gestion des bords sur l'axe x
@@ -245,7 +237,7 @@ void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page, 
         lapin->cptimg=0;
         lapin->imgcourante++;
         // quand l'indice de l'image courante arrive à nimg de la séquence on recommence la séquence à 0
-        if ( lapin->imgcourante >= tabSequences[ lapin->type ].nimg )
+        if ( lapin->imgcourante >= tab_sequences[ lapin->type ].nimg )
             lapin->imgcourante=0;
     }
 
@@ -254,31 +246,31 @@ void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page, 
 }
 
 // Gérer l'évolution de l'ensemble des lapins
-void actualiserTablapins(t_lapin * tab[Nlapin], int tabParis[2], int *alive, BITMAP *bmp, t_joueur tab_joueur_course[NOMBRE_JOUEURS])
+void actualiserTablapins(t_lapin * tab[Nlapin], int tabParis[2], int *alive, BITMAP *bmp, t_joueur tab_joueur_course[NOMBRE_JOUEURS], t_sequence tab_sequences[NSEQUENCE])
 {
     int i;
     for (i=0;i<Nlapin;i++)
-        actualiserlapin(tab[i], tabParis, alive, bmp, tab_joueur_course);
+        actualiserlapin(tab[i], tabParis, alive, bmp, tab_joueur_course, tab_sequences);
 }
 
 
 // Dessiner un lapin sur une bitmap bmp
-void dessinerlapin(BITMAP *bmp, t_lapin *lapin)
+void dessinerlapin(BITMAP *bmp, t_lapin *lapin, t_sequence tab_sequences[NSEQUENCE])
 {
     // Pointeur sur la séquence concernée (prise en compte du type du lapin)
     t_sequence *seq;
-    seq=&tabSequences[ lapin->type ];
+    seq=&tab_sequences[ lapin->type ];
 
     //  Prise en compte du numéro d'image courante du lapin dans cette séquence
     draw_sprite(bmp, seq->img[ lapin->imgcourante ], lapin->x, lapin->y);
 }
 
 // Dessiner l'ensemble des lapins sur une bitmap bmp
-void dessinerTablapins(BITMAP *bmp,t_lapin * tab[Nlapin])
+void dessinerTablapins(BITMAP *bmp,t_lapin * tab[Nlapin], t_sequence tab_sequences[NSEQUENCE])
 {
     int i;
     for (i=0;i<Nlapin;i++)
-        dessinerlapin(bmp,tab[i]);
+        dessinerlapin(bmp,tab[i], tab_sequences);
 }
 
 
@@ -324,10 +316,10 @@ void chargerSequence(t_sequence * seq)
 }
 
 // Charger toutes les séquences du tableau global tabSequence
-void chargerTabSequences()
+void chargerTabSequences(t_sequence tab_sequences[NSEQUENCE])
 {
     int i;
 
     for (i=0;i<NSEQUENCE;i++)
-        chargerSequence(&tabSequences[i]);
+        chargerSequence(&tab_sequences[i]);
 }

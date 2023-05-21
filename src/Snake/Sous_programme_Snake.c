@@ -35,6 +35,7 @@ t_corp_de_snake* Creer_maillon(BITMAP* tab_de_Skin[12]){
     Nouveau_maillon->next_corp = NULL;
 
     return Nouveau_maillon;
+
 }
 
 void Actualisation_Snake(t_corp_de_snake* head){
