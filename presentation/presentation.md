@@ -335,7 +335,7 @@ t_cercle_fixe * tab_cercles_fixes, int * alive, int mono_portee, t_joueur * joue
 
 ---
 
-# Tir ballons `1/8`
+# Tir aux ballons `1/8`
 
 *Réalisé par: Thaïs LECLAIRE (100%)*
 
@@ -349,7 +349,7 @@ t_cercle_fixe * tab_cercles_fixes, int * alive, int mono_portee, t_joueur * joue
 
 ---
 
-# Tir ballons `2/8`
+# Tir aux ballons `2/8`
 
 ### Structures de données utilisées
 
@@ -369,7 +369,7 @@ typedef struct acteur
 
 ---
 
-# Tir ballons `3/8`
+# Tir aux ballons `3/8`
 
 ```C
 typedef struct joueur_ballons {
@@ -383,7 +383,7 @@ typedef struct joueur_ballons {
 
 ```
 ---
-# Tir ballons `4/8`
+# Tir aux ballons `4/8`
 
 ```C
 typedef struct ballon {
@@ -404,7 +404,7 @@ typedef struct ballon {
 
 ---
 
-# Tir ballons `5/8`
+# Tir aux ballons `5/8`
 
 ### Prototypes
 
@@ -424,7 +424,7 @@ int libreListeActeurs(t_listeActeurs *la);
 ```
 
 ---
-# Tir ballons `6/8`
+# Tir aux ballons `6/8`
 
 ### Prototypes
 
@@ -444,7 +444,7 @@ void dessinerBallon(BITMAP *bmp, t_ballon * ballon);
 ```
 
 ---
-# Tir ballons `7/8`
+# Tir aux ballons `7/8`
 
 ### Logigramme
 
@@ -452,7 +452,7 @@ void dessinerBallon(BITMAP *bmp, t_ballon * ballon);
 
 ---
 
-# Tir ballons `8/8`
+# Tir aux ballons `8/8`
 
 ### Graphe d'appel
 
@@ -460,7 +460,7 @@ void dessinerBallon(BITMAP *bmp, t_ballon * ballon);
 
 ---
 
-## Course lapins `1/8`
+# Course de lapins `1/8`
 
 *Réalisé par: Thaïs LECLAIRE (100%)*
 
@@ -472,7 +472,7 @@ void dessinerBallon(BITMAP *bmp, t_ballon * ballon);
 
 ---
 
-# Course lapins  `2/8`
+# Course de lapins  `2/8`
 
 ### Structures de données utilisées
 
@@ -490,7 +490,7 @@ typedef struct sequence
 
 ---
 
-# Course lapins `3/8`
+# Course de lapins `3/8`
 
 ```C
 typedef struct lapin
@@ -508,7 +508,7 @@ typedef struct lapin
 } t_lapin;
 ```
 ---
-# Course lapins `4/8`
+# Course de lapins `4/8`
 
 ```C
 typedef struct ballon {
@@ -530,7 +530,7 @@ typedef struct ballon {
 
 ---
 
-# Course lapins `5/8`
+# Course de lapins `5/8`
 
 ### Prototypes
 
@@ -549,7 +549,7 @@ void chargerTabSequences();
 ```
 
 ---
-# Course lapins `6/8`
+# Course de lapins `6/8`
 
 ### Prototypes
 
@@ -569,7 +569,7 @@ void dessinerBallon(BITMAP *bmp, t_ballon * ballon);
 ```
 
 ---
-## Course lapins `7/8`
+# Course de lapins `7/8`
 
 ### Logigramme
 
@@ -577,7 +577,7 @@ void dessinerBallon(BITMAP *bmp, t_ballon * ballon);
 
 ---
 
-# Course lapins `8/8`
+# Course de lapins `8/8`
 
 ### Graphe d'appel
 
@@ -587,7 +587,7 @@ void dessinerBallon(BITMAP *bmp, t_ballon * ballon);
 ---
 
 
-# Rivière  `1/7`
+# Traversée de la rivière  `1/7`
 
 *Réalisé par: Lucie Daix (100%)*
 
@@ -601,7 +601,7 @@ void dessinerBallon(BITMAP *bmp, t_ballon * ballon);
 
 ---
 
-# Rivière `2/7`
+# Traversée de la rivière `2/7`
 
 ### Structures de données utilisées
 
@@ -620,7 +620,7 @@ typedef struct rondin {
 
 ---
 
-# Rivière `3/7`
+# Traversée de la rivière `3/7`
 
 ```C
 typedef struct joueur_riv
@@ -639,7 +639,7 @@ typedef struct joueur_riv
 ```
 ---
 
-# Rivière `4/7`
+# Traversée de la rivière `4/7`
 
 ### Tableaux importants
 
@@ -652,7 +652,7 @@ t_rondin * tab_rondins[NRONDIN];
 
 ---
 
-# Rivière `5/7`
+# Traversée de la rivière `5/7`
 
 ### Prototypes
 
@@ -676,7 +676,7 @@ int Collision_joueur_rondin(t_rondin *rondin, t_joueur_riv *joueur);
 
 ---
 
-# Rivière `6/7`
+# Traversée de la rivière `6/7`
 
 ### Logigramme
 <br>
@@ -685,7 +685,7 @@ int Collision_joueur_rondin(t_rondin *rondin, t_joueur_riv *joueur);
 
 ---
 
-# Rivière `7/7`
+# Traversée de la rivière `7/7`
 
 ### Graphe d'appel
 
@@ -726,7 +726,7 @@ typedef struct taupe{
 
 ---
 
-# Taule-là ! `3/6`
+# Taupe-là ! `3/6`
 
 ```C
 typedef struct joueur_taupe
@@ -811,71 +811,86 @@ Schémas qui récapitulent les fonctions des jeux
 
 ---
 
+# Investissement GitHub `1/2`
 
+![center h:500](./images/GITHUB_preuve.png)
 
-# bilan collectif 
+---
 
-expérience acquises
+# Investissement GitHub `2/2`
 
-//perso thaïs + autre diapo 1er semestre
+![h:400](./images/resume%20github.jpg)
+
+![bg right 90%](./images/graphique_github.png)
+
+---
+
+# Bilan collectif 
 
 ---
 
 
-# Thomas
 
-## Tâches réalisées
+# Thomas LEROY
 
-- `✅ 100%` Jeu du snake
-- `✅ 100%` Menu
-- `✅ 100%` Sauvegarde
+#### Tâches réalisées
 
----
-
-
-# Guy-Charbel
-
-## Tâches réalisées
-
-- `✅ 100%` Jeu de Guitar Hero
-- `✅ 100%` Menu
-- `✅ 100%` Sauvegarde
-
+- `✅ 100%` Jeu Snake
+- `✅ 100%` Sauvegarde / Statistiques
+- `✅ 100%` Animations joueurs / Gestion des sprites
+- `✅ 100%` Direction artistique
+- `✅ 100%` Contribution MARP
+- `✅ 100%` Score et tickets
+- `✅ 100%` Interfaces
+- `✅ 100%` Finitions / Corrections de bugs
 
 ---
 
-# Thaïs
+# Guy-Charbel KAIROUZ
 
-## Tâches réalisées
+#### Tâches réalisées
 
+- `✅ 100%` Jeu Guitar Hero
+- `✅ 100%` Sauvegarde / Statistiques
+- `✅ 100%` Travail de documentation approfondi
+- `✅ 100%` Contribution MARP
+- `✅ 100%` Interfaces
+- `✅ 100%` Gestion des menus
+- `✅ 100%` Optimisations / Corrections de bugs / Formatage du code
+- `✅ 100%` Gestion du repository Github
+
+
+---
+
+# Thaïs LECLAIRE
+
+#### Tâches réalisées
+
+- `✅ 100%` Jeu de la course de lapins
 - `✅ 100%` Jeu du tir aux ballons
-- `✅ 80%` Jeu course de lapin
-     - manque de compétence*
-- `✅ 100%` Affiche
-- `✅ 100%` Infographie
----
-
-# Lucie 
-
-## Tâches réalisées 
-
-- `✅ 100%` jeu rivière
-- `✅ 80%` jeu taupe
-    - manque de compétence*
-- `✅ 100%` Marps
+- `✅ 100%` Contribution MARP
+- `✅ 100%` Infographies et schémas
 
 ---
 
-# Investissement 
+# Lucie DAIX
 
-![bg right 95%](./images/GITHUB_preuve.png)
+#### Tâches réalisées
 
- ![center h:100](./images/GITHUB_preuve(2).png)
+- `✅ 100%` Jeu de la traversée de la rivière
+- `✅ 100%` Jeu des taupes
+- `✅ 100%` Contribution MARP
+
+---
+
+# Pourcentage de réalisation de chacun
+
+![center h:500](./images/camembert.png)
 
 
 ---
 
-# Récapitulatif des jeux
+# Récapitulatif des jeux `1/2`
 
 | Jeu | Avancement | Problèmes / reste |
 | --- | --- | --- |
@@ -886,7 +901,7 @@ expérience acquises
 
 ---
 
-# Récapitulatif des jeux
+# Récapitulatif des jeux `2/2`
 
 | Jeu | Avancement | Problèmes / reste |
 | --- | --- | --- |
@@ -894,8 +909,11 @@ expérience acquises
 | Guitar Hero | 100% | - |
 | Tir aux ballons | 90% | Les ballons n'éclatent pas mais s'envolent |
 
+---
+
+# Conclusion
+
+De manière générale, nous avons grandement apprécié réaliser ce projet en équipe. Nous avons beaucoup appris sur de nombreux plans tels que le travail de groupe, l'organisation, la recherche, la conception, la détermination et l'entraide. 
 
 
-
-
-
+Nous sommes ravis de poursuivre sur ce chemin, et attendons avec impatience les prochains projets à venir !
