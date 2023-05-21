@@ -318,7 +318,7 @@ typedef struct lapin
 t_lapin * creerlapin(int type, int x, int y, int dx, int tmpdx, int tmpimg);
 void remplirTablapins(t_lapin * tab[Nlapin]);
 void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page, t_joueur tab_course[NOMBRE_JOUEURS]);
-void actualiserTablapins(t_lapin * tab[Nlapin], int tabParis[2], int *alive, BITMAP *page, t_joueur tab_course[NOMBRE_JOUEURS]);
+void actualiserTablapins(t_lapin * tab[Nlapin], int tabParis[2], int *alive, BITMAP *bmp, t_joueur tab_joueur_course[NOMBRE_JOUEURS]);
 void dessinerlapin(BITMAP *bmp, t_lapin *lapin);
 void dessinerTablapins(BITMAP *bmp,t_lapin * tab[Nlapin]);
 void chargerSequence(t_sequence * seq);

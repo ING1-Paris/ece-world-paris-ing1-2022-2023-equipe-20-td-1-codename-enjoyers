@@ -122,7 +122,7 @@ void jeu_course(t_joueur joueur_course[NOMBRE_JOUEURS])
         blit(decor,page,0,0,0,0,SCREEN_W,SCREEN_H);
 
         // 2) DETERMINER NOUVELLES POSITIONS
-        actualiserTablapins(meslapins, tab_paris, &alive, &page, tab_joueurs);
+        actualiserTablapins(meslapins, tab_paris, &alive, page, joueur_course);
 
         // 3) AFFICHAGE NOUVELLES POSITIONS SUR LE BUFFER
         dessinerTablapins(page,meslapins);
@@ -189,7 +189,7 @@ void remplirTablapins(t_lapin * tab[Nlapin])
 
 
 // Actualiser un lapin
-void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page, t_joueur joueur_course[NOMBRE_JOUEURS])
+void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page, t_joueur tab_course[NOMBRE_JOUEURS])
 {
 
     // gestion des bords sur l'axe x
@@ -210,11 +210,11 @@ void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page, 
         if (gagnant) {
 
             if(lapin->type == tabParis[0]) {
-                joueur_course[0].tickets = joueur_course[0].tickets+1 ;
+                tab_course[0].tickets = tab_course[0].tickets+1 ;
                 alert("joueur 1, vous avez gagné un ticket !", NULL, NULL, "Retour", NULL, 0, 0);
             }
             else {
-                joueur_course[1].tickets = joueur_course[1].tickets+1;
+                tab_course[1].tickets = tab_course[1].tickets+1;
                 alert("joueur 2, vous avez gagné un ticket !", NULL, NULL, "Retour", NULL, 0, 0);
             }
 
@@ -251,11 +251,11 @@ void actualiserlapin(t_lapin *lapin, int tabParis[2], int *alive, BITMAP *page, 
 }
 
 // Gérer l'évolution de l'ensemble des lapins
-void actualiserTablapins(t_lapin * tab[Nlapin], int tabParis[2], int *alive, BITMAP *page, t_joueur joueur_course[NOMBRE_JOUEURS])
+void actualiserTablapins(t_lapin * tab[Nlapin], int tabParis[2], int *alive, BITMAP *bmp, t_joueur tab_joueur_course[NOMBRE_JOUEURS])
 {
     int i;
     for (i=0;i<Nlapin;i++)
-        actualiserlapin(tab[i], tabParis, alive, page, joueur_course);
+        actualiserlapin(tab[i], tabParis, alive, bmp, tab_joueur_course);
 }
 
 
