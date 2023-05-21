@@ -113,6 +113,8 @@ void jeu_course(t_joueur joueur_course[NOMBRE_JOUEURS])
     // remplir le tableau avec des lapins alloués et initialisés
     remplirTablapins(meslapins);
 
+    PlaySound(TEXT("../assets/Item/Course/Son_Stade_Course.wav"), NULL, SND_ASYNC);
+
 
     // Boucle d'animation (pas d'interaction)
     while (alive)
@@ -134,6 +136,7 @@ void jeu_course(t_joueur joueur_course[NOMBRE_JOUEURS])
         rest(20);
     }
 
+    PlaySound(NULL, 0, 0);
     destroy_bitmap(fond);
     destroy_bitmap(decor);
     destroy_bitmap(page);
