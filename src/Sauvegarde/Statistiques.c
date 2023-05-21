@@ -70,27 +70,4 @@ void statistique() {
     do_dialog(Menu_score, 1);
 
 
-    int alive = 1;
-
-
-
-    /*while (alive) {
-
-        do_dialog(Menu_score, 3);
-
-        if (alert("Quitter", NULL, NULL, "Au revoir !", NULL, 0, 0)) {
-
-            allegro_exit();
-            exit(0);
-        }
-
-    }*/
-
-
-
-
-
-
-
-
 }
