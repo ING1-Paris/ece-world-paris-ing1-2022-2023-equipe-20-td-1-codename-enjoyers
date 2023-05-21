@@ -183,7 +183,6 @@ void traverser_riviere(t_joueur tab_joueurs[NOMBRE_JOUEURS], int tab_temps[NOMBR
 
         // Remplissage du tableau de temps (utilisé ultérieurement pour la sauvegarde) avec le temps de parcours du joueur actuel
         tab_temps[i] = (int) tab_joueurs_riv[i]->temps;
-        printf("Le joueur %d est reste en vie pendant %d\n", i+1, tab_temps[i]);
 
     }
 
