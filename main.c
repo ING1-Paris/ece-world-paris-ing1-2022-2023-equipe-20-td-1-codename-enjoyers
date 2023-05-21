@@ -333,6 +333,7 @@ int main() {
 
 
         for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
+
             Innactivite[i]=1;
         }
 
@@ -387,6 +388,7 @@ int main() {
            traverser_riviere(tableau_joueurs, tab_temps_epreuves);
 
         } else if (Choix_epreuve == 7){
+
             statistique();
             Choix_epreuve = 0;
 
