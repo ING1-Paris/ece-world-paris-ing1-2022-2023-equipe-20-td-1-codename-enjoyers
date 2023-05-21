@@ -65,8 +65,8 @@ Algorithmique et langage C
 <br>
 
 Règles : 
-* Deux joueurs s'affrontent autour de 6 éprevues
-* Le premier qui n'a plus de ticket a perdu
+* Deux joueurs s'affrontent autour de 6 jeux
+* Le premier qui n'a plus de tickets a perdu
 
 
 
@@ -589,7 +589,7 @@ void dessinerBallon(BITMAP *bmp, t_ballon * ballon);
 
 # Traversée de la rivière  `1/7`
 
-*Réalisé par: Lucie Daix (100%)*
+*Réalisé par: Lucie DAIX (100%)*
 
 * Gestion aléatoires des rondins 
 * Déplacement des acteurs
@@ -696,10 +696,10 @@ int Collision_joueur_rondin(t_rondin *rondin, t_joueur_riv *joueur);
 
 # Taupe-là !  `1/6`
 
-*Réalisé par: Lucie Daix (100%)*
+*Réalisé par: Lucie DAIX (100%)*
 
 * Gestion aléatoires des taupes 
-* Collisions entre les taupes et les souris
+* Collisions entre les taupes et la souris du joueur
 
 
 ![bg right w:500 h:400](./images/taupe.jpg)
@@ -828,7 +828,6 @@ Schémas qui récapitulent les fonctions des jeux
 # Bilan collectif 
 
 ---
-
 
 
 # Thomas LEROY
