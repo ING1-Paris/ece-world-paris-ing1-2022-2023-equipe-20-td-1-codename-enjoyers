@@ -296,7 +296,6 @@ void Snake(t_joueur * Joueur, int tab_temps[NOMBRE_JOUEURS]) {
     //gestion du temps en fin de partie
     for (int i = 0; i < NOMBRE_JOUEURS; ++i) {
         tab_temps[i] = (int) difftime(Mort_du_seprent[i], begin);
-        printf("Le joueur %d est reste en vie pendant %d\n", i+1, tab_temps[i]);
     }
 
 
